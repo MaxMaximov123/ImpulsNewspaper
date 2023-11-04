@@ -3,6 +3,9 @@ import { db } from './database.js';
 
 export default class Scanner {
   postKeys = [];
+  browser = null;
+  page = null;
+  totalHeight = 0;
 
   constructor() {
     this.start().catch((error) => {
@@ -15,20 +18,15 @@ export default class Scanner {
   }
 
   async scanning() {
-    let browser = await puppeteer.launch({headless: false});
-    let page = await browser.newPage();
 
-    await page.goto('https://vk.com/impulse131');
+    let scrollStep = 2000;
 
-    let scrollStep = 500;
-    let totalHeight = 0;
-
-    while (totalHeight < await page.evaluate(() => document.body.scrollHeight)) {
-      await page.evaluate(scrollStep => {
+    while (this.totalHeight < await this.page.evaluate(() => document.body.scrollHeight)) {
+      await this.page.evaluate(scrollStep => {
         window.scrollBy(0, scrollStep);
       }, scrollStep);
 
-      let postElements = await page.$$('.post');
+      let postElements = await this.page.$$('.post');
       let newPosts = [];
 
       for (let postElement of postElements) {
@@ -39,7 +37,8 @@ export default class Scanner {
 
         try {
           if (!postElement) continue;
-          post.key = await postElement.evaluate(el => el.id);
+          post.key = Number((await postElement.evaluate(el => el.id)).split('_')[1]);
+          console.log(post);
           if (this.postKeys.includes(post.key)) continue;
           let postContent = await postElement.$('._post_content');
           if (!postContent) continue;
@@ -131,16 +130,38 @@ export default class Scanner {
         this.postKeys.push(...postsIntoDB.map(obj => obj.key));
       }
       
-      totalHeight += scrollStep;
-      await this.waitForTimeout(500);
-      
+      if (postElements.length > 200) {
+        await this.page.reload();
+        return this.scanning();
+      }
+
+      this.totalHeight += scrollStep;
+      await this.waitForTimeout(5000);      
     }
 
-    await browser.close();
+    await this.page.reload();
     return this.scanning();
-}
+  }
+
+  async reloadPage() {
+    while (true) {
+      await this.waitForTimeout(1000 * 60 * 5);
+      await this.page.reload();
+      this.totalHeight = 0;
+    }
+  }
 
   async start() {
+    this.browser = await puppeteer.launch(
+      {
+        args: ['--no-sandbox'],
+        headless: 'new'
+      }
+    );
+    this.page = await this.browser.newPage();
+    await this.page.goto('https://vk.com/impulse131');
+    this.reloadPage();
+
     this.postKeys = (await db('posts').select('key')).map(obj => obj.key);
     this.scanning();
   }

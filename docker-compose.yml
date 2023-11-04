@@ -1,0 +1,52 @@
+version: '3'
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: max
+      POSTGRES_PASSWORD: jbfgslgsdlfkngd
+      POSTGRES_DB: posts
+      POSTGRES_PORT: 5432
+    volumes:
+      - ./data:/var/lib/postgresql/data
+    ports:
+      - 3200:5432
+    networks:
+      - mynetwork
+  
+  scanner:
+    restart: always
+    build:
+      context: .
+      dockerfile: vk-scanner/Dockerfile
+    environment:
+      DATABASE_POOL_MAX: 40
+      DATABASE_POOL_MIN: 5
+      DATABASE_URL: postgres://max:jbfgslgsdlfkngd@db:5432/posts
+      DATABASE_SCHEMA: public
+    depends_on:
+      - db
+    networks:
+      - mynetwork
+    
+  
+  
+  
+
+  # site:
+  #   restart: always
+  #   build:
+  #     context: .
+  #     dockerfile: site/live.sport/server/Dockerfile
+  #   environment:
+  #     DATABASE_POOL_MAX: 50
+  #     DATABASE_POOL_MIN: 5
+  #     DATABASE_SCHEMA: public
+  #     DATABASE_URL: postgres://game-matcher:Ato8ov1shooNoco@142.132.242.33:8789/game-matcher
+    
+  #   ports:
+  #     - 8005:8005
+
+networks:
+  mynetwork:
