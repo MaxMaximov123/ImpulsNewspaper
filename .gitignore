@@ -1,0 +1,6 @@
+data/
+.idea/
+vk-scanner/node_modules/
+vk-scanner/.env
+site/.env
+site/node_modules/
