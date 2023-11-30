@@ -4,11 +4,12 @@ export async function up(knex) {
       table.string('key');
 
       table.text('text');
+      table.timestamp('created_at');
 
       table.index('id');
       table.index('key');
+      table.index('created_at');
 
-      table.index('text');
       table.unique(['key']);
     });
   };

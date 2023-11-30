@@ -21,11 +21,16 @@ import '@quasar/extras/material-icons/material-icons.css'
 
 import 'quasar/src/css/index.sass'
 
+import 'vue-fullpage.js/dist/style.css'
+import VueFullPage from 'vue-fullpage.js'
+
 const myApp = createApp(App)
 
 myApp.use(Quasar, {
   plugins: {}, // import Quasar plugins and add here
-})
+});
+
+myApp.use(VueFullPage);
 
 myApp.use(router)
 .use(vuetify)

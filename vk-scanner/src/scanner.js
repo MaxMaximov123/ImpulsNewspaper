@@ -33,21 +33,57 @@ export default class Scanner {
         let post = {
           text: null,
           images: [],
+          createdAt: null,
         };
 
         try {
           if (!postElement) continue;
           post.key = Number((await postElement.evaluate(el => el.id)).split('_')[1]);
-          console.log(post);
+
           if (this.postKeys.includes(post.key)) continue;
+
           let postContent = await postElement.$('._post_content');
+          let postHeader = await postElement.$('.PostHeader');
+          let postHeaderInfo = await postHeader.$('.PostHeaderInfo');
+          let postHeaderSubtitle = await postHeaderInfo.$('.PostHeaderSubtitle');
+          let PostHeaderSubtitleLink = await postHeaderSubtitle.$('.PostHeaderSubtitle__link');
+          let PostHeaderSubtitleItem = await PostHeaderSubtitleLink.$('.PostHeaderSubtitle__item');
+
+          let postDate = new Date(await PostHeaderSubtitleItem.evaluate(element => {
+            let currentYear = new Date().getFullYear();
+            const MONTH_NAMES = {
+              'янв': 0, 'фев': 1, 'мар': 2, 'апр': 3, 'май': 4, 'июн': 5,
+              'июл': 6, 'авг': 7, 'сен': 8, 'окт': 9, 'ноя': 10, 'дек': 11
+            };
+
+            let dateString = element ? element.textContent.replace(/ в \d+:\d+/, '') : '';
+            if (!/\d\d\d\d/.test(dateString)) {
+              dateString += ` ${currentYear}`;
+            }
+
+            let parts = dateString.split(' ');
+            dateString = `${parts[2]}-${MONTH_NAMES[parts[1]] + 1}-${parts[0].padStart(2, '0')}`;
+            
+            return dateString;
+          }));
+
+          post.createdAt = postDate;
+
+
           if (!postContent) continue;
+
           let postContentBody = await postContent.$('.post_content');
+
           if (!postContentBody) continue;
+
           postContentBody = await postContentBody.$('.post_info');
+
           if (!postContentBody) continue;
+
           postContentBody = await postContentBody.$('.wall_text');
+
           if (!postContentBody) continue;
+
           let postContentText = await postContentBody.$('.wall_post_text');
 
           if (postContentText) {
@@ -97,7 +133,8 @@ export default class Scanner {
           }
 
           newPosts.push(post);
-          
+          // console.log(post);
+
         } catch (error) {
           console.log(error);
         }
@@ -110,6 +147,7 @@ export default class Scanner {
           postsIntoDB.push({
             key: post.key,
             text: post.text,
+            createdAt: post.createdAt,
           });
 
           if (post.images.length > 0) {
@@ -154,8 +192,9 @@ export default class Scanner {
   async start() {
     this.browser = await puppeteer.launch(
       {
-        args: ['--no-sandbox'],
-        headless: 'new'
+        // args: ['--no-sandbox'],
+        // headless: 'new'
+        headless: false
       }
     );
     this.page = await this.browser.newPage();

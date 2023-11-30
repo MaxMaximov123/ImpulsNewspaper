@@ -45,6 +45,24 @@ app.post('/api/posts', async (req, res) => {
   }
 });
 
+app.post('/api/post', async (req, res) => {
+  const stTime = new Date().getTime();
+  const requestData = req.body;
+  
+  try{
+    let result = {
+      data: (await db.select('posts.*').column(db.raw('array_agg(images.src) as images'))
+      .from('posts')
+      .leftJoin('images', 'posts.key', 'images.postKey')
+      .groupBy('posts.key', 'posts.id').where('posts.key', requestData.postKey))[0],
+      time: (new Date().getTime()) - stTime,};
+    res.send(JSON.stringify(result));
+  } catch(e){
+    console.log(e);
+    res.send(JSON.stringify({time: (new Date().getTime()) - stTime, data: []}));
+  }
+});
+
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(staticFilesPath, 'index.html'));

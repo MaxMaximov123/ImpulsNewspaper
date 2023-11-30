@@ -2,16 +2,21 @@
     <div class="q-pa-md">
       <div class="news-container justify-center q-gutter-sm" @scroll="handleScroll">
         <div
+          @click="() => this.$router.push(`../post/${post.key}`)"
           v-for="(post, index) in postList"
           :key="post.key"
           :data-id="index - 1"
           class="news-item q-pa-sm"
         >
+          <div class="created-at">
+              {{ post.createdAt }}
+            </div>
           <q-card style="background-color: rgba(240, 235, 232, 0.797);">
             <div v-if="post.text[0] && post.images?.[0]" class="news-info items-start">
               <div class="col" style="margin-top: auto; margin-bottom: auto;">
                 <q-card-section>
-                  <div class="news-title" v-html="
+                  <div 
+                    class="news-title" v-html="
                     post.text.slice(0, 10).join(' ') + (
                     post.text.length > 10 ? '...' : '')
                   "></div>
@@ -113,7 +118,6 @@
       },
 
       showAllText(post) {
-        console.log(post);
         post.allText = !post.allText;
       },
 
@@ -121,6 +125,12 @@
         this.isLoadingPosts = true;
         let requestResults = (await this.postRequest(`${this.apiHost}/api/posts`, {offset: this.postList.length})).data;
         let newRequestResults = [];
+        let timeFormatOptions = {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+        };
+
         for (let index=0;index<requestResults.length;index++) {
           newRequestResults.push((() => {
             let obj = requestResults[index];
@@ -129,15 +139,19 @@
             // obj.text = obj.text.replace(/Show more/g, `Показать ещё`);
             obj.text = obj.text.replace(/#.*/g, ``);
             obj.text = obj.text.split(` `);
-            console.log(obj.text);
             obj.allText = false;
             obj.slide = ref(1);
+            obj.createdAt = new Date(obj.createdAt).toLocaleString("ru", timeFormatOptions);
             return obj;
           })());
         }
 
         this.postList.push(...requestResults);
         this.isLoadingPosts = false;
+      },
+
+      goToFullPost(postKey) {
+        console.log(postKey);
       },
 
       handleScroll(event) {
@@ -164,9 +178,16 @@
   }
 
   .news-title {
-    color: rgb(255, 113, 95);
-    font-family: Comic Sans Ms;
-    font-size: 30px;
+    color: #1F3264;
+    font-family: Courier;
+    text-align: center;
+    font-size: clamp(14px, 2.5vw, 30px);
+  }
+
+  .created-at {
+    color: #1F3264;
+    font-family: Courier;
+    font-size: clamp(12px, 2.5vw, 20px);
   }
 
   .news-info {
@@ -199,10 +220,6 @@
   
     .news-item {
       max-width: 95%;
-    }
-
-    .news-title {
-      font-size: 14px;
     }
 
     .once-image {
