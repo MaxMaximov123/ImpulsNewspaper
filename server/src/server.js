@@ -30,13 +30,25 @@ app.use(express.static(staticFilesPath));
 app.post('/api/posts', async (req, res) => {
   const stTime = new Date().getTime();
   const requestData = req.body;
+
+  let sourceKeys = {
+    'Импульс': 'IMPULS',
+    'ВШЭ': 'HSE',
+    'МГТУ': 'BMSTU',
+  };
+
+  requestData.filters.selectedSourceKeys = requestData.filters.selectedSourceKeys.map(
+    sourceKey => sourceKeys[sourceKey]
+  );
   
   try{
     let result = {
       data: await db.select('posts.*').column(db.raw('array_agg(images.src) as images'))
       .from('posts')
       .leftJoin('images', 'posts.key', 'images.postKey')
-      .groupBy('posts.key', 'posts.id').orderBy('posts.id').offset(requestData.offset).limit(10),
+      .where('posts.text', 'ilike', `%${requestData?.filters?.context || ''}%`)
+      .whereIn('posts.sourceKey', requestData.filters.selectedSourceKeys)
+      .groupBy('posts.key', 'posts.id').orderBy('posts.createdAt', 'desc').offset(requestData.offset).limit(10),
       time: (new Date().getTime()) - stTime,};
     res.send(JSON.stringify(result));
   } catch(e){

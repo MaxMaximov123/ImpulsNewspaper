@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import MainPage from '../views/MainPage.vue'
+import Posts from '../views/Posts.vue'
 import Post from '../views/Post.vue'
 
 const router = createRouter({
@@ -8,7 +8,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'main',
-      component: MainPage
+      component: Posts
     },
     {
       path: '/post/:postKey',

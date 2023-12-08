@@ -1,9 +1,13 @@
 <template>
     <q-img
-        v-for="image in images"
-        class="rounded-borders large-image"
+        v-for="image in images.slice(0, images.length - 1)"
+        style="margin-bottom: 18px;"
+        class="rounded-borders"
         :src=image
-        alt="Large Image"
+    />
+    <q-img
+        class="rounded-borders"
+        :src="images[images.length - 1]"
     />
   </template>
   
@@ -14,12 +18,12 @@
     props: {
         images: Array,
     },
-    setup () {
+    data() {
       return {
         slide: ref(1),
         fullscreen: ref(false)
       }
-    }
+    },
   }
   </script>
 
