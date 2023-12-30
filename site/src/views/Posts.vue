@@ -2,7 +2,18 @@
   <Header @updateFilters="render" :filters="filters" :loadingUpdate="isLoadingPosts"></Header>
   <div class="q-pa-md">
     <div class="news-container q-gutter-sm" @scroll="handleScroll">
-      <v-combobox
+      <div class="filters">
+        <v-combobox
+          single-line
+          class="sorted-by"
+          v-model="filters.sortedBy"
+          label="Сортировать"
+          :items="['Сначала новые', 'Сначала старые', 'Сначала популярные', 'Сначала непопулярные']"
+          :loading="isLoadingPosts"
+          density="compact"
+          @update:modelValue="selectSourceKey"
+        ></v-combobox>
+        <v-combobox
           class="source-keys"
           v-model="filters.selectedSourceKeys"
           clearable
@@ -11,8 +22,10 @@
           label="Источник"
           :items="['Импульс', 'ВШЭ', 'МГТУ']"
           :loading="isLoadingPosts"
+          density="compact"
           @update:modelValue="selectSourceKey"
-      ></v-combobox>
+        ></v-combobox></div>
+      
       <div
         @click="() => this.$router.push(`../post/${post.key}`)"
         v-for="(post, index) in postList"
@@ -106,14 +119,15 @@
 
     data() {
         return {
-          apiHost: 1 ? 'http://localhost:8005' : 'https://1d05-2a00-1fa1-c032-6788-a03f-59e9-88fb-1552.ngrok-free.app',
+          apiHost: 1 ? 'http://144.76.118.30:8006' : 'https://0576-178-205-17-246.ngrok-free.app',
           postList: [],
           isLoadingPosts: false,
           queryParams: {},
           areAllPostsLoaded: false,
           filters: {
             context: '',
-            selectedSourceKeys: [ "Импульс", "ВШЭ", "МГТУ" ]
+            selectedSourceKeys: [ "Импульс", "ВШЭ", "МГТУ" ],
+            sortedBy: 'Сначала новые',
           }
         }
     },
@@ -240,7 +254,7 @@
   <style scoped>
   @import url('https://fonts.cdnfonts.com/css/gilroy-bold');
   .news-item {
-    max-width: 80%;
+    max-width: 70%;
     margin-bottom: 20px;
     background-color: #ebe1c583;
     border-radius: 5px;
@@ -254,7 +268,7 @@
     font-family: 'Gilroy-Medium', sans-serif;
     /*font-family: Courier;*/
     text-align: center;
-    font-size: clamp(14px, 2.5vw, 30px);
+    font-size: clamp(14px, 2vh, 30px);
   }
 
   .created-at {
@@ -264,6 +278,13 @@
     color: #1F3264;
     font-family: 'Gilroy-Medium', sans-serif;
     font-size: clamp(10px, 2.5vw, 16px);
+  }
+
+  .filters {
+    margin-left: auto;
+    margin-right: auto;
+    width: 70%;
+    display: flex;
   }
 
   .news-info {
@@ -286,8 +307,16 @@
 
   .source-keys {
     /* font-size: clamp(20px, 5vw, 30px); */
-    width: 80%;
-    margin-left: 10%;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .sorted-by {
+    /* font-size: clamp(20px, 5vw, 30px); */
+    width: 10%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-right: 5px;
   }
 
 
@@ -311,7 +340,22 @@
 
     .source-keys {
       width: 95%;
-      margin-left: 2.5%;
+    }
+
+    .filters {
+      display: block;
+      width: 95%;
+    }
+
+    .source-keys {
+      /* font-size: clamp(20px, 5vw, 30px); */
+      width: 100%;
+    }
+
+    .sorted-by {
+      /* font-size: clamp(20px, 5vw, 30px); */
+      width: 100%;
+      padding-right: 0px;
     }
   }
   </style>
