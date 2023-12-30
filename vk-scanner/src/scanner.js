@@ -1,12 +1,12 @@
 import puppeteer from 'puppeteer';
 import { db } from './database.js';
+import config from './config.js';
 
 export default class Scanner {
   postKeys = [];
   browser = null;
   page = null;
   totalHeight = 0;
-  sourceKey = 'IMPULS';
   isScanning = true;
 
   constructor() {
@@ -157,7 +157,7 @@ export default class Scanner {
               key: post.key,
               text: post.text,
               createdAt: post.createdAt,
-              sourceKey: this.sourceKey,
+              sourceKey: config.sourceKey,
             });
 
             if (post.images.length > 0) {
@@ -198,13 +198,13 @@ export default class Scanner {
   async start() {
     this.browser = await puppeteer.launch(
       {
-        // args: ['--no-sandbox'],
-        // headless: 'new'
-        headless: false
+        args: ['--no-sandbox'],
+        headless: 'new',
+        // headless: false
       }
     );
     this.page = await this.browser.newPage();
-    await this.page.goto('https://vk.com/impulse131');
+    await this.page.goto(config.sourceUrl);
 
     this.postKeys = (await db('posts').select('key')).map(obj => obj.key);
     this.scanning();

@@ -1,9 +1,9 @@
 <template>
-  <Header @updateFilters="() => {}" :filters="{context: ''}"></Header>
+  <Header @updateFilters="() => {}" :filters="{context: ''}" id="header"></Header>
     <div class="q-pa-sm">
-      <div class="news-container q-gutter-sm">
+      <div class="news-container q-pa-xs">
         <div
-          class="news-item q-pa-sm"
+          class="q-pa-sm"
         >
           <div class="created-at q-ml-md q-mt-sm">
               {{ post.createdAt }}
@@ -113,7 +113,7 @@ export default {
             this.post.text = this.post.text
               .replace(/Show more/g, `Показать ещё`)
               .replace(/Показать ещё/g, '');
-            this.post.text = this.post.text.replace(/(https?:.*\/([A-Z]|[a-z]|[0-9])*.?([A-Z]|[a-z]|[0-9])*)/g, `<a href="$1">$1</a>`);
+            this.post.text = this.post.text.replace(/(https?:([A-z]|[0-9]|\.|\/)*)(\s|\n|\(|\))/g, `<a href="$1" target="_blank">$1</a>`);
             this.post.text = this.post.text.replace(/\n/g, "<br>")
             // obj.text = obj.text.replace(/Show more/g, `Показать ещё`);
             this.post.createdAt = new Date(this.post.createdAt).toLocaleString("ru", timeFormatOptions);
@@ -126,7 +126,7 @@ export default {
 <style scoped>@import url('https://fonts.cdnfonts.com/css/gilroy-bold');
   .news-title {
     color: #1F3264;
-    font-family: Courier;
+    font-family: 'Gilroy-Medium', sans-serif;
     text-align: left;
     margin-top: 40px;
     font-size: clamp(14px, 2vw, 20px);
@@ -134,7 +134,7 @@ export default {
 
 
   .gallery {
-    height: 100vh;
+    height: 86vh;
     overflow: auto;
   }
 
@@ -142,7 +142,7 @@ export default {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 75px;
+    margin-top: 70px;
   }
 
  
@@ -178,7 +178,7 @@ export default {
     }
   
     .news-item {
-      max-width: 95%;
+      width: 95%;
     }
 
     .once-image {

@@ -281,7 +281,7 @@
   .news-container {
     margin-left: auto;
     margin-right: auto;
-    margin-top: 80px;
+    margin-top: 70px;
   }
 
   .source-keys {

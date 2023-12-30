@@ -15,7 +15,7 @@ services:
     networks:
       - mynetwork
   
-  scanner:
+  scanner-impuls:
     restart: always
     build:
       context: .
@@ -25,6 +25,39 @@ services:
       DATABASE_POOL_MIN: 5
       DATABASE_URL: postgres://max:jbfgslgsdlfkngd@db:5432/posts
       DATABASE_SCHEMA: public
+      SOURCE_KEY: IMPULS
+    depends_on:
+      - db
+    networks:
+      - mynetwork
+  
+  scanner-hse:
+    restart: always
+    build:
+      context: .
+      dockerfile: vk-scanner/Dockerfile
+    environment:
+      DATABASE_POOL_MAX: 40
+      DATABASE_POOL_MIN: 5
+      DATABASE_URL: postgres://max:jbfgslgsdlfkngd@db:5432/posts
+      DATABASE_SCHEMA: public
+      SOURCE_KEY: HSE
+    depends_on:
+      - db
+    networks:
+      - mynetwork
+  
+  scanner-bmstu:
+    restart: always
+    build:
+      context: .
+      dockerfile: vk-scanner/Dockerfile
+    environment:
+      DATABASE_POOL_MAX: 40
+      DATABASE_POOL_MIN: 5
+      DATABASE_URL: postgres://max:jbfgslgsdlfkngd@db:5432/posts
+      DATABASE_SCHEMA: public
+      SOURCE_KEY: BMSTU
     depends_on:
       - db
     networks:

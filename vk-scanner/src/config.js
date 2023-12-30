@@ -5,6 +5,16 @@ dotenv.config({ path: new URL('../.env', import.meta.url) });
 
 const config = {};
 
+config.sourceKey = process.env.SOURCE_KEY;
+
+config.sourceUrls = {
+	IMPULS: 'https://vk.com/impulse131',
+	HSE: 'https://vk.com/hseolymp',
+	BMSTU: 'https://vk.com/olymp_bmstu',
+}
+
+config.sourceUrl = config.sourceUrls[config.sourceKey];
+
 config.database = {
 	pool: {
 		min: Number(process.env.DATABASE_POOL_MIN),
