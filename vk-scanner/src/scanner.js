@@ -67,6 +67,7 @@ export default class Scanner {
               if (!/\d\d\d\d/.test(dateString)) {
                 dateString += ` ${currentYear}`;
               }
+              
 
               let parts = dateString.split(' ');
               if (dateString.includes('сегодня')) {
