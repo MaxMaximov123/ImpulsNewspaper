@@ -62,24 +62,20 @@ services:
       - db
     networks:
       - mynetwork
-    
-  
-  
-  
 
-  # site:
-  #   restart: always
-  #   build:
-  #     context: .
-  #     dockerfile: site/live.sport/server/Dockerfile
-  #   environment:
-  #     DATABASE_POOL_MAX: 50
-  #     DATABASE_POOL_MIN: 5
-  #     DATABASE_SCHEMA: public
-  #     DATABASE_URL: postgres://game-matcher:Ato8ov1shooNoco@142.132.242.33:8789/game-matcher
+  site:
+    restart: always
+    build:
+      context: .
+      dockerfile: server/Dockerfile
+    environment:
+      DATABASE_POOL_MAX: 50
+      DATABASE_POOL_MIN: 5
+      DATABASE_SCHEMA: public
+      DATABASE_URL: postgres://max:jbfgslgsdlfkngd@db:5432/posts
     
-  #   ports:
-  #     - 8005:8005
+    ports:
+      - 8006:8006
 
 networks:
   mynetwork:
