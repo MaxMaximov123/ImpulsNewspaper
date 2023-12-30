@@ -73,7 +73,10 @@ services:
       DATABASE_POOL_MIN: 5
       DATABASE_SCHEMA: public
       DATABASE_URL: postgres://max:jbfgslgsdlfkngd@db:5432/posts
-    
+    depends_on:
+      - db
+    networks:
+      - mynetwork
     ports:
       - 8006:8006
 
