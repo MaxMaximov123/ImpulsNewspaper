@@ -52,6 +52,8 @@ export default class Scanner {
             let PostHeaderSubtitleLink = await postHeaderSubtitle.$('.PostHeaderSubtitle__link');
             let PostHeaderSubtitleItem = await PostHeaderSubtitleLink.$('.PostHeaderSubtitle__item');
 
+
+
             let postDate = new Date(await PostHeaderSubtitleItem.evaluate(element => {
               let currentYear = new Date().getFullYear();
               let currentMonth = new Date().getMonth();
@@ -71,6 +73,8 @@ export default class Scanner {
                 return new Date().toString();
               } else if (dateString.includes('вчера')) {
                 return new Date().getTime() - 1000 * 60 * 60 * 24;
+              } else if (/.* часа назад/.test(dateString)) {
+                return new Date().toString();
               }
               dateString = `${parts[2]}-${MONTH_NAMES[parts[1]] + 1}-${parts[0].padStart(2, '0')}`;
               
@@ -142,6 +146,7 @@ export default class Scanner {
               }
             }
 
+            console.log(post);
             newPosts.push(post);
 
           } catch (error) {
