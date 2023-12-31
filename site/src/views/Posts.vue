@@ -20,7 +20,7 @@
           chips
           multiple
           label="Источник"
-          :items="['Импульс', 'ВШЭ', 'МГТУ']"
+          :items="['Импульс', 'ВШЭ', 'МГТУ', "Иннополис"]"
           :loading="isLoadingPosts"
           density="compact"
           @update:modelValue="selectSourceKey"
@@ -126,7 +126,7 @@
           areAllPostsLoaded: false,
           filters: {
             context: '',
-            selectedSourceKeys: [ "Импульс", "ВШЭ", "МГТУ" ],
+            selectedSourceKeys: [ "Импульс", "ВШЭ", "МГТУ", "Иннополис"],
             sortedBy: 'Сначала новые',
           }
         }

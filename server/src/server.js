@@ -35,6 +35,7 @@ app.post('/api/posts', async (req, res) => {
     'Импульс': 'IMPULS',
     'ВШЭ': 'HSE',
     'МГТУ': 'BMSTU',
+    "Иннополис": "INNOPOLIS",
   };
 
   requestData.filters.selectedSourceKeys = requestData.filters.selectedSourceKeys.map(

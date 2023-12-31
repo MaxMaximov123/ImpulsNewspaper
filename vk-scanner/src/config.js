@@ -11,6 +11,7 @@ config.sourceUrls = {
 	IMPULS: 'https://vk.com/impulse131',
 	HSE: 'https://vk.com/hseolymp',
 	BMSTU: 'https://vk.com/olymp_bmstu',
+	INNOPOLIS: 'https://vk.com/innopolisu'
 }
 
 config.sourceUrl = config.sourceUrls[config.sourceKey];
