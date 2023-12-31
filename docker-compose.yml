@@ -78,7 +78,7 @@ services:
     networks:
       - mynetwork
     ports:
-      - 443:443
+      - 8000:8000
 
 networks:
   mynetwork:
