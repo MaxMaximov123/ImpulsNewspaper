@@ -54,7 +54,7 @@ export default class Scanner {
 
 
 
-            let postDate = await PostHeaderSubtitleItem.evaluate(element => {
+            let postDate = new Date(await PostHeaderSubtitleItem.evaluate(element => {
               let currentYear = new Date().getFullYear();
               let currentMonth = new Date().getMonth();
               let today = new Date().getDay();
@@ -68,9 +68,6 @@ export default class Scanner {
                 dateString += ` ${currentYear}`;
               }
 
-              return dateString;
-
-
               let parts = dateString.split(' ');
               if (dateString.includes('сегодня')) {
                 return new Date().toString();
@@ -82,7 +79,7 @@ export default class Scanner {
               dateString = `${parts[2]}-${MONTH_NAMES[parts[1]] + 1}-${parts[0].padStart(2, '0')}`;
               
               return dateString;
-            });
+            }));
 
             post.createdAt = postDate;
 
