@@ -212,6 +212,10 @@ export default class Scanner {
       }
     );
     this.page = await this.browser.newPage();
+
+    await this.page.setExtraHTTPHeaders({
+      'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
+    });
     await this.page.goto(config.sourceUrl);
 
     this.postKeys = (await db('posts').select('key')).map(obj => obj.key);
