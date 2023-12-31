@@ -136,7 +136,7 @@
       window.addEventListener('scroll', this.handleScroll);
       let queryParams = this.$route.query;
       this.filters.context = queryParams?.context || '';
-      this.filters.selectedSourceKeys = (queryParams?.selectedSourceKeys || "Импульс,ВШЭ,МГТУ").split(',');
+      this.filters.selectedSourceKeys = (queryParams?.selectedSourceKeys || "Импульс,ВШЭ,МГТУ,Иннополис").split(',');
 
       await this.render();
     },
