@@ -75,6 +75,8 @@ export default class Scanner {
                 return new Date().getTime() - 1000 * 60 * 60 * 24;
               } else if (/.* часа назад/.test(dateString)) {
                 return new Date().toString();
+              } else if (/.* минут назад/.test(dateString)) {
+                return new Date().toString();
               }
               dateString = `${parts[2]}-${MONTH_NAMES[parts[1]] + 1}-${parts[0].padStart(2, '0')}`;
               
