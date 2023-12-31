@@ -81,7 +81,7 @@ app.get('*', (req, res) => {
 });
 
 // Запустите сервер на указанном порту
-const port = 443;
+const port = 80;
 const server = app.listen(port, () => {
   const address = server.address();
   console.log(`Сервер запущен на порту ${address.port}`);
