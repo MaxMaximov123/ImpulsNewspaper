@@ -119,7 +119,7 @@
 
     data() {
         return {
-          apiHost: 1 ? 'http://144.76.118.30:8006' : 'https://0576-178-205-17-246.ngrok-free.app',
+          apiHost: 1 ? 'http://148.251.6.25:443' : 'https://0576-178-205-17-246.ngrok-free.app',
           postList: [],
           isLoadingPosts: false,
           queryParams: {},
