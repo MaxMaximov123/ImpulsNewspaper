@@ -20,7 +20,7 @@
           chips
           multiple
           label="Источник"
-          :items="['Импульс', 'ВШЭ', 'МГТУ', "Иннополис"]"
+          :items="['Импульс', 'ВШЭ', 'МГТУ', 'Иннополис']"
           :loading="isLoadingPosts"
           density="compact"
           @update:modelValue="selectSourceKey"
