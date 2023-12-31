@@ -78,7 +78,7 @@ services:
     networks:
       - mynetwork
     ports:
-      - 8006:8006
+      - 443:443
 
 networks:
   mynetwork:
