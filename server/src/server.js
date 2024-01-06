@@ -63,8 +63,11 @@ app.post('/api/post', async (req, res) => {
   const requestData = req.body;
   
   try{
+    await db.where('posts.key', requestData.postKey).increment('views', 1);
     let result = {
-      data: (await db.select('posts.*').column(db.raw('array_agg(images.src) as images'))
+      data: (await 
+      db.select('posts.*')
+      .column(db.raw('array_agg(images.src) as images'))
       .from('posts')
       .leftJoin('images', 'posts.key', 'images.postKey')
       .groupBy('posts.key', 'posts.id').where('posts.key', requestData.postKey))[0],
