@@ -5,6 +5,20 @@ import path from 'path';
 
 import { db } from './database.js';
 
+const sourceKeys = {
+  'Импульс': 'IMPULS',
+  'ВШЭ': 'HSE',
+  'МГТУ': 'BMSTU',
+  "Иннополис": "INNOPOLIS",
+};
+
+const sortedBy = {
+  'Сначала новые': ['posts.createdAt', 'desc'], 
+  'Сначала старые': ['posts.createdAt', 'asc'],
+  'Сначала популярные': ['posts.views','desc'],
+  'Сначала непопулярные': ['posts.views', 'asc'],
+}
+
 const app = express();
 
 app.use(express.json());
@@ -31,13 +45,6 @@ app.post('/api/posts', async (req, res) => {
   const stTime = new Date().getTime();
   const requestData = req.body;
 
-  let sourceKeys = {
-    'Импульс': 'IMPULS',
-    'ВШЭ': 'HSE',
-    'МГТУ': 'BMSTU',
-    "Иннополис": "INNOPOLIS",
-  };
-
   requestData.filters.selectedSourceKeys = requestData.filters.selectedSourceKeys.map(
     sourceKey => sourceKeys[sourceKey]
   );
@@ -49,7 +56,9 @@ app.post('/api/posts', async (req, res) => {
       .leftJoin('images', 'posts.key', 'images.postKey')
       .where('posts.text', 'ilike', `%${requestData?.filters?.context || ''}%`)
       .whereIn('posts.sourceKey', requestData.filters.selectedSourceKeys)
-      .groupBy('posts.key', 'posts.id').orderBy('posts.createdAt', 'desc').offset(requestData.offset).limit(10),
+      .orderBy(...sortedBy[requestData.filters.sortedBy])
+      .orderBy('posts.createdAt', 'desc')
+      .groupBy('posts.key', 'posts.id').offset(requestData.offset).limit(10),
       time: (new Date().getTime()) - stTime,};
     res.send(JSON.stringify(result));
   } catch(e){
@@ -63,7 +72,7 @@ app.post('/api/post', async (req, res) => {
   const requestData = req.body;
   
   try{
-    await db.where('posts.key', requestData.postKey).increment('views', 1);
+    await db('posts').where('key', requestData.postKey).increment('views', 1);
     let result = {
       data: (await 
       db.select('posts.*')

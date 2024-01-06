@@ -12,7 +12,7 @@ config.database = {
 	},
 	url: process.env.DATABASE_URL,
 	schema: process.env.DATABASE_SCHEMA || 'public',
-};	
+};
 
 // ---------------------------------------------------------------------- //
 

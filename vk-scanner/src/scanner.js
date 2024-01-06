@@ -166,6 +166,7 @@ export default class Scanner {
               text: post.text,
               createdAt: post.createdAt,
               sourceKey: config.sourceKey,
+              views: 1,
             });
 
             if (post.images.length > 0) {

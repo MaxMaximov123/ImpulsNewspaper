@@ -64,7 +64,7 @@ export default {
     data(){
         return {
             postKey: null,
-            apiHost: 1 ? 'http://148.251.6.25:8000' : 'https://0576-178-205-17-246.ngrok-free.app',
+            apiHost: 1 ? 'http://148.251.6.25:8000' : 'http://localhost:8000',
             post: {
                 text: '',
                 images: [],

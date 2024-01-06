@@ -11,7 +11,7 @@
           :items="['Сначала новые', 'Сначала старые', 'Сначала популярные', 'Сначала непопулярные']"
           :loading="isLoadingPosts"
           density="compact"
-          @update:modelValue="selectSourceKey"
+          @update:modelValue="updateSortedBy"
         ></v-combobox>
         <v-combobox
           class="source-keys"
@@ -119,7 +119,7 @@
 
     data() {
         return {
-          apiHost: 1 ? 'http://148.251.6.25:8000' : 'https://0576-178-205-17-246.ngrok-free.app',
+          apiHost: 1 ? 'http://148.251.6.25:8000' : 'http://localhost:8000',
           postList: [],
           isLoadingPosts: false,
           queryParams: {},
@@ -136,6 +136,7 @@
       window.addEventListener('scroll', this.handleScroll);
       let queryParams = this.$route.query;
       this.filters.context = queryParams?.context || '';
+      this.filters.sortedBy = queryParams?.sortedBy || 'Сначала новые';
       this.filters.selectedSourceKeys = (queryParams?.selectedSourceKeys || "Импульс,ВШЭ,МГТУ,Иннополис").split(',');
 
       await this.render();
@@ -159,7 +160,16 @@
         }});
 
         await this.render();
+      },
 
+      async updateSortedBy() {
+        this.$router.push({path: `/`, query: {
+          context: this.filters.context,
+          selectedSourceKeys: this.filters.selectedSourceKeys.join(','),
+          sortedBy: this.filters.sortedBy
+        }});
+
+        await this.render();
       },
 
       formatCountPictures(n) {
