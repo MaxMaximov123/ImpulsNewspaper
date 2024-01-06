@@ -27,7 +27,11 @@
         ></v-combobox></div>
       
       <div
-        @click="() => this.$router.push(`../post/${post.key}`)"
+        @click="() => {
+          console.log(post.key);
+          openInNewTab(`post/${post.key}`) //this.$router.push(`../post/${post.key}`)
+        }
+        "
         v-for="(post, index) in postList"
         :key="post.key"
         :data-id="index - 1"
@@ -160,6 +164,10 @@
         }});
 
         await this.render();
+      },
+
+      openInNewTab(url) {
+        window.open(url, '_blank').focus();
       },
 
       async updateSortedBy() {
