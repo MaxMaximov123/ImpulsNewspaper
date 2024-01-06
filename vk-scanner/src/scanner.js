@@ -198,7 +198,24 @@ export default class Scanner {
     while (true) {
       await this.waitForTimeout(1000 * 60 * 5);
       this.isScanning = false;
-      await this.page.reload();
+
+      // await this.page.reload();
+
+      await this.browser.close();
+
+      this.browser = await puppeteer.launch(
+        {
+          args: ['--no-sandbox'],
+          headless: 'new',
+          // headless: false
+        }
+      );
+
+      this.page = await this.browser.newPage();
+      await this.page.setExtraHTTPHeaders({
+        'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
+      });
+      await this.page.goto(config.sourceUrl);
       this.totalHeight = 0;
     }
   }
@@ -219,7 +236,7 @@ export default class Scanner {
     await this.page.goto(config.sourceUrl);
 
     this.postKeys = (await db('posts').select('key')).map(obj => obj.key);
-    this.scanning();
     this.startReloadingPage();
+    this.scanning();
   }
 }
