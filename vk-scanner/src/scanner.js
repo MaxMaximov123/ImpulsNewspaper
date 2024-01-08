@@ -75,7 +75,11 @@ export default class Scanner {
                 return new Date().getTime() - 1000 * 60 * 60 * 24;
               } else if (/.* часа назад/.test(dateString)) {
                 return new Date().toString();
+              } else if (/.* час назад/.test(dateString)) {
+                return new Date().toString();
               } else if (/.* минут назад/.test(dateString)) {
+                return new Date().toString();
+              } else if (/.* минуту назад/.test(dateString)) {
                 return new Date().toString();
               }
 
