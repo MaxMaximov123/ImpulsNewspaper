@@ -75,13 +75,17 @@ export default class Scanner {
                 return new Date().toString();
               } else if (dateString.includes('вчера')) {
                 return new Date().getTime() - 1000 * 60 * 60 * 24;
-              } else if (/.* часа назад.*/.test(dateString)) {
+              } else if (/.*часа назад.*/.test(dateString)) {
                 return new Date().toString();
-              } else if (/.* час назад.*/.test(dateString)) {
+              } else if (/.*часов назад.*/.test(dateString)) {
+                  return new Date().toString();
+              } else if (/.*час назад.*/.test(dateString)) {
                 return new Date().toString();
-              } else if (/.* минут назад.*/.test(dateString)) {
+              } else if (/.*минут назад.*/.test(dateString)) {
                 return new Date().toString();
-              } else if (/.* минуту назад.*/.test(dateString)) {
+              } else if (/.*минуты назад.*/.test(dateString)) {
+                return new Date().toString();
+              } else if (/.*минуту назад.*/.test(dateString)) {
                 return new Date().toString();
               }
 
@@ -183,13 +187,13 @@ export default class Scanner {
                     src: src
                   }
                 })
-              ).onConflict('src').ignore();
+              ).onConflict().ignore();
             }
           }
         }
 
         if (postsIntoDB.length > 0) {
-          await db('posts').insert(postsIntoDB).onConflict('key').ignore();
+          await db('posts').insert(postsIntoDB).onConflict().ignore();
           this.postKeys.push(...postsIntoDB.map(obj => obj.key));
         }
 

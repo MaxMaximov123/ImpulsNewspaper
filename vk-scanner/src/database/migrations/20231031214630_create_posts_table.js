@@ -11,9 +11,10 @@ export async function up(knex) {
       table.index('id');
       table.index('key');
       table.index('created_at');
-      table.index('source_key', 'created_at', 'text');
+      table.index('source_key');
+      // table.index('text');
 
-      table.unique(['key']);
+      table.unique(['key', 'source_key', 'created_at', 'text']);
     });
   };
   

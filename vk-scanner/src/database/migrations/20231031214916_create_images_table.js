@@ -8,7 +8,7 @@ export async function up(knex) {
       table.index('id');
       table.index('post_key');
 
-      table.unique(['src']);
+      table.unique(['src', 'post_key']);
     });
   };
   
