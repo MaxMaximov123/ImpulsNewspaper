@@ -33,8 +33,8 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100svw;
-    height: 100svh;
+    width: 100dvw;
+    height: 100dvh;
     background-color: #96BAFF;
     z-index: -1;
   }
