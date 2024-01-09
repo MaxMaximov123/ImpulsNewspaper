@@ -34,7 +34,7 @@ export default {
     top: 0;
     left: 0;
     width: 100dvw;
-    height: 100dvh;
+    height: 50dvh;
     background-color: #96BAFF;
     z-index: -1;
   }
