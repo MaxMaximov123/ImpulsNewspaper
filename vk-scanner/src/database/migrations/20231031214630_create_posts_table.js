@@ -14,7 +14,7 @@ export async function up(knex) {
       table.index('source_key');
       // table.index('text');
 
-      table.unique(['key', 'source_key', 'created_at', 'text']);
+      table.unique(['key', 'source_key', 'text']);
     });
   };
   
