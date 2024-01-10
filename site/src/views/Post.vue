@@ -166,7 +166,7 @@ export default {
 
   @media (max-width: 700px) {
     .gallery {
-      height: 100%;
+      height: 100lvh;
       margin-bottom: 25px;
     }
     .news-info {

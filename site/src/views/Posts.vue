@@ -3,8 +3,8 @@
   <div class="q-pa-md">
     <div class="news-container q-gutter-sm" @scroll="handleScroll">
       <div class="filters">
-        <v-combobox
-          single-line
+        <v-select
+          variant="outlined"
           class="sorted-by"
           v-model="filters.sortedBy"
           label="Сортировать"
@@ -12,9 +12,10 @@
           :loading="isLoadingPosts"
           density="compact"
           @update:modelValue="updateSortedBy"
-        ></v-combobox>
+        ></v-select>
         <v-combobox
           class="source-keys"
+          variant="outlined"
           v-model="filters.selectedSourceKeys"
           clearable
           chips
@@ -115,10 +116,12 @@
   <script>
   import { ref } from 'vue';
   import Header from '@/components/Header.vue';
+  import MenuBar from '@/components/MenuBar.vue';
   
   export default {
     components: {
       Header,
+      MenuBar
     },
 
     data() {

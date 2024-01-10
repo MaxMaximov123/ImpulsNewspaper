@@ -18,11 +18,11 @@ import { Quasar } from 'quasar'
 
 import '@quasar/extras/roboto-font-latin-ext/roboto-font-latin-ext.css'
 import '@quasar/extras/material-icons/material-icons.css'
-
 import 'quasar/src/css/index.sass'
-
 import 'vue-fullpage.js/dist/style.css'
 import VueFullPage from 'vue-fullpage.js'
+import vueAwesomeSidebar from 'vue-awesome-sidebar'
+import 'vue-awesome-sidebar/dist/vue-awesome-sidebar.css'
 
 const myApp = createApp(App)
 
@@ -31,6 +31,7 @@ myApp.use(Quasar, {
 });
 
 myApp.use(VueFullPage);
+myApp.use(vueAwesomeSidebar);
 
 myApp.use(router)
 .use(vuetify)

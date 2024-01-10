@@ -1,8 +1,5 @@
 <template>
-  <link href="https://cdn.jsdelivr.net/npm/@mdi/font@5.x/css/materialdesignicons.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
   <v-card max-width="448" class="mx-auto" color="grey-lighten-3" style="z-index: 100;">
-    <v-layout>
       <v-app-bar
         scroll-threshold="500"
         color="teal-darken-4"
@@ -49,7 +46,6 @@
           <v-icon>mdi-dots-vertical</v-icon>
         </v-btn>
       </v-app-bar>
-    </v-layout>
   </v-card>
 </template>
 
