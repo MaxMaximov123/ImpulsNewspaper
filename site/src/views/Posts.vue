@@ -13,7 +13,7 @@
           density="compact"
           @update:modelValue="updateSortedBy"
         ></v-select>
-        <v-combobox
+        <v-select
           class="source-keys"
           variant="outlined"
           v-model="filters.selectedSourceKeys"
@@ -25,7 +25,7 @@
           :loading="isLoadingPosts"
           density="compact"
           @update:modelValue="selectSourceKey"
-        ></v-combobox></div>
+        ></v-select></div>
       
       <div
         @click="() => {
