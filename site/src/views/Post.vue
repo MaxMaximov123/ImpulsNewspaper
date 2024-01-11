@@ -113,11 +113,12 @@ export default {
             this.post.text = this.post.text
               .replace(/Show more/g, `Показать ещё`)
               .replace(/Показать ещё/g, '');
-            this.post.text = this.post.text.replace(/(https?:([A-z]|[0-9]|\.|\/)*)(\s|\n|\(|\))/g, `<a href="$1" target="_blank">$1</a>`);
+            this.post.text = this.post.text.replace(/(https?:([A-z]|[0-9]|\.|\/|-)*)(\s|\n|\(|\)|.*)/g, `<a href="$1" target="_blank">$1</a>`);
             this.post.text = this.post.text.replace(/\n/g, "<br>")
             // obj.text = obj.text.replace(/Show more/g, `Показать ещё`);
             this.post.createdAt = new Date(this.post.createdAt).toLocaleString("ru", timeFormatOptions);
             this.post.text = this.post.text.replace(/#.*/g, ``);
+            this.post.images = [...new Set(this.post.images)];
             this.isLoadingPosts = false;
         },
     },
@@ -134,7 +135,7 @@ export default {
 
 
   .gallery {
-    /* height: 86vh; */
+    height: 86vh;
     overflow: auto;
   }
 
@@ -143,7 +144,6 @@ export default {
     margin-left: auto;
     margin-right: auto;
     margin-top: 70px;
-    /* margin-bottom: 0px; */
   }
 
  
@@ -157,7 +157,7 @@ export default {
   }
 
   .news-info {
-    height:max-content;
+    height: 100%;
     display: flex;
   }
 

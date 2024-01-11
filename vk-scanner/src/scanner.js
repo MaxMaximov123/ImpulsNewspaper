@@ -89,7 +89,7 @@ export default class Scanner {
                 return new Date().toString();
               }
 
-              dateString = `${MONTH_NAMES[parts[1]] < currentMonth ? parts[2] : parts[2] - 1}-${MONTH_NAMES[parts[1]] + 1}-${parts[0].padStart(2, '0')}`;
+              dateString = `${MONTH_NAMES[parts[1]] <= currentMonth ? parts[2] : parts[2] - 1}-${MONTH_NAMES[parts[1]] + 1}-${parts[0].padStart(2, '0')}`;
               
               return dateString;
             }));
