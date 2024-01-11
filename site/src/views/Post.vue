@@ -134,7 +134,7 @@ export default {
 
 
   .gallery {
-    height: 86vh;
+    /* height: 86vh; */
     overflow: auto;
   }
 
@@ -143,6 +143,7 @@ export default {
     margin-left: auto;
     margin-right: auto;
     margin-top: 70px;
+    /* margin-bottom: 0px; */
   }
 
  
@@ -156,7 +157,7 @@ export default {
   }
 
   .news-info {
-    height: 100%;
+    height:max-content;
     display: flex;
   }
 
