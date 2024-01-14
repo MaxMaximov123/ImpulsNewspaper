@@ -32,16 +32,24 @@ app.use((req, res, next) => {
   next();
 });
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+// const __filename = fileURLToPath(import.meta.url);
+// const __dirname = path.dirname(__filename);
 
-const staticFilesPath = path.join(__dirname, '../../site', 'dist');
-console.log(staticFilesPath)
+// const staticFilesPath = path.join(__dirname, '../../site', 'dist');
+// console.log(staticFilesPath)
 
-console.log(__dirname, staticFilesPath)
+// console.log(__dirname, staticFilesPath)
 
-app.use(express.static(staticFilesPath));
+// app.use(express.static(staticFilesPath));
 // app.use(cors());
+
+app.get('/', async (req, res) => {
+  res.send('1');
+});
+
+app.get('/api', async (req, res) => {
+  res.send('2');
+});
 
 
 app.post('/posts', async (req, res) => {
