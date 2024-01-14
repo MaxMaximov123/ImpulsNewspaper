@@ -52,7 +52,7 @@ app.get('/api', async (req, res) => {
 });
 
 
-app.post('/posts', async (req, res) => {
+app.post('api/posts', async (req, res) => {
   const stTime = new Date().getTime();
   const requestData = req.body;
 
@@ -78,7 +78,7 @@ app.post('/posts', async (req, res) => {
   }
 });
 
-app.post('/post', async (req, res) => {
+app.post('api/post', async (req, res) => {
   const stTime = new Date().getTime();
   const requestData = req.body;
   
