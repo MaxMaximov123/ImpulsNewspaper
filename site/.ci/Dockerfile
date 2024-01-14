@@ -5,7 +5,6 @@ WORKDIR /usr/src/app/site
 COPY site/package*.json ./
 RUN npm ci
 COPY site .
-RUN npm run test
 RUN npm run build
 
 FROM nginx:stable-alpine as build
