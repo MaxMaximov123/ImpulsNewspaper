@@ -99,11 +99,6 @@ app.post('/post', async (req, res) => {
   }
 });
 
-
-app.get('*', (req, res) => {
-    res.sendFile(path.join(staticFilesPath, 'index.html'));
-});
-
 // Запустите сервер на указанном порту
 const port = 81;
 const server = app.listen(port, () => {
