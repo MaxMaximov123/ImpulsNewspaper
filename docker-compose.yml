@@ -72,7 +72,7 @@ services:
       - db
     network_mode: "host"
 
-  site:
+  backend:
     restart: always
     build:
       context: .
@@ -84,6 +84,13 @@ services:
       DATABASE_URL: postgres://max:jbfgslgsdlfkngd@db:5432/posts
     depends_on:
       - db
+    network_mode: "host"
+  
+  frontend:
+    restart: always
+    build:
+      context: .
+      dockerfile: site/.ci/Dockerfile
     network_mode: "host"
   
   certbot:
