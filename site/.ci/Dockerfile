@@ -11,7 +11,7 @@ FROM nginx:stable-alpine as build
 WORKDIR /usr/share/nginx/html
 RUN rm -rf ./*
 COPY --from=prepare /usr/src/app/site/dist .
-COPY --from=prepare /usr/src/app/core-frontend/nginx/default.conf /etc/nginx/conf.d/default.conf
+COPY --from=prepare /usr/src/app/site/nginx/default.conf /etc/nginx/conf.d/default.conf
 
 EXPOSE 82
 CMD ["nginx", "-g", "daemon off;"]
