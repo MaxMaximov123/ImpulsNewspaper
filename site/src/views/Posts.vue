@@ -126,7 +126,7 @@
 
     data() {
         return {
-          apiHost: 1 ? 'http://148.251.6.25:8000' : 'http://localhost:8000',
+          apiHost: 1 ? '/api' : 'http://localhost:8000/api',
           postList: [],
           isLoadingPosts: false,
           queryParams: {},
@@ -223,7 +223,7 @@
 
       async loadNewPosts() {
         this.isLoadingPosts = true;
-        let requestResults = (await this.postRequest(`${this.apiHost}/api/posts`, {
+        let requestResults = (await this.postRequest(`${this.apiHost}/posts`, {
           offset: this.postList.length,
           filters: this.filters,
         })).data;

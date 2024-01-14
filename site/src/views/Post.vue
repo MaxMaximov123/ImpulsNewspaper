@@ -64,7 +64,7 @@ export default {
     data(){
         return {
             postKey: null,
-            apiHost: 1 ? 'http://148.251.6.25:8000' : 'http://localhost:8000',
+            apiHost: 1 ? '/api' : 'http://localhost:8000/api',
             post: {
                 text: '',
                 images: [],
@@ -107,7 +107,7 @@ export default {
               day: 'numeric',
             };
             this.isLoadingPosts = true;
-            let requestResults = (await this.postRequest(`${this.apiHost}/api/post`, {postKey: this.postKey})).data;
+            let requestResults = (await this.postRequest(`${this.apiHost}/post`, {postKey: this.postKey})).data;
             this.post = requestResults;
 
             this.post.text = this.post.text
