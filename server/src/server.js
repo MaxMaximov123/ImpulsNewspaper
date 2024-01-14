@@ -47,12 +47,12 @@ app.get('/', async (req, res) => {
   res.send('1');
 });
 
-app.get('/api', async (req, res) => {
+app.get('/api/', async (req, res) => {
   res.send('2');
 });
 
 
-app.post('api/posts', async (req, res) => {
+app.post('/api/posts', async (req, res) => {
   const stTime = new Date().getTime();
   const requestData = req.body;
 
@@ -78,7 +78,7 @@ app.post('api/posts', async (req, res) => {
   }
 });
 
-app.post('api/post', async (req, res) => {
+app.post('/api/post', async (req, res) => {
   const stTime = new Date().getTime();
   const requestData = req.body;
   
