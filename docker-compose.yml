@@ -91,6 +91,7 @@ services:
     volumes:
       - ./certbot/www/:/var/www/certbot/:rw
       - ./certbot/conf/:/etc/letsencrypt/:rw
+    network_mode: "host"
   
   webserver:
     build:
@@ -100,3 +101,4 @@ services:
     volumes:
       - ./certbot/www:/var/www/certbot/:ro
       - ./certbot/conf/:/etc/nginx/ssl/:ro
+    network_mode: "host"
