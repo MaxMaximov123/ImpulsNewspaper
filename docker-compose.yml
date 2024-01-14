@@ -10,10 +10,7 @@ services:
       POSTGRES_PORT: 5432
     volumes:
       - ./data:/var/lib/postgresql/data
-    ports:
-      - 3200:5432
-    networks:
-      - mynetwork
+    network_mode: "host"
   
   scanner-impuls:
     restart: always
@@ -28,8 +25,7 @@ services:
       SOURCE_KEY: IMPULS
     depends_on:
       - db
-    networks:
-      - mynetwork
+    network_mode: "host"
   
   scanner-hse:
     restart: always
@@ -44,8 +40,7 @@ services:
       SOURCE_KEY: HSE
     depends_on:
       - db
-    networks:
-      - mynetwork
+    network_mode: "host"
   
   scanner-bmstu:
     restart: always
@@ -60,8 +55,7 @@ services:
       SOURCE_KEY: BMSTU
     depends_on:
       - db
-    networks:
-      - mynetwork
+    network_mode: "host"
   
   scanner-innopolis:
     restart: always
@@ -76,8 +70,7 @@ services:
       SOURCE_KEY: INNOPOLIS
     depends_on:
       - db
-    networks:
-      - mynetwork
+    network_mode: "host"
 
   site:
     restart: always
@@ -91,10 +84,19 @@ services:
       DATABASE_URL: postgres://max:jbfgslgsdlfkngd@db:5432/posts
     depends_on:
       - db
-    networks:
-      - mynetwork
-    ports:
-      - 8000:8000
-
-networks:
-  mynetwork:
+    network_mode: "host"
+  
+  certbot:
+    image: certbot/certbot:latest
+    volumes:
+      - ./certbot/www/:/var/www/certbot/:rw
+      - ./certbot/conf/:/etc/letsencrypt/:rw
+  
+  webserver:
+    build:
+      context: .
+      dockerfile: nginx/.ci/Dockerfile
+    restart: always
+    volumes:
+      - ./certbot/www:/var/www/certbot/:ro
+      - ./certbot/conf/:/etc/nginx/ssl/:ro

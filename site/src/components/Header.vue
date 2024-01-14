@@ -27,24 +27,54 @@
 
 
         <div style="width: 30vw;">
-        <v-text-field
-        style="background-color: rgba(255, 255, 255, 0.196); border-top-right-radius: 5px; border-top-left-radius: 5px;"
-          @keyup.enter="searchByContext"
-          v-model="filters.context"
-          :loading="loadingUpdate"
-          label="Поиск"
-          append-inner-icon="mdi-magnify"
-          single-line
-          hide-details
-          density="compact"
-          clearable
-          @click:append-inner="searchByContext"
-      ></v-text-field>
-    </div>
+          <v-text-field
+            style="
+            background-color: rgba(255, 255, 255, 0.196);
+            border-top-right-radius: 5px;
+            border-top-left-radius: 5px;"
+            @keyup.enter="searchByContext"
+            v-model="filters.context"
+            :loading="loadingUpdate"
+            label="Поиск"
+            append-inner-icon="mdi-magnify"
+            single-line
+            hide-details
+            density="compact"
+            clearable
+            @click:append-inner="searchByContext"
+          ></v-text-field>
+        </div>
+        <div class="q-pa-sm">
+          <q-btn round>
+            <q-avatar size="42px" color="primary" text-color="white">
+                R
+            </q-avatar>
+            <q-menu>
+            <q-list dense style="min-width: 100px">
+              <q-item clickable v-ripple>
+                <q-item-section avatar style="margin-left: -5px;">
+                  <q-avatar color="primary" text-color="white">
+                    R
+                  </q-avatar>
+                </q-item-section>
 
-        <v-btn icon>
-          <v-icon>mdi-dots-vertical</v-icon>
-        </v-btn>
+                <q-item-section>Letter avatar-type</q-item-section>
+              </q-item>
+              <q-item clickable v-close-popup>
+                <q-item-section>Open...</q-item-section>
+              </q-item>
+              <q-item clickable v-close-popup>
+                <q-item-section>New</q-item-section>
+              </q-item>
+              <q-separator />
+              <q-separator />
+              <q-item clickable v-close-popup>
+                <q-item-section>Log in</q-item-section>
+              </q-item>
+            </q-list>
+            </q-menu>
+          </q-btn>
+        </div>
       </v-app-bar>
   </v-card>
 </template>
