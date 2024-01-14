@@ -2,8 +2,8 @@ import express from 'express';
 
 import { fileURLToPath } from 'url';
 import path from 'path';
-import { OAuth2Client } from 'google-auth-library';
-import oauth2Client from new OAuth2Client()
+// import { OAuth2Client } from 'google-auth-library';
+// import oauth2Client from new OAuth2Client()
 
 import { db } from './database.js';
 
@@ -41,7 +41,7 @@ console.log(staticFilesPath)
 console.log(__dirname, staticFilesPath)
 
 app.use(express.static(staticFilesPath));
-app.use(cors());
+// app.use(cors());
 
 
 app.post('/api/posts', async (req, res) => {
@@ -97,7 +97,7 @@ app.get('*', (req, res) => {
 });
 
 // Запустите сервер на указанном порту
-const port = 443;
+const port = 81;
 const server = app.listen(port, () => {
   const address = server.address();
   console.log(`Сервер запущен на порту ${address.port}`);
