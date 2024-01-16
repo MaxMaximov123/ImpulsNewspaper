@@ -25,15 +25,20 @@ import VueFullPage from 'vue-fullpage.js'
 import vueAwesomeSidebar from 'vue-awesome-sidebar'
 import 'vue-awesome-sidebar/dist/vue-awesome-sidebar.css'
 
-const myApp = createApp(App)
+const app = createApp(App);
 
-myApp.use(Quasar, {
+import vue3GoogleLogin from 'vue3-google-login';
+app.use(vue3GoogleLogin, {
+  clientId: '1051307181457-kng50lf3a7182s62eh986ht7di9p79qe.apps.googleusercontent.com'
+})
+
+app.use(Quasar, {
   plugins: {}, // import Quasar plugins and add here
 });
 
-myApp.use(VueFullPage);
-myApp.use(vueAwesomeSidebar);
+app.use(VueFullPage);
+app.use(vueAwesomeSidebar);
 
-myApp.use(router)
+app.use(router)
 .use(vuetify)
 .mount('#app')
