@@ -1,8 +1,6 @@
 <template>
   <Header @updateFilters="render" :filters="filters" :loadingUpdate="isLoadingPosts"></Header>
-  
-  <GoogleLogin :callback="(r) => console.log(r)"/>
-
+  <!-- <Auth></Auth> -->
   <div class="q-pa-md">
     <div class="news-container q-gutter-sm" @scroll="handleScroll">
       <div class="filters">
@@ -120,16 +118,18 @@
   import { ref } from 'vue';
   import Header from '@/components/Header.vue';
   import MenuBar from '@/components/MenuBar.vue';
+  import Auth from '@/components/Auth.vue';
   
   export default {
     components: {
       Header,
-      MenuBar
+      MenuBar,
+      Auth
     },
 
     data() {
         return {
-          apiHost: 1 ? '/api' : 'http://localhost:81/api',
+          apiHost: 0 ? '/api' : 'http://localhost:81/api',
           postList: [],
           isLoadingPosts: false,
           queryParams: {},
@@ -148,6 +148,7 @@
       this.filters.context = queryParams?.context || '';
       this.filters.sortedBy = queryParams?.sortedBy || 'Сначала новые';
       this.filters.selectedSourceKeys = (queryParams?.selectedSourceKeys || "Импульс,ВШЭ,МГТУ,Иннополис").split(',');
+
       await this.render();
     },
 

@@ -14,6 +14,8 @@ config.database = {
 	schema: process.env.DATABASE_SCHEMA || 'public',
 };
 
+console.log(config);
+
 // ---------------------------------------------------------------------- //
 
 export default config;

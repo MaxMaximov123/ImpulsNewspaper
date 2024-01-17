@@ -27,10 +27,13 @@ import 'vue-awesome-sidebar/dist/vue-awesome-sidebar.css'
 
 const app = createApp(App);
 
-import vue3GoogleLogin from 'vue3-google-login';
-app.use(vue3GoogleLogin, {
-  clientId: '1051307181457-kng50lf3a7182s62eh986ht7di9p79qe.apps.googleusercontent.com'
-})
+import gAuthPlugin from 'vue3-google-oauth2';
+let gauthClientId = '676785461988-icoil0dtlld2fcp5kb22llst7t94mans.apps.googleusercontent.com';
+app.use(gAuthPlugin, {
+  clientId: gauthClientId,
+  scope: 'email',
+  prompt: 'consent',
+});
 
 app.use(Quasar, {
   plugins: {}, // import Quasar plugins and add here
