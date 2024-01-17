@@ -2,8 +2,6 @@ import express from 'express';
 
 import { fileURLToPath } from 'url';
 import path from 'path';
-import { OAuth2Client } from 'google-auth-library';
-const oauth2Client = new OAuth2Client();
 
 import { db } from './database.js';
 

@@ -179,7 +179,7 @@ export default class Scanner {
               views: 1,
             });
 
-            if (post.images.length > 0) {
+            if (post.images.length > 0 && !this.postKeys.includes(post.key)) {
               await db('images').insert(
                 post.images.map(src => {
                   return {

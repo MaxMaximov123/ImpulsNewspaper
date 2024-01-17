@@ -1,6 +1,5 @@
 <template>
   <Header @updateFilters="render" :filters="filters" :loadingUpdate="isLoadingPosts"></Header>
-  <!-- <Auth></Auth> -->
   <div class="q-pa-md">
     <div class="news-container q-gutter-sm" @scroll="handleScroll">
       <div class="filters">
@@ -39,9 +38,16 @@
         :data-id="index - 1"
         class="news-item q-pa-sm"
       >
-        <div class="created-at">
+        <div class="info-block">
+          <div class="created-at">
             {{ post.createdAt }}
           </div>
+        </div>
+        <div class="info-block">
+          <div style="margin-left: auto; margin-right: auto;">
+            {{ sourceKeys[post.sourceKey] }}
+          </div>
+        </div>
         <q-card style="background-color: rgba(240, 235, 232, 0.797);">
           <div v-if="post.text[0] && post.images?.[0]" class="news-info items-start">
             <div class="col" style="margin-top: auto; margin-bottom: auto;">
@@ -118,18 +124,16 @@
   import { ref } from 'vue';
   import Header from '@/components/Header.vue';
   import MenuBar from '@/components/MenuBar.vue';
-  import Auth from '@/components/Auth.vue';
   
   export default {
     components: {
       Header,
       MenuBar,
-      Auth
     },
 
     data() {
         return {
-          apiHost: 0 ? '/api' : 'http://localhost:81/api',
+          apiHost: 1 ? '/api' : 'http://localhost:81/api',
           postList: [],
           isLoadingPosts: false,
           queryParams: {},
@@ -138,7 +142,13 @@
             context: '',
             selectedSourceKeys: [ "Импульс", "ВШЭ", "МГТУ", "Иннополис"],
             sortedBy: 'Сначала новые',
-          }
+          },
+          sourceKeys: {
+            'IMPULS': 'Импульс',
+            'HSE': 'ВШЭ',
+            'BMSTU': 'МГТУ',
+            "INNOPOLIS": "Иннополис",
+          },
         }
     },
 
@@ -296,12 +306,18 @@
   }
 
   .created-at {
-    z-index: 1; 
-    position:absolute;
     padding-left: 5px;
-    color: #1F3264;
+  }
+
+  .info-block {
+    top: clamp(-20px, 5vw, -32px);
+    max-height: 0px;
+    z-index: 1; 
+    position:relative;
     font-family: 'Gilroy-Medium', sans-serif;
     font-size: clamp(10px, 2.5vw, 16px);
+    color: #1F3264;
+    display: flex;
   }
 
   .filters {

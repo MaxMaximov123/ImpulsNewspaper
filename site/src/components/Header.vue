@@ -44,45 +44,32 @@
             @click:append-inner="searchByContext"
           ></v-text-field>
         </div>
-        <div class="q-pa-sm">
-          <q-btn round>
-            <q-avatar size="42px" color="primary" text-color="white">
-                R
-            </q-avatar>
-            <q-menu>
-            <q-list dense style="min-width: 100px">
-              <q-item clickable v-ripple>
-                <q-item-section avatar style="margin-left: -5px;">
-                  <q-avatar color="primary" text-color="white">
-                    R
-                  </q-avatar>
-                </q-item-section>
 
-                <q-item-section>Letter avatar-type</q-item-section>
-              </q-item>
-              <q-item clickable v-close-popup>
-                <q-item-section>Open...</q-item-section>
-              </q-item>
-              <q-item clickable v-close-popup>
-                <q-item-section>New</q-item-section>
-              </q-item>
-              <q-separator />
-              <q-separator />
-              <q-item clickable v-close-popup>
-                <q-item-section>Log in</q-item-section>
-              </q-item>
-            </q-list>
-            </q-menu>
-          </q-btn>
-        </div>
+        <GoogleLogin class="q-mx-sm" :callback="callback" prompt auto-login :buttonConfig="{
+          shape: 'pill',
+          type: 'icon'
+        }"/>
       </v-app-bar>
   </v-card>
 </template>
 
+<script setup>
+import { decodeCredential } from 'vue3-google-login'
+const callback = (response) => {
+  // decodeCredential will retrive the JWT payload from the credential
+  const userData = decodeCredential(response.credential)
+  console.log("Handle the userData", userData)
+}
+</script>
+
 <script>
 import router from '@/router';
+import Auth from '@/components/Auth.vue';
 
 export default {
+  components: {
+    Auth,
+  },
   props: {
     filters: Object,
     loadingUpdate: Boolean,
