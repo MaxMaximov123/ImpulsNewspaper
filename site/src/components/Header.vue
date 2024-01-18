@@ -47,24 +47,20 @@
           ></v-text-field>
         </div>
 
-        <GoogleLogin class="q-mx-sm" :callback="callback" prompt auto-login :buttonConfig="{
-          shape: 'pill',
-          type: 'icon'
-        }"/>
+        <q-avatar size="40px" class="q-mx-sm">
+          <img v-if="user" :src="user.picture">
+          <GoogleLogin v-else class="q-mx-sm" :callback="callback" prompt auto-login :buttonConfig="{
+            shape: 'pill',
+            type: 'icon',
+            image: 'https://cdn.quasar.dev/img/avatar4.jpg',
+          }"/>
+        </q-avatar>
       </v-app-bar>
   </v-card>
 </template>
 
-<script setup>
-import { decodeCredential } from 'vue3-google-login'
-const callback = (response) => {
-  // decodeCredential will retrive the JWT payload from the credential
-  const userData = decodeCredential(response.credential)
-  console.log("Handle the userData", userData)
-}
-</script>
-
 <script>
+import { decodeCredential } from 'vue3-google-login'
 import router from '@/router';
 import Auth from '@/components/Auth.vue';
 
@@ -80,12 +76,18 @@ export default {
   data() {
     return {
       searchContext: '',
+      user: null,
     }
   },
 
   methods: {
     async searchByContext() {
       await this.applyFilters();
+    },
+
+    callback(response) {
+      const userData = decodeCredential(response.credential);
+      this.user = userData;
     },
 
     postRequest(url, data){
