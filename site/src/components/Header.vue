@@ -21,7 +21,7 @@
           <img :src="`/images/newLogo.jpeg`">
         </q-avatar>
 
-        <Auth/>
+        <!-- <Auth/> -->
 
         <v-app-bar-title style="
         font-family: 'Gilroy-Medium', sans-serif;
@@ -47,10 +47,10 @@
           ></v-text-field>
         </div>
 
-        <!-- <GoogleLogin class="q-mx-sm" :callback="callback" prompt auto-login :buttonConfig="{
+        <GoogleLogin class="q-mx-sm" :callback="callback" prompt auto-login :buttonConfig="{
           shape: 'pill',
           type: 'icon'
-        }"/> -->
+        }"/>
       </v-app-bar>
   </v-card>
 </template>
