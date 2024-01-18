@@ -222,6 +222,7 @@
         return new Promise((resolve, reject) => {
         const options = {
             method: 'POST',
+            mode: 'no-cors',
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
