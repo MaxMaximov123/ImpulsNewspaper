@@ -21,6 +21,8 @@
           <img :src="`/images/newLogo.jpeg`">
         </q-avatar>
 
+        <Auth/>
+
         <v-app-bar-title style="
         font-family: 'Gilroy-Medium', sans-serif;
         font-size: clamp(17px, 3vw, 25px);" @click="() => this.$router.push(`../`)">Импульс</v-app-bar-title>
@@ -45,10 +47,10 @@
           ></v-text-field>
         </div>
 
-        <GoogleLogin class="q-mx-sm" :callback="callback" prompt auto-login :buttonConfig="{
+        <!-- <GoogleLogin class="q-mx-sm" :callback="callback" prompt auto-login :buttonConfig="{
           shape: 'pill',
           type: 'icon'
-        }"/>
+        }"/> -->
       </v-app-bar>
   </v-card>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <!-- <Header @updateFilters="() => {}" :filters="{context: ''}" id="header"></Header> -->
+  <Header @updateFilters="() => {}" :filters="{context: ''}" id="header"></Header>
     <div class="q-pa-sm">
       <div class="news-container q-pa-xs">
         <div

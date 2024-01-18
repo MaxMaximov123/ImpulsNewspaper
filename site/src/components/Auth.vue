@@ -1,12 +1,41 @@
-<script setup>
-import { decodeCredential } from 'vue3-google-login'
-const callback = (response) => {
-  // decodeCredential will retrive the JWT payload from the credential
-  const userData = decodeCredential(response.credential)
-  console.log("Handle the userData", userData)
-}
-</script>
-
+<!-- frontend/src/views/Home.vue -->
 <template>
-  <GoogleLogin :callback="callback" prompt auto-login compact/>
+  <a href="https://oauth.yandex.ru/authorize?response_type=code&client_id=34a4fadda62f45a694dd6f6d20e144a6" title="Яндекс">Войти через Яндекс</a>
+  <!-- <button @click="loginWithGoogle">Войти через Google</button> -->
+  <!-- <div>
+    <div v-if="user">
+      <p>Привет, {{ user.displayName }}!</p>
+      <button @click="logout">Выйти</button>
+    </div>
+    <div v-else>
+      <button @click="loginWithGoogle">Войти через Google</button>
+    </div>
+  </div> -->
 </template>
+
+<script>
+import { loginWithGoogle, logout, getUser } from '@/services/authService.js';
+
+export default {
+  data() {
+    return {
+      user: null,
+    };
+  },
+  mounted() {
+    // this.checkAuthStatus();
+  },
+  methods: {
+    async loginWithGoogle() {
+      loginWithGoogle();
+    },
+    async logout() {
+      logout();
+      this.user = null;
+    },
+    async checkAuthStatus() {
+      this.user = await getUser();
+    },
+  },
+};
+</script>

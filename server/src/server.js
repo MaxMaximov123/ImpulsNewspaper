@@ -1,9 +1,12 @@
 import express from 'express';
-
+import cors from 'cors';
 import { fileURLToPath } from 'url';
 import path from 'path';
-
 import { db } from './database.js';
+import passport from 'passport';
+import expressSession from 'express-session';
+
+import GoogleStrategy from 'passport-google-oauth20';
 
 const sourceKeys = {
   'Импульс': 'IMPULS',
@@ -22,7 +25,6 @@ const sortedBy = {
 const app = express();
 
 app.use(express.json());
-
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*'); // Замените * на адрес вашего сайта, если нужно ограничить доступ
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
@@ -30,25 +32,59 @@ app.use((req, res, next) => {
   next();
 });
 
-// const __filename = fileURLToPath(import.meta.url);
-// const __dirname = path.dirname(__filename);
+app.use(expressSession({ secret: 'your-secret-key', resave: true, saveUninitialized: true }));
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(cors());
 
-// const staticFilesPath = path.join(__dirname, '../../site', 'dist');
-// console.log(staticFilesPath)
+passport.use(new GoogleStrategy({
+  clientID: '286378377685-dmbah97qnjji3m0i5r485meevoci4egt.apps.googleusercontent.com',
+  clientSecret: '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',
+  callbackURL: 'http://localhost:81/auth/google/callback',
+},
+(accessToken, refreshToken, profile, done) => {
+  console.log(accessToken, refreshToken, profile, done);
+  // По желанию: обработка данных профиля, сохранение пользователя в базе данных и т.д.
+  return done(null, profile);
+}));
 
-// console.log(__dirname, staticFilesPath)
-
-// app.use(express.static(staticFilesPath));
-// app.use(cors());
-
-app.get('/', async (req, res) => {
-  res.send('1');
+// Сериализация и десериализация пользователя
+passport.serializeUser((user, done) => {
+  done(null, user);
 });
 
-app.get('/api/', async (req, res) => {
-  res.send('2');
+passport.deserializeUser((obj, done) => {
+  done(null, obj);
 });
 
+// Маршрут для начала аутентификации через Google
+app.get('/auth/google',
+  passport.authenticate('google', { scope: ['profile', 'email'] })
+);
+
+// Обработка колбэка аутентификации от Google
+app.get('/auth/google/callback',
+  passport.authenticate('google', { failureRedirect: '/' }),
+  (req, res) => {
+    // Пользователь успешно аутентифицирован, выполните необходимые действия
+    // res.redirect('/');
+  }
+);
+
+// Маршрут для выхода
+app.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/');
+});
+
+// Маршрут для проверки статуса аутентификации
+app.get('/api/user', (req, res) => {
+  if (req.isAuthenticated()) {
+    res.json(req.user);
+  } else {
+    res.status(401).json({ error: 'Unauthorized' });
+  }
+});
 
 app.post('/api/posts', async (req, res) => {
   const stTime = new Date().getTime();
@@ -94,47 +130,6 @@ app.post('/api/post', async (req, res) => {
   } catch(e){
     console.log(e);
     res.send(JSON.stringify({time: (new Date().getTime()) - stTime, data: []}));
-  }
-});
-
-app.post('/auth', async (req, res) => {
-  try {
-// get the code from frontend
-    const code = req.headers.authorization;
-    console.log('Authorization Code:', code);
-
-    // Exchange the authorization code for an access token
-    const response = await axios.post(
-      'https://oauth2.googleapis.com/token',
-      {
-        code,
-        client_id: '587301-d27f8hofgi6i0.apps.googleusercontent.com',
-        client_secret: 'GOCSPX-u02eNWutQVi',
-        redirect_uri: 'postmessage',
-        grant_type: 'authorization_code'
-      }
-    );
-    const accessToken = response.data.access_token;
-    console.log('Access Token:', accessToken);
-
-    // Fetch user details using the access token
-    const userResponse = await axios.get(
-      'https://www.googleapis.com/oauth2/v3/userinfo',
-      {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
-      }
-    );
-    const userDetails = userResponse.data;
-    console.log('User Details:', userDetails);
-
-    // Process user details and perform necessary actions
-
-    res.status(200).json({ message: 'Authentication successful' });
-  } catch (error) {
-    console.error('Error saving code:', error);
-    res.status(500).json({ message: 'Failed to save code' });
   }
 });
 
