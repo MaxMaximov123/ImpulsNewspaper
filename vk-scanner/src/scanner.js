@@ -9,7 +9,8 @@ export default class Scanner {
   totalHeight = 0;
   isScanning = true;
 
-  constructor() {
+  constructor({ restartTime }) {
+    this.restartTime = restartTime;
     this.start().catch((error) => {
       console.log(error);
     });
@@ -207,7 +208,7 @@ export default class Scanner {
 
   async startReloadingPage() {
     while (true) {
-      await this.waitForTimeout(1000 * 60 * 5);
+      await this.waitForTimeout(1000 * 60 * this.restartTime);
       this.isScanning = false;
 
       // await this.page.reload();
