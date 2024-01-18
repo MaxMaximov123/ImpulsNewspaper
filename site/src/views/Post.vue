@@ -53,13 +53,13 @@
 import router from '@/router';
 import Gallery from '@/components/Gallery.vue';
 import GalleryN from '@/components/GalleryN.vue';
-// import Header from '@/components/Header.vue';
+import Header from '@/components/Header.vue';
 
 export default {
     components: {
         Gallery,
         GalleryN,
-        // Header
+        Header
     },
     data(){
         return {
