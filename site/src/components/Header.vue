@@ -13,15 +13,13 @@
           ></v-img>
         </template>
         
+        <q-btn @click="() => this.$router.push(`../`)" flat round class="q-mx-sm">
         <q-avatar
-          @click="() => this.$router.push(`../`)"
-          style="margin-left: 10px;"
-          size="40px"
+          size="45px"
         >
           <img :src="`/images/newLogo.jpeg`">
         </q-avatar>
-
-        <!-- <Auth/> -->
+        </q-btn>
 
         <v-app-bar-title style="
         font-family: 'Gilroy-Medium', sans-serif;
@@ -47,14 +45,66 @@
           ></v-text-field>
         </div>
 
-        <q-avatar size="40px" class="q-mx-sm">
-          <img v-if="user" :src="user.picture">
-          <GoogleLogin v-else class="q-mx-sm" :callback="callback" prompt auto-login :buttonConfig="{
-            shape: 'pill',
-            type: 'icon',
-            image: 'https://cdn.quasar.dev/img/avatar4.jpg',
-          }"/>
-        </q-avatar>
+        <div>
+          <q-btn flat round class="q-mx-sm">
+            <q-avatar>
+              <img src="/images/defaultUser.png">
+              <q-menu>
+                <q-list>
+                  <q-item-label header>Аккаунт</q-item-label>
+                  <q-item clickable v-close-popup tabindex="0">
+                    <q-item-section>
+                      <q-item-label>Войти</q-item-label>
+                    </q-item-section>
+                  </q-item>
+
+                  <q-item clickable v-close-popup tabindex="0">
+                    <q-item-section>
+                      <q-item-label>Что-то еще</q-item-label>
+                    </q-item-section>
+                  </q-item>
+
+                  <q-separator inset spaced />
+                </q-list>
+              </q-menu>
+            </q-avatar>
+          </q-btn>
+        </div>
+
+        <div>
+          <q-btn flat round  icon="more_vert" class="q-mr-sm" size="16px">
+              <q-menu>
+                <q-list>
+                  <q-item-label header>Импульс</q-item-label>
+                  <q-item clickable v-close-popup tabindex="0">
+                    <q-item-section avatar>
+                      <q-avatar>
+                        <img src="https://cdn-icons-png.flaticon.com/512/828/828370.png">
+                      </q-avatar>
+                    </q-item-section>
+                    <q-item-section>
+                      <q-item-label>Бумажные издания</q-item-label>
+                      <q-item-label caption>2017-2018</q-item-label>
+                    </q-item-section>
+                  </q-item>
+
+                  <q-item clickable v-close-popup tabindex="0">
+                    <q-item-section avatar>
+                      <q-avatar>
+                        <img src="https://cdn-icons-png.flaticon.com/512/6159/6159876.png">
+                      </q-avatar>
+                    </q-item-section>
+                    <q-item-section>
+                      <q-item-label>Юбилейный выпуск</q-item-label>
+                      <q-item-label caption>2024</q-item-label>
+                    </q-item-section>
+                  </q-item>
+
+                  <q-separator inset spaced />
+                </q-list>
+              </q-menu>
+          </q-btn>
+        </div>
       </v-app-bar>
   </v-card>
 </template>

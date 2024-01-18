@@ -86,6 +86,50 @@ app.get('/api/user', (req, res) => {
   }
 });
 
+app.post('/auth', async (req, res) => {
+  const stTime = new Date().getTime();
+  const requestData = req.body;
+
+  // console.log(await postRequest(
+  //   `https://oauth.yandex.ru/token/?grant_type=authorization_code&code=${requestData.code}&client_id=34a4fadda62f45a694dd6f6d20e144a6&client_secret=9e4eaa5263b84d38ad1c854774588ec1`,
+  //   {}
+  //   )
+  // );
+
+  let clientId = '34a4fadda62f45a694dd6f6d20e144a6';
+  let clientSecret = '9e4eaa5263b84d38ad1c854774588ec1';
+  let authorizationHeader = `Basic ${btoa(`${clientId}:${clientSecret}`)}`;
+
+  let requestBody = new URLSearchParams({
+    grant_type: 'authorization_code',
+    code: requestData.code
+  });
+
+  let tokenObject = await ((await fetch('https://oauth.yandex.ru/token', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': authorizationHeader,
+    },
+    body: requestBody,
+  })).json());
+
+    fetch(`https://login.yandex.ru/info?format=json`, {
+      method: 'GET',
+      headers: {
+        'Authorization': `OAuth ${tokenObject.access_token}`,
+    },
+    })
+    .then(response => response.json())
+    .then(data => console.log('Success:', data))
+    .catch(error => console.error('Error:', error));
+
+
+  console.log(tokenObject);
+
+  res.send(JSON.stringify({time: (new Date().getTime()) - stTime, data: []}));
+});
+
 app.post('/api/posts', async (req, res) => {
   const stTime = new Date().getTime();
   const requestData = req.body;
@@ -132,6 +176,30 @@ app.post('/api/post', async (req, res) => {
     res.send(JSON.stringify({time: (new Date().getTime()) - stTime, data: []}));
   }
 });
+
+function postRequest(url, data) {
+  return new Promise((resolve, reject) => {
+  const options = {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type',
+      },
+      body: JSON.stringify(data)
+  };
+  
+  fetch(url, options)
+  .then(response => response.json())
+  .then(result => {
+      resolve(result);
+  })
+  .catch(error => {
+      reject(error);
+  });
+  })
+}
 
 // Запустите сервер на указанном порту
 const port = 81;

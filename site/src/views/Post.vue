@@ -54,6 +54,7 @@ import router from '@/router';
 import Gallery from '@/components/Gallery.vue';
 import GalleryN from '@/components/GalleryN.vue';
 import Header from '@/components/Header.vue';
+import { postRequest, apiHost } from '@/services/postRequest';
 
 export default {
     components: {
@@ -64,7 +65,7 @@ export default {
     data(){
         return {
             postKey: null,
-            apiHost: 1 ? '/api' : 'http://localhost:8000/api',
+            apiHost: apiHost,
             post: {
                 text: '',
                 images: [],
@@ -80,24 +81,7 @@ export default {
 
     methods: {
         postRequest(url, data){
-            return new Promise((resolve, reject) => {
-            const options = {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            };
-            
-            fetch(url, options)
-            .then(response => response.json())
-            .then(result => {
-                resolve(result);
-            })
-            .catch(error => {
-                reject(error);
-            });
-            })
+            return postRequest(url, data);
         },
 
         async loadNewPost() {
@@ -107,7 +91,7 @@ export default {
               day: 'numeric',
             };
             this.isLoadingPosts = true;
-            let requestResults = (await this.postRequest(`${this.apiHost}/post`, {postKey: this.postKey})).data;
+            let requestResults = (await this.postRequest(`${this.apiHost}api/post`, {postKey: this.postKey})).data;
             this.post = requestResults;
 
             this.post.text = this.post.text

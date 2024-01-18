@@ -124,6 +124,7 @@
   import { ref } from 'vue';
   import Header from '@/components/Header.vue';
   import MenuBar from '@/components/MenuBar.vue';
+  import { postRequest, apiHost } from '@/services/postRequest';
   
   export default {
     components: {
@@ -133,7 +134,7 @@
 
     data() {
         return {
-          apiHost: 1 ? '/api' : 'http://localhost:81/api',
+          apiHost: apiHost,
           postList: [],
           isLoadingPosts: false,
           queryParams: {},
@@ -153,6 +154,7 @@
     },
 
     async mounted() {
+      console.log(this.apiHost);
       window.addEventListener('scroll', this.handleScroll);
       let queryParams = this.$route.query;
       // if (queryParams.code) {
@@ -218,28 +220,8 @@
         return n;
       },
 
-      postRequest(url, data){
-        return new Promise((resolve, reject) => {
-        const options = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-                'Access-Control-Allow-Headers': 'Content-Type',
-            },
-            body: JSON.stringify(data)
-        };
-        
-        fetch(url, options)
-        .then(response => response.json())
-        .then(result => {
-            resolve(result);
-        })
-        .catch(error => {
-            reject(error);
-        });
-        })
+      async postRequest(url, data) {
+        return await postRequest(url, data)
       },
 
       showAllText(post) {
@@ -248,7 +230,7 @@
 
       async loadNewPosts() {
         this.isLoadingPosts = true;
-        let requestResults = (await this.postRequest(`${this.apiHost}/posts`, {
+        let requestResults = (await this.postRequest(`${this.apiHost}api/posts`, {
           offset: this.postList.length,
           filters: this.filters,
         })).data;
