@@ -155,15 +155,15 @@
     async mounted() {
       window.addEventListener('scroll', this.handleScroll);
       let queryParams = this.$route.query;
-      if (queryParams.code) {
-        console.log(queryParams.code);
-        console.log(
-          await this.postRequest(
-            `https://oauth.yandex.ru/token/?grant_type=authorization_code&code=${queryParams.code}&client_id=34a4fadda62f45a694dd6f6d20e144a6&client_secret=9e4eaa5263b84d38ad1c854774588ec1`,
-            {}
-            )
-          );
-      }
+      // if (queryParams.code) {
+      //   console.log(queryParams.code);
+      //   console.log(
+      //     await this.postRequest(
+      //       `https://oauth.yandex.ru/token/?grant_type=authorization_code&code=${queryParams.code}&client_id=34a4fadda62f45a694dd6f6d20e144a6&client_secret=9e4eaa5263b84d38ad1c854774588ec1`,
+      //       {}
+      //       )
+      //     );
+      // }
       this.filters.context = queryParams?.context || '';
       this.filters.sortedBy = queryParams?.sortedBy || 'Сначала новые';
       this.filters.selectedSourceKeys = (queryParams?.selectedSourceKeys || "Импульс,ВШЭ,МГТУ,Иннополис").split(',');
@@ -222,7 +222,6 @@
         return new Promise((resolve, reject) => {
         const options = {
             method: 'POST',
-            mode: 'no-cors',
             headers: {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
