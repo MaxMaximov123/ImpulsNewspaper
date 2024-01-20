@@ -21,6 +21,12 @@ export default {
     MenuBar
   },
 
+  methods: {
+  },
+
+  mounted() {
+  },
+
   data(){
     return {
     };

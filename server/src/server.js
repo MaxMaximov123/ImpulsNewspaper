@@ -3,10 +3,8 @@ import cors from 'cors';
 import { fileURLToPath } from 'url';
 import path from 'path';
 import { db } from './database.js';
-import passport from 'passport';
-import expressSession from 'express-session';
-
-import GoogleStrategy from 'passport-google-oauth20';
+import { constants } from 'buffer';
+import jwt from 'jsonwebtoken';
 
 const sourceKeys = {
   'Импульс': 'IMPULS',
@@ -32,102 +30,138 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(expressSession({ secret: 'your-secret-key', resave: true, saveUninitialized: true }));
-app.use(passport.initialize());
-app.use(passport.session());
 app.use(cors());
 
-passport.use(new GoogleStrategy({
-  clientID: '286378377685-dmbah97qnjji3m0i5r485meevoci4egt.apps.googleusercontent.com',
-  clientSecret: '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',
-  callbackURL: 'http://localhost:81/auth/google/callback',
-},
-(accessToken, refreshToken, profile, done) => {
-  console.log(accessToken, refreshToken, profile, done);
-  // По желанию: обработка данных профиля, сохранение пользователя в базе данных и т.д.
-  return done(null, profile);
-}));
 
-// Сериализация и десериализация пользователя
-passport.serializeUser((user, done) => {
-  done(null, user);
+
+app.get('/auth/:key', async (req, res) => {
+  const stTime = new Date().getTime();
+  if (req.params.key === 'yandex') {
+    let clientId = '34a4fadda62f45a694dd6f6d20e144a6';
+    let clientSecret = '9e4eaa5263b84d38ad1c854774588ec1';
+    let authorizationHeader = `Basic ${btoa(`${clientId}:${clientSecret}`)}`;
+
+    let requestBody = new URLSearchParams({
+      grant_type: 'authorization_code',
+      code: req.query.code
+    });
+
+    let tokenObject = await ((await fetch('https://oauth.yandex.ru/token', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': authorizationHeader,
+      },
+      body: requestBody,
+    })).json());
+
+      let userData = await (
+        await fetch(`https://login.yandex.ru/info?format=json`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `OAuth ${tokenObject.access_token}`,
+          },
+        }
+        )
+      ).json();
+
+      console.log({
+        local_id: userData.id,
+        client_id: userData.client_id,
+        key: userData.psuid,
+        first_name: userData.first_name,
+        last_name: userData.last_name,
+        email: userData.default_email,
+        avatar_id: userData.default_avatar_id,
+        phone_number: userData.default_phone.number,
+        source_key: 'YANDEX',
+        created_at: new Date(),
+      });
+    
+      let userId = await db('users').insert([{
+        local_id: userData.id,
+        client_id: userData.client_id,
+        key: userData.psuid,
+        first_name: userData.first_name,
+        last_name: userData.last_name,
+        email: userData.default_email,
+        avatar_id: userData.default_avatar_id,
+        phone_number: userData.default_phone.number,
+        source_key: 'YANDEX',
+        created_at: new Date(),
+      }]).onConflict(['client_id', 'source_key']).merge().returning('id');
+
+      res.cookie('user', 'john_doe', { maxAge: 900000, httpOnly: true });
+      res.redirect(301, '/');
+    }
 });
 
-passport.deserializeUser((obj, done) => {
-  done(null, obj);
-});
-
-// Маршрут для начала аутентификации через Google
-app.get('/auth/google',
-  passport.authenticate('google', { scope: ['profile', 'email'] })
-);
-
-// Обработка колбэка аутентификации от Google
-app.get('/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/' }),
-  (req, res) => {
-    // Пользователь успешно аутентифицирован, выполните необходимые действия
-    // res.redirect('/');
-  }
-);
-
-// Маршрут для выхода
-app.get('/logout', (req, res) => {
-  req.logout();
-  res.redirect('/');
-});
-
-// Маршрут для проверки статуса аутентификации
-app.get('/api/user', (req, res) => {
-  if (req.isAuthenticated()) {
-    res.json(req.user);
-  } else {
-    res.status(401).json({ error: 'Unauthorized' });
-  }
-});
-
-app.post('/auth', async (req, res) => {
+app.post('/api/user', async (req, res) => {
   const stTime = new Date().getTime();
   const requestData = req.body;
+  console.log(requestData);
+  if (requestData.key === 'yandex') {
 
-  // console.log(await postRequest(
-  //   `https://oauth.yandex.ru/token/?grant_type=authorization_code&code=${requestData.code}&client_id=34a4fadda62f45a694dd6f6d20e144a6&client_secret=9e4eaa5263b84d38ad1c854774588ec1`,
-  //   {}
-  //   )
-  // );
+    let clientId = '34a4fadda62f45a694dd6f6d20e144a6';
+    let clientSecret = '9e4eaa5263b84d38ad1c854774588ec1';
+    let authorizationHeader = `Basic ${btoa(`${clientId}:${clientSecret}`)}`;
 
-  let clientId = '34a4fadda62f45a694dd6f6d20e144a6';
-  let clientSecret = '9e4eaa5263b84d38ad1c854774588ec1';
-  let authorizationHeader = `Basic ${btoa(`${clientId}:${clientSecret}`)}`;
+    let requestBody = new URLSearchParams({
+      grant_type: 'authorization_code',
+      code: requestData.code
+    });
 
-  let requestBody = new URLSearchParams({
-    grant_type: 'authorization_code',
-    code: requestData.code
-  });
-
-  let tokenObject = await ((await fetch('https://oauth.yandex.ru/token', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': authorizationHeader,
-    },
-    body: requestBody,
-  })).json());
-
-    fetch(`https://login.yandex.ru/info?format=json`, {
-      method: 'GET',
+    let tokenObject = await ((await fetch('https://oauth.yandex.ru/token', {
+      method: 'POST',
       headers: {
-        'Authorization': `OAuth ${tokenObject.access_token}`,
-    },
-    })
-    .then(response => response.json())
-    .then(data => console.log('Success:', data))
-    .catch(error => console.error('Error:', error));
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': authorizationHeader,
+      },
+      body: requestBody,
+    })).json());
 
+      let userData = await (
+        await fetch(`https://login.yandex.ru/info?format=json`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `OAuth ${tokenObject.access_token}`,
+          },
+        }
+        )
+      ).json();
 
-  console.log(tokenObject);
+      console.log({
+        local_id: userData.id,
+        client_id: userData.client_id,
+        key: userData.psuid,
+        first_name: userData.first_name,
+        last_name: userData.last_name,
+        email: userData.default_email,
+        avatar_id: userData.default_avatar_id,
+        phone_number: userData.default_phone.number,
+        source_key: 'YANDEX',
+        created_at: new Date(),
+      });
+    
+      let userId = await db('users').insert([{
+        local_id: userData.id,
+        client_id: userData.client_id,
+        key: userData.psuid,
+        first_name: userData.first_name,
+        last_name: userData.last_name,
+        email: userData.default_email,
+        avatar_id: userData.default_avatar_id,
+        phone_number: userData.default_phone.number,
+        source_key: 'YANDEX',
+        created_at: new Date(),
+      }]).onConflict(['client_id', 'source_key']).merge().returning('id');
 
-  res.send(JSON.stringify({time: (new Date().getTime()) - stTime, data: []}));
+    res.send(JSON.stringify({time: (new Date().getTime()) - stTime, data: {
+      token: jwt.sign({
+        userId: userId
+      }, userData.psuid, {}),
+    }}));
+    }
 });
 
 app.post('/api/posts', async (req, res) => {

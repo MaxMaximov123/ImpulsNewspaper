@@ -1,6 +1,5 @@
-<!-- frontend/src/views/Home.vue -->
+
 <template>
-  <h1>Яндекс</h1>
 </template>
 
 <script>
@@ -15,25 +14,25 @@ export default {
   },
   async mounted() {
     this.queryParams = this.$route.query;
-    if (this.queryParams.code) {
-      console.log(this.queryParams.code);
-      await this.postRequest(`${this.apiHost}auth`, {
-        code: this.queryParams.code,
-      });
-      // console.log(
-      //   await this.postRequest(
-      //     `https://oauth.yandex.ru/token/?grant_type=authorization_code&code=${this.queryParams.code}&client_id=34a4fadda62f45a694dd6f6d20e144a6&client_secret=9e4eaa5263b84d38ad1c854774588ec1`,
-      //     {}
-      //     )
-      //   );
+    let res = null;
+    if (this.$route.params.key === 'yandex') {
+      if (this.queryParams.code) {
+        res = await this.postRequest(`${this.apiHost}auth/`, {
+          code: this.queryParams.code,
+          key: this.$route.params.key,
+        });
+        // this.$router.push(`../../`);
+      }
     }
 
-    // this.checkAuthStatus();
+    console.log(res);
+    localStorage.setItem('token', res.data.token);
+    this.$router.push(`../../`);
   },
   methods: {
     postRequest(url, data) {
       return postRequest(url, data);
-    }
+    },
   },
 };
 </script>

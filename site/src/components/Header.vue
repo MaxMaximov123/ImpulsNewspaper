@@ -1,4 +1,5 @@
 <template>
+  <LoginForm :dialog="loginDialog"></LoginForm>
   <v-card max-width="448" class="mx-auto" color="grey-lighten-3" style="z-index: 100;">
       <v-app-bar
         scroll-threshold="500"
@@ -53,7 +54,7 @@
                 <q-list>
                   <q-item-label header>Аккаунт</q-item-label>
                   <q-item clickable v-close-popup tabindex="0">
-                    <q-item-section>
+                    <q-item-section @click="() => loginDialog.isOpen = true">
                       <q-item-label>Войти</q-item-label>
                     </q-item-section>
                   </q-item>
@@ -111,13 +112,15 @@
 
 <script>
 import { decodeCredential } from 'vue3-google-login'
+import { postRequest, apiHost } from '@/services/postRequest';
 import router from '@/router';
-import Auth from '@/components/Auth.vue';
+import LoginForm from '@/components/LoginForm.vue';
 
 export default {
   components: {
-    Auth,
+    LoginForm,
   },
+  emits: ['updateFilters'],
   props: {
     filters: Object,
     loadingUpdate: Boolean,
@@ -127,7 +130,13 @@ export default {
     return {
       searchContext: '',
       user: null,
+      loginDialog: {
+        isOpen: false
+      },
     }
+  },
+
+  mounted() {
   },
 
   methods: {
@@ -140,25 +149,8 @@ export default {
       this.user = userData;
     },
 
-    postRequest(url, data){
-        return new Promise((resolve, reject) => {
-        const options = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        };
-        
-        fetch(url, options)
-        .then(response => response.json())
-        .then(result => {
-            resolve(result);
-        })
-        .catch(error => {
-            reject(error);
-        });
-        })
+    postRequest(url, data) {
+      return postRequest(url, data);
     },
 
     async applyFilters(){
