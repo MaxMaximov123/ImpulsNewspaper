@@ -145,7 +145,8 @@ app.post('/api/user', async (req, res) => {
   try{
     let result = {
       data: (await db('users').select('*').where('token', req.body.token))[0],
-      time: (new Date().getTime()) - stTime,};
+      time: (new Date().getTime()) - stTime
+    };
     res.send(JSON.stringify(result));
   } catch(e){
     console.log(e);

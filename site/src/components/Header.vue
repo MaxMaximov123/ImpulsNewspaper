@@ -49,9 +49,9 @@
         <div>
           <q-btn flat round class="q-mx-sm">
             <q-avatar>
-              <img :src="
+              <!-- <img :src="
                 user.avatarId ? 
-                `https://avatars.yandex.net/get-yapic/${user.avatarId}/islands-50` : '/images/defaultUser.png'">
+                `https://avatars.yandex.net/get-yapic/${user.avatarId}/islands-50` : '/images/defaultUser.png'"> -->
               <q-menu>
                 <q-list>
                   <q-item-label header>Аккаунт</q-item-label>
