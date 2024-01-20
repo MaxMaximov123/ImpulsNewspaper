@@ -3,7 +3,8 @@
 </template>
 
 <script>
-  import { postRequest, apiHost } from '@/services/postRequest';
+import { postRequest, apiHost } from '@/services/postRequest';
+import VueCookies from 'vue-cookies';
 
 export default {
   data() {
@@ -25,8 +26,7 @@ export default {
       }
     }
 
-    console.log(res);
-    localStorage.setItem('token', res.data.token);
+    await VueCookies.set("token", res.data.token, "expiring time")
     this.$router.push(`../../`);
   },
   methods: {

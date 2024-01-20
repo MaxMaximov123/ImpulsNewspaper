@@ -1,5 +1,4 @@
 <template>
-  <Header @updateFilters="render" :filters="filters" :loadingUpdate="isLoadingPosts"></Header>
   <div class="q-pa-md">
     <div class="news-container q-gutter-sm" @scroll="handleScroll">
       <div class="filters">
@@ -122,14 +121,18 @@
   
   <script>
   import { ref } from 'vue';
-  import Header from '@/components/Header.vue';
   import MenuBar from '@/components/MenuBar.vue';
   import { postRequest, apiHost } from '@/services/postRequest';
   
   export default {
     components: {
-      Header,
       MenuBar,
+    },
+
+    watch: {
+      $route(to, from) {
+        this.render();
+      }
     },
 
     data() {

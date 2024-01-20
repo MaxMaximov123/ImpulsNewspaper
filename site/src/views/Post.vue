@@ -1,5 +1,5 @@
 <template>
-  <Header @updateFilters="() => {}" :filters="{context: ''}" id="header"></Header>
+  <!-- <Header @updateFilters="() => {}" :filters="{context: ''}" id="header"></Header> -->
     <div class="q-pa-sm">
       <div class="news-container q-pa-xs">
         <div
@@ -53,14 +53,14 @@
 import router from '@/router';
 import Gallery from '@/components/Gallery.vue';
 import GalleryN from '@/components/GalleryN.vue';
-import Header from '@/components/Header.vue';
+// import Header from '@/components/Header.vue';
 import { postRequest, apiHost } from '@/services/postRequest';
 
 export default {
     components: {
         Gallery,
         GalleryN,
-        Header
+        // Header
     },
     data(){
         return {

@@ -49,7 +49,9 @@
         <div>
           <q-btn flat round class="q-mx-sm">
             <q-avatar>
-              <img src="/images/defaultUser.png">
+              <img :src="
+                user.avatarId ? 
+                `https://avatars.yandex.net/get-yapic/${user.avatarId}/islands-50` : '/images/defaultUser.png'">
               <q-menu>
                 <q-list>
                   <q-item-label header>Аккаунт</q-item-label>
@@ -122,6 +124,7 @@ export default {
   },
   emits: ['updateFilters'],
   props: {
+    user: Object,
     filters: Object,
     loadingUpdate: Boolean,
   },
@@ -129,7 +132,6 @@ export default {
   data() {
     return {
       searchContext: '',
-      user: null,
       loginDialog: {
         isOpen: false
       },
@@ -144,11 +146,6 @@ export default {
       await this.applyFilters();
     },
 
-    callback(response) {
-      const userData = decodeCredential(response.credential);
-      this.user = userData;
-    },
-
     postRequest(url, data) {
       return postRequest(url, data);
     },
@@ -157,7 +154,6 @@ export default {
       this.$router.push({path: `/`, query: {
         context: this.filters.context
       }});
-      this.$emit('updateFilters');
     },
   },
 }

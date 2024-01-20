@@ -1,6 +1,7 @@
 <template>
   <v-app class="app">
     <div class="background"></div>
+    <Header :user="userData" :filters="filters" :loadingUpdate="false"></Header>
     <div class="content blured" id="content">
       <router-view></router-view>
     </div>
@@ -15,20 +16,31 @@
 <script>
 
 import MenuBar from '@/components/MenuBar.vue';
+import VueCookies from 'vue-cookies';
+import { postRequest, apiHost } from '@/services/postRequest';
+import Header from '@/components/Header.vue';
 
 export default {
   components: {
-    MenuBar
+    MenuBar,
+    Header
   },
-
   methods: {
   },
 
-  mounted() {
+  async mounted() {
+    console.log(VueCookies.get('token'));
+    this.userData = (await postRequest(
+      `${apiHost}api/user`, { token: VueCookies.get('token') }
+    )).data;
   },
 
   data(){
     return {
+      userData: {},
+      filters: {
+        context: '',
+      }
     };
   },
 }

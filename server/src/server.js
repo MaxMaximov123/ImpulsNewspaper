@@ -34,91 +34,29 @@ app.use(cors());
 
 
 
-app.get('/auth/:key', async (req, res) => {
-  const stTime = new Date().getTime();
-  if (req.params.key === 'yandex') {
-    let clientId = '34a4fadda62f45a694dd6f6d20e144a6';
-    let clientSecret = '9e4eaa5263b84d38ad1c854774588ec1';
-    let authorizationHeader = `Basic ${btoa(`${clientId}:${clientSecret}`)}`;
-
-    let requestBody = new URLSearchParams({
-      grant_type: 'authorization_code',
-      code: req.query.code
-    });
-
-    let tokenObject = await ((await fetch('https://oauth.yandex.ru/token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': authorizationHeader,
-      },
-      body: requestBody,
-    })).json());
-
-      let userData = await (
-        await fetch(`https://login.yandex.ru/info?format=json`, {
-          method: 'GET',
-          headers: {
-            'Authorization': `OAuth ${tokenObject.access_token}`,
-          },
-        }
-        )
-      ).json();
-
-      console.log({
-        local_id: userData.id,
-        client_id: userData.client_id,
-        key: userData.psuid,
-        first_name: userData.first_name,
-        last_name: userData.last_name,
-        email: userData.default_email,
-        avatar_id: userData.default_avatar_id,
-        phone_number: userData.default_phone.number,
-        source_key: 'YANDEX',
-        created_at: new Date(),
-      });
-    
-      let userId = await db('users').insert([{
-        local_id: userData.id,
-        client_id: userData.client_id,
-        key: userData.psuid,
-        first_name: userData.first_name,
-        last_name: userData.last_name,
-        email: userData.default_email,
-        avatar_id: userData.default_avatar_id,
-        phone_number: userData.default_phone.number,
-        source_key: 'YANDEX',
-        created_at: new Date(),
-      }]).onConflict(['client_id', 'source_key']).merge().returning('id');
-
-      res.cookie('user', 'john_doe', { maxAge: 900000, httpOnly: true });
-      res.redirect(301, '/');
-    }
-});
-
-app.post('/api/user', async (req, res) => {
+app.post('/auth', async (req, res) => {
   const stTime = new Date().getTime();
   const requestData = req.body;
   console.log(requestData);
   if (requestData.key === 'yandex') {
+    try {
+      let clientId = '34a4fadda62f45a694dd6f6d20e144a6';
+      let clientSecret = '9e4eaa5263b84d38ad1c854774588ec1';
+      let authorizationHeader = `Basic ${btoa(`${clientId}:${clientSecret}`)}`;
 
-    let clientId = '34a4fadda62f45a694dd6f6d20e144a6';
-    let clientSecret = '9e4eaa5263b84d38ad1c854774588ec1';
-    let authorizationHeader = `Basic ${btoa(`${clientId}:${clientSecret}`)}`;
+      let requestBody = new URLSearchParams({
+        grant_type: 'authorization_code',
+        code: requestData.code
+      });
 
-    let requestBody = new URLSearchParams({
-      grant_type: 'authorization_code',
-      code: requestData.code
-    });
-
-    let tokenObject = await ((await fetch('https://oauth.yandex.ru/token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': authorizationHeader,
-      },
-      body: requestBody,
-    })).json());
+      let tokenObject = await ((await fetch('https://oauth.yandex.ru/token', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Authorization': authorizationHeader,
+        },
+        body: requestBody,
+      })).json());
 
       let userData = await (
         await fetch(`https://login.yandex.ru/info?format=json`, {
@@ -142,11 +80,11 @@ app.post('/api/user', async (req, res) => {
         source_key: 'YANDEX',
         created_at: new Date(),
       });
-    
+      
       let userId = await db('users').insert([{
         local_id: userData.id,
         client_id: userData.client_id,
-        key: userData.psuid,
+        token: userData.psuid,
         first_name: userData.first_name,
         last_name: userData.last_name,
         email: userData.default_email,
@@ -156,12 +94,23 @@ app.post('/api/user', async (req, res) => {
         created_at: new Date(),
       }]).onConflict(['client_id', 'source_key']).merge().returning('id');
 
-    res.send(JSON.stringify({time: (new Date().getTime()) - stTime, data: {
-      token: jwt.sign({
-        userId: userId
-      }, userData.psuid, {}),
-    }}));
+      console.log(userId);
+
+      res.cookie('user', 'john_doe', { maxAge: 900000, httpOnly: true });
+      res.send(JSON.stringify({
+        time: (new Date().getTime()) - stTime,
+        data: {
+          token: userData.psuid,
+        }
+      }));
+    } catch(e) {
+      res.send(JSON.stringify({
+        time: (new Date().getTime()) - stTime,
+        data: {}
+      }));
+      console.log(e);
     }
+  }
 });
 
 app.post('/api/posts', async (req, res) => {
@@ -187,6 +136,20 @@ app.post('/api/posts', async (req, res) => {
   } catch(e){
     console.log(e);
     res.send(JSON.stringify({time: (new Date().getTime()) - stTime, data: []}));
+  }
+});
+
+app.post('/api/user', async (req, res) => {
+  const stTime = new Date().getTime();
+  console.log(req.body);
+  try{
+    let result = {
+      data: (await db('users').select('*').where('token', req.body.token))[0],
+      time: (new Date().getTime()) - stTime,};
+    res.send(JSON.stringify(result));
+  } catch(e){
+    console.log(e);
+    res.send(JSON.stringify({time: (new Date().getTime()) - stTime, data: {}}));
   }
 });
 

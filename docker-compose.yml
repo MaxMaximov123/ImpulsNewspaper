@@ -90,6 +90,8 @@ services:
   
   frontend:
     restart: always
+    environment:
+      API_HOST: '/'
     build:
       context: .
       dockerfile: site/.ci/Dockerfile
@@ -102,7 +104,7 @@ services:
       - ./certbot/conf/:/etc/letsencrypt/:rw
     network_mode: "host"
   
-  webserver:
+  nginx:
     build:
       context: .
       dockerfile: nginx/.ci/Dockerfile

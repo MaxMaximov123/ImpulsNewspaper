@@ -1,3 +1,5 @@
+// import { config } from '../config.js';
+
 export const apiHost = 1 ? '/' : 'http://localhost:81/';
 
 export function postRequest(url, data) {

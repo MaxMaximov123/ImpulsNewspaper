@@ -3,7 +3,7 @@ export async function up(knex) {
       table.increments('id').primary();
       table.string('local_id');
       table.string('client_id');
-      table.string('key');
+      table.string('token');
       table.string('first_name');
       table.string('last_name');
       table.string('email');
@@ -15,7 +15,7 @@ export async function up(knex) {
       table.index('id');
       table.index('local_id');
       table.index('client_id');
-      table.index('key');
+      table.index('token');
       table.index('first_name');
       table.index('last_name');
       table.index('email');
