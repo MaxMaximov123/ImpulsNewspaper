@@ -19,6 +19,7 @@ import MenuBar from '@/components/MenuBar.vue';
 import VueCookies from 'vue-cookies';
 import { postRequest, apiHost } from '@/services/postRequest';
 import Header from '@/components/Header.vue';
+import { render } from 'vue';
 
 export default {
   components: {
@@ -29,11 +30,24 @@ export default {
   },
 
   async mounted() {
-    console.log(VueCookies.get('token'));
-    this.userData = (await postRequest(
-      `${apiHost}api/user`, { token: VueCookies.get('token') }
-    )).data;
+    await this.render();
   },
+
+  methods: {
+    async render() {
+      this.userData = (
+        await postRequest(
+          `${apiHost}api/user`, { token: VueCookies.get('token') }
+        )
+      ).data;
+    }
+  },
+
+  watch: {
+      $route(to, from) {
+        this.render();
+      }
+    },
 
   data(){
     return {
