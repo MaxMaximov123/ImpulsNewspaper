@@ -18,7 +18,7 @@ export default {
     let res = null;
     if (this.$route.params.key === 'yandex') {
       if (this.queryParams.code) {
-        res = await this.postRequest(`${this.apiHost}auth/`, {
+        res = await this.postRequest(`${this.apiHost}api/auth/`, {
           code: this.queryParams.code,
           key: this.$route.params.key,
         });

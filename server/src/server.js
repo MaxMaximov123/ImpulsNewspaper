@@ -34,7 +34,7 @@ app.use(cors());
 
 
 
-app.post('/auth', async (req, res) => {
+app.post('/api/auth', async (req, res) => {
   const stTime = new Date().getTime();
   const requestData = req.body;
   console.log(requestData);
