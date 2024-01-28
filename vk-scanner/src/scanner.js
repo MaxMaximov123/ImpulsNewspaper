@@ -66,7 +66,7 @@ export default class Scanner {
 
               let dateString = element ? element.textContent.replace(/ в \d+:\d+/, '') : '';
               if (!/\d\d\d\d/.test(dateString)) {
-                dateString += ` ${currentYear}`;
+                dateString += ` ${MONTH_NAMES[dateString.split(' ')[1]] <= currentMonth ? currentYear : currentYear - 1}`;
               }
 
               // return dateString;
@@ -90,7 +90,7 @@ export default class Scanner {
                 return new Date().toString();
               }
 
-              dateString = `${MONTH_NAMES[parts[1]] <= currentMonth ? parts[2] : parts[2] - 1}-${MONTH_NAMES[parts[1]] + 1}-${parts[0].padStart(2, '0')}`;
+              dateString = `${parts[2]}-${MONTH_NAMES[parts[1]] + 1}-${parts[0].padStart(2, '0')}`;
               
               return dateString;
             }));
@@ -235,9 +235,9 @@ export default class Scanner {
   async start() {
     this.browser = await puppeteer.launch(
       {
-        args: ['--no-sandbox'],
-        headless: 'new',
-        // headless: false
+        // args: ['--no-sandbox'],
+        // headless: 'new',
+        headless: false
       }
     );
     this.page = await this.browser.newPage();
