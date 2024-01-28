@@ -69,7 +69,7 @@ export default class Scanner {
                 dateString += ` ${MONTH_NAMES[dateString.split(' ')[1]] <= currentMonth ? currentYear : currentYear - 1}`;
               } else {
                 let d = dateString.split(' ');
-                return [`"${dateString}"`, d, 9];
+                return [`"${dateString}"`, d[0].split(' '), 9];
               }
               
               let parts = dateString.split(' ');
