@@ -64,14 +64,12 @@ export default class Scanner {
                 'июл': 6, 'авг': 7, 'сен': 8, 'окт': 9, 'ноя': 10, 'дек': 11
               };
 
-              let dateString = element ? element.textContent.replace(/ в \d+:\d+/, '') : '';
+              let dateString = element ? element.textContent.replace(/\s+в\s+\d+:\d+/, '') : '';
               if (!/\d\d\d\d/.test(dateString)) {
-                dateString += ` ${MONTH_NAMES[dateString.split(' ')[1]] <= currentMonth ? currentYear : currentYear - 1}`;
-              } else {
-                return [dateString, (dateString + ' ').split(/\s+/), 8]; // /\s+/
+                dateString += ` ${MONTH_NAMES[dateString.split(/\s+/)[1]] <= currentMonth ? currentYear : currentYear - 1}`;
               }
               
-              let parts = dateString.split(' ');
+              let parts = dateString.split(/\s+/);
               if (dateString.includes('сегодня')) {
                 return new Date().toString();
               } else if (dateString.includes('вчера')) {
