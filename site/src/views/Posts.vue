@@ -182,8 +182,6 @@
           context: this.filters.context,
           selectedSourceKeys: this.filters.selectedSourceKeys.join(',')
         }});
-
-        await this.render();
       },
 
       openInNewTab(url) {
@@ -196,8 +194,6 @@
           selectedSourceKeys: this.filters.selectedSourceKeys.join(','),
           sortedBy: this.filters.sortedBy
         }});
-
-        await this.render();
       },
 
       formatCountPictures(n) {
