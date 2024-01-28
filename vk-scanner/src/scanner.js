@@ -55,7 +55,7 @@ export default class Scanner {
 
 
 
-            let postDate = new Date(await PostHeaderSubtitleItem.evaluate(element => {
+            let postDate = await PostHeaderSubtitleItem.evaluate(element => {
               let currentYear = new Date().getFullYear();
               let currentMonth = new Date().getMonth();
               let today = new Date().getDay();
@@ -93,9 +93,11 @@ export default class Scanner {
               dateString = `${parts[2]}-${MONTH_NAMES[parts[1]] + 1}-${parts[0].padStart(2, '0')}`;
               
               return dateString;
-            }));
+            });
 
-            post.createdAt = postDate;
+            console.log(postDate);
+
+            post.createdAt = new Date(postDate);
 
 
             if (!postContent) continue;
