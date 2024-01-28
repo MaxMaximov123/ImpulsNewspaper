@@ -67,10 +67,10 @@ export default class Scanner {
               let dateString = element ? element.textContent.replace(/ в \d+:\d+/, '') : '';
               if (!/\d\d\d\d/.test(dateString)) {
                 dateString += ` ${MONTH_NAMES[dateString.split(' ')[1]] <= currentMonth ? currentYear : currentYear - 1}`;
+              } else {
+                return dateString;
               }
-
-              // return dateString;
-
+              
               let parts = dateString.split(' ');
               if (dateString.includes('сегодня')) {
                 return new Date().toString();
