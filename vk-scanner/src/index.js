@@ -3,7 +3,7 @@ import Scanner from './scanner.js';
 
 async function main() {
 	new Scanner({ restartTime: 5 });
-	new Scanner({ restartTime: 60 });
+	// new Scanner({ restartTime: 60 });
 }
 
 main().catch((error) => {
