@@ -92,7 +92,7 @@ app.post('/api/auth', async (req, res) => {
         phone_number: userData.default_phone.number,
         source_key: 'YANDEX',
         created_at: new Date(),
-      }]).onConflict(['client_id', 'source_key']).merge().returning('id');
+      }]).onConflict(['token', 'source_key']).merge().returning('id');
 
       console.log(userId);
 
