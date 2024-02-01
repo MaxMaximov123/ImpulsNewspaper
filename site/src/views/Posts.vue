@@ -27,11 +27,6 @@
         ></v-select></div>
       
       <div
-        @click="() => {
-          console.log(post.key);
-          openInNewTab(`post/${post.key}`) //this.$router.push(`../post/${post.key}`)
-        }
-        "
         v-for="(post, index) in postList"
         :key="post.key"
         :data-id="index - 1"
@@ -47,6 +42,13 @@
             {{ sourceKeys[post.sourceKey] }}
           </div>
         </div>
+        <button style="width: 100%;"
+        @click="() => {
+          console.log(post.key);
+          openInNewTab(`post/${post.key}`);
+          //this.$router.push(`../post/${post.key}`)
+        }
+        ">
         <q-card style="background-color: rgba(240, 235, 232, 0.797);">
           <div v-if="post.text[0] && post.images?.[0]" class="news-info items-start">
             <div class="col" style="margin-top: auto; margin-bottom: auto;">
@@ -94,6 +96,7 @@
             </div>
           </div>
         </q-card>
+      </button>
       </div>
       <div v-if="areAllPostsLoaded" style="
         display: flex;

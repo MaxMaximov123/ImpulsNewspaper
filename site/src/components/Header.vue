@@ -18,7 +18,7 @@
         <q-avatar
           size="45px"
         >
-          <img :src="`/images/newLogo.jpeg`">
+          <img :src="`/favicon.ico`">
         </q-avatar>
         </q-btn>
 
