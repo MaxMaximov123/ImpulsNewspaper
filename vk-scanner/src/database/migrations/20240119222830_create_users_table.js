@@ -24,7 +24,7 @@ export async function up(knex) {
       table.index('source_key');
       table.index('created_at');
 
-      table.unique(['client_id', 'source_key']);
+      table.unique(['token', 'source_key']);
     });
   };
   
