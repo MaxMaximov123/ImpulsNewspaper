@@ -356,7 +356,7 @@
     }
   
     .news-item {
-      max-width: 95%;
+      max-width: 100%;
     }
 
     .once-image {

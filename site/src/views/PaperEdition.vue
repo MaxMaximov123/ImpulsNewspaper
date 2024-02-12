@@ -3,7 +3,6 @@
   <div class="pdf-viewer">
     <PDF :src="this.paperEditionPath"/>
   </div>
-  {{ paperEditionPath }}
 </template>
 
 <script>
@@ -32,5 +31,11 @@ export default {
   margin-left: auto;
   margin-right: auto;
   width: 60lvw;
+}
+
+@media (max-width: 700px) {
+  .pdf-viewer {
+    width: 90lvw;
+}
 }
 </style>
