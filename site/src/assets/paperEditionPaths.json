@@ -1,0 +1,44 @@
+[
+  {
+    "label": "Бумажные издания",
+    "path": "./src/assets/paperEdition",
+    "avatar": "https://cdn-icons-png.flaticon.com/512/828/828370.png",
+    "url": "paperEdition",
+    "children": [
+      {
+        "path": "./src/assets/paperEdition/2020",
+        "label": "2020",
+        "url": "paperEdition/2020",
+        "children": [
+          {
+            "path": "./src/assets/paperEdition/2020/Декабрь.pdf",
+            "label": "Декабрь",
+            "url": "paperEdition/2020/Декабрь"
+          },
+          {
+            "path": "./src/assets/paperEdition/2020/День учителя.pdf",
+            "label": "День учителя",
+            "url": "paperEdition/2020/День учителя"
+          }
+        ]
+      },
+      {
+        "path": "./src/assets/paperEdition/2021",
+        "label": "2021",
+        "url": "paperEdition/2021",
+        "children": [
+          {
+            "path": "./src/assets/paperEdition/2021/Спец выпуск.pdf",
+            "label": "Спец выпуск",
+            "url": "paperEdition/2021/Спец выпуск"
+          },
+          {
+            "path": "./src/assets/paperEdition/2021/Февраль.pdf",
+            "label": "Февраль",
+            "url": "paperEdition/2021/Февраль"
+          }
+        ]
+      }
+    ]
+  }
+]

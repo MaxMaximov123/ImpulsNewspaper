@@ -328,7 +328,6 @@
   .news-container {
     margin-left: auto;
     margin-right: auto;
-    margin-top: 70px;
   }
 
   .source-keys {

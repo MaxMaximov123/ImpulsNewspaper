@@ -34,6 +34,9 @@ export default {
   },
 
   methods: {
+    getPath(path) {
+      console.log(path);
+    },
     async render() {
       this.userData = (
         await postRequest(

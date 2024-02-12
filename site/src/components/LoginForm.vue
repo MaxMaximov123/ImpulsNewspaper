@@ -5,7 +5,7 @@
             <img style="width: 20px; margin-right: 5px;" src="https://yastatic.net/s3/web4static/_/v2/AppFavicon-Icon_size64_ru.5f7303b2887f57.link.png">
             <a href="https://oauth.yandex.ru/authorize?response_type=code&client_id=34a4fadda62f45a694dd6f6d20e144a6" title="Яндекс">Войти c Яндекс ID</a>
         </button>
-        <button @click="loginWith('google')" class="google">
+        <!-- <button @click="loginWith('google')" class="google">
             <i class="fab fa-google"></i>
             Войти через Google
         </button>
@@ -16,7 +16,7 @@
         <button @click="loginWith('telegram')" class="telegram">
             <i class="fab fa-telegram"></i>
             Войти через Телеграм
-        </button>
+        </button> -->
         </div>
     </Modal>
 
