@@ -9,16 +9,21 @@
         "path": "./src/assets/paperEdition/2020",
         "label": "2020",
         "url": "paperEdition/2020",
+        "selectable": false,
         "children": [
           {
             "path": "./src/assets/paperEdition/2020/Декабрь.pdf",
             "label": "Декабрь",
-            "url": "paperEdition/2020/Декабрь"
+            "url": "paperEdition/2020/Декабрь",
+            "selectable": true,
+            "handler": "() => {console.Consolelog(777)}"
           },
           {
             "path": "./src/assets/paperEdition/2020/День учителя.pdf",
             "label": "День учителя",
-            "url": "paperEdition/2020/День учителя"
+            "url": "paperEdition/2020/День учителя",
+            "selectable": true,
+            "handler": "() => {console.Consolelog(777)}"
           }
         ]
       },
@@ -26,16 +31,21 @@
         "path": "./src/assets/paperEdition/2021",
         "label": "2021",
         "url": "paperEdition/2021",
+        "selectable": false,
         "children": [
           {
             "path": "./src/assets/paperEdition/2021/Спец выпуск.pdf",
             "label": "Спец выпуск",
-            "url": "paperEdition/2021/Спец выпуск"
+            "url": "paperEdition/2021/Спец выпуск",
+            "selectable": true,
+            "handler": "() => {console.Consolelog(777)}"
           },
           {
             "path": "./src/assets/paperEdition/2021/Февраль.pdf",
             "label": "Февраль",
-            "url": "paperEdition/2021/Февраль"
+            "url": "paperEdition/2021/Февраль",
+            "selectable": true,
+            "handler": "() => {console.Consolelog(777)}"
           }
         ]
       }

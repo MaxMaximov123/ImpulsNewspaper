@@ -30,19 +30,17 @@ export default {
   },
 
   async mounted() {
-    await this.render();
   },
 
   methods: {
-    getPath(path) {
-      console.log(path);
-    },
     async render() {
       this.userData = (
         await postRequest(
           `${apiHost}api/user`, { token: VueCookies.get('token') }
         )
       ).data;
+
+      this.$storage.user = this.userData;
     }
   },
 

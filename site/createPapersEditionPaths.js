@@ -11,13 +11,16 @@ function createFullPaths(obj) {
             obj.children.push({
                 path: `${obj.path}/${file}`,
                 label: file.match(/(.+)\..+/)[1],
-                url: `${obj.url}/${file.match(/(.+)\..+/)[1]}`
+                url: `${obj.url}/${file.match(/(.+)\..+/)[1]}`,
+                selectable: true,
+                handler: "() => {console.Consolelog(777)}",
             });
         } else if (/^[^\.]/.test(file)) {
             obj.children.push({
                 path: `${obj.path}/${file}`,
                 label: file,
-                url: `${obj.url}/${file}`
+                url: `${obj.url}/${file}`,
+                selectable: false,
             });
             createFullPaths(obj.children.at(-1));
         }
@@ -29,16 +32,6 @@ let wood = {
     path: './src/assets/paperEdition',
     avatar: 'https://cdn-icons-png.flaticon.com/512/828/828370.png',
     url: 'paperEdition',
-    children: [
-    {
-        label: '2021',
-        icon: 'restaurant_menu',
-        children: [
-        { label: 'Quality ingredients' },
-        { label: 'Good recipe' }
-        ]
-    },
-    ]
 };
 createFullPaths(wood);
 

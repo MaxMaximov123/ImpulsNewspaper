@@ -74,8 +74,9 @@ export default {
         }
     },
 
-    async mounted() {
+    async created() {
         this.postKey = Number(this.$route.params.postKey);
+        console.log(888, this.$user)
         this.loadNewPost();
     },
 

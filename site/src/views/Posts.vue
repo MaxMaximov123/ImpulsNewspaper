@@ -42,14 +42,13 @@
             {{ sourceKeys[post.sourceKey] }}
           </div>
         </div>
-        <button style="width: 100%;"
+        <q-card style="background-color: #f3efed;" >
+          <button style="width: 100%; margin-bottom: -2lvh;"
         @click="() => {
-          console.log(post.key);
           openInNewTab(`post/${post.key}`);
           //this.$router.push(`../post/${post.key}`)
         }
         ">
-        <q-card style="background-color: rgba(240, 235, 232, 0.797);">
           <div v-if="post.text[0] && post.images?.[0]" class="news-info items-start">
             <div class="col" style="margin-top: auto; margin-bottom: auto;">
               <q-card-section>
@@ -95,8 +94,12 @@
               </q-card-section>
             </div>
           </div>
+        </button>
+          <q-btn flat color="grey-7" rounded class="q-ml-sm q-my-xsm">
+            <q-icon class="q-mr-sm" :name="post.likeIcon"/>
+            <span>{{ post.likesCount }}</span>
+          </q-btn>
         </q-card>
-      </button>
       </div>
       <div v-if="areAllPostsLoaded" style="
         display: flex;
@@ -159,12 +162,16 @@
         }
     },
 
-    async mounted() {
+    async created() {
       window.addEventListener('scroll', this.handleScroll);
       let queryParams = this.$route.query;
       this.filters.context = queryParams?.context || '';
       this.filters.sortedBy = queryParams?.sortedBy || 'Сначала новые';
       this.filters.selectedSourceKeys = (queryParams?.selectedSourceKeys || "Импульс,ВШЭ,МГТУ,Иннополис").split(',');
+
+      while (!this.$storage.user.id) {
+        await this.waitForTimeout(10);
+      };
 
       await this.render();
     },
@@ -178,6 +185,10 @@
         this.postList = [];
         
         await this.loadNewPosts();
+      },
+
+      async waitForTimeout(time) {
+        await new Promise((resolve) => setTimeout(resolve, time));
       },
 
       async selectSourceKey() {
@@ -225,6 +236,7 @@
         let requestResults = (await this.postRequest(`${this.apiHost}api/posts`, {
           offset: this.postList.length,
           filters: this.filters,
+          userId: this.$storage.user.id,
         })).data;
         let newRequestResults = [];
         let timeFormatOptions = {
@@ -244,6 +256,7 @@
             obj.allText = false;
             obj.slide = ref(1);
             obj.createdAt = new Date(obj.createdAt).toLocaleString("ru", timeFormatOptions);
+            obj.likeIcon = obj.isLiked ? 'mdi-heart' : 'mdi-heart-outline';
             return obj;
           })();
         }
@@ -252,6 +265,7 @@
           this.areAllPostsLoaded = true;
         }
 
+        console.log(requestResults);
         this.postList.push(...requestResults);
         this.isLoadingPosts = false;
       },
@@ -288,7 +302,7 @@
     font-family: 'Gilroy-Medium', sans-serif;
     /*font-family: Courier;*/
     text-align: center;
-    font-size: clamp(14px, 2vh, 30px);
+    font-size: clamp(14px, 1.8vw, 20px);
   }
 
   .created-at {

@@ -29,6 +29,10 @@ app.config.globalProperties.$reqire = (path) => {
   return new URL(`./${path}`, import.meta.url).href
 }
 
+app.config.globalProperties.$storage = {
+  user: {},
+};
+
 import vue3GoogleLogin from 'vue3-google-login'
 app.use(vue3GoogleLogin, {
   clientId: '286378377685-dmbah97qnjji3m0i5r485meevoci4egt.apps.googleusercontent.com'

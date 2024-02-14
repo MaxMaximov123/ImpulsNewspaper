@@ -14,18 +14,17 @@
           ></v-img>
         </template>
         
-        <q-btn @click="() => this.$router.push(`../`)" flat round class="q-mx-sm">
+        <q-btn @click="() => this.$router.push('../../')" flat round class="q-ml-sm">
         <q-avatar
           size="45px"
         >
           <img :src="`/favicon.ico`">
         </q-avatar>
         </q-btn>
-        {{ selectedPaper }}
 
         <v-app-bar-title style="
         font-family: 'Gilroy-Medium', sans-serif;
-        font-size: clamp(17px, 3vw, 25px);" @click="() => this.$router.push(`../`)">Импульс</v-app-bar-title>
+        font-size: clamp(17px, 3vw, 25px);" @click="() => this.$router.push('../../')">Импульс</v-app-bar-title>
 
         <div style="width: 30vw;">
           <v-text-field
@@ -46,7 +45,7 @@
           ></v-text-field>
         </div>
         <div>
-          <q-btn flat round class="q-mx-sm">
+          <q-btn flat round class="q-ml-sm">
             <q-avatar>
               <img :src="
                 user?.avatarId ? 
@@ -78,15 +77,13 @@
               <q-menu>
                 <q-list>
                   <q-item-label header>Импульс</q-item-label>
-                  <q-item clickable v-close-popup tabindex="0">
+                  <q-item tabindex="0">
                     <q-tree
                       style="margin-left: -10px;"
                       :nodes="paperEdition"
                       node-key="url"
-                      v-model:selected="selectedPaper"
-                      default-expand-all
-                      @update:selected="() => this.$router.push('../../'+ this.selectedPaper)"
-                    />
+                    >
+                    </q-tree>
                   </q-item>
 
                   <q-item clickable v-close-popup tabindex="0">
@@ -116,6 +113,7 @@ import { postRequest, apiHost } from '@/services/postRequest';
 import router from '@/router';
 import LoginForm from '@/components/LoginForm.vue';
 import paperEdition from '@/assets/paperEditionPaths.json';
+import { ref } from 'vue';
 
 export default {
   components: {
@@ -138,12 +136,26 @@ export default {
   },
 
   created() {
-    console.log(paperEdition)
+    this.addHandler(paperEdition[0]);
   },
 
   methods: {
     async searchByContext() {
       await this.applyFilters();
+    },
+
+    addHandler(obj) {
+      obj.handler = () => {
+        if (obj.url.match(/\//g)?.length === 2) {
+          this.$router.push('../../' + obj.url);
+        }
+      }
+
+      if (obj.children) {
+        obj.children.forEach(obj2 => {
+          this.addHandler(obj2);
+        });
+      }
     },
 
     postRequest(url, data) {
@@ -161,6 +173,7 @@ export default {
     return {
       paperEdition: paperEdition,
       selectedPaper: '',
+      expandedPaper: ref([]),
     }
   }
 }
