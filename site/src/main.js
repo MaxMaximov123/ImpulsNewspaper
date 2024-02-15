@@ -22,6 +22,7 @@ import 'vue-fullpage.js/dist/style.css'
 import VueFullPage from 'vue-fullpage.js'
 import vueAwesomeSidebar from 'vue-awesome-sidebar'
 import 'vue-awesome-sidebar/dist/vue-awesome-sidebar.css'
+import VueCookies from 'vue-cookies'
 
 const app = createApp(App);
 
@@ -30,7 +31,13 @@ app.config.globalProperties.$reqire = (path) => {
 }
 
 app.config.globalProperties.$storage = {
-  user: {},
+  user: null,
+  authDialog: {
+  },
+};
+
+app.config.globalProperties.$waitForTimeout = async (time) => {
+  await new Promise((resolve) => setTimeout(resolve, time));
 };
 
 import vue3GoogleLogin from 'vue3-google-login'
@@ -44,6 +51,8 @@ app.use(Quasar, {
 
 app.use(VueFullPage);
 app.use(vueAwesomeSidebar);
+
+app.use(VueCookies, { expires: '1y'})
 
 app.use(router)
 .use(vuetify)

@@ -40,7 +40,7 @@ export default {
         )
       ).data;
 
-      this.$storage.user = this.userData;
+      this.$storage.user = this.userData ? {...this.userData, authorized: true } : { authorized: false };
     }
   },
 

@@ -42,6 +42,7 @@
             {{ sourceKeys[post.sourceKey] }}
           </div>
         </div>
+
         <q-card style="background-color: #f3efed;" >
           <button style="width: 100%; margin-bottom: -2lvh;"
         @click="() => {
@@ -96,6 +97,10 @@
           </div>
         </button>
           <q-btn flat color="grey-7" rounded class="q-ml-sm q-my-xsm" @click="async () => {
+              if (!this.$storage.user.authorized) {
+                this.authDialog.isOpen = true;
+                return;
+              }
               await this.postRequest(`${this.apiHost}api/setLike`, {
                 userId: this.$storage.user.id,
                 postId: post.id,
@@ -162,6 +167,7 @@
           isLoadingPosts: false,
           queryParams: {},
           areAllPostsLoaded: false,
+          authDialog: this.$storage.authDialog,
           filters: {
             context: '',
             selectedSourceKeys: [ "Импульс", "ВШЭ", "МГТУ", "Иннополис"],
@@ -183,8 +189,8 @@
       this.filters.sortedBy = queryParams?.sortedBy || 'Сначала новые';
       this.filters.selectedSourceKeys = (queryParams?.selectedSourceKeys || "Импульс,ВШЭ,МГТУ,Иннополис").split(',');
 
-      while (!this.$storage.user.id) {
-        await this.waitForTimeout(10);
+      while (!this.$storage.user) {
+        await this.$waitForTimeout(10);
       };
 
       await this.render();
@@ -199,10 +205,6 @@
         this.postList = [];
         
         await this.loadNewPosts();
-      },
-
-      async waitForTimeout(time) {
-        await new Promise((resolve) => setTimeout(resolve, time));
       },
 
       async selectSourceKey() {
@@ -250,7 +252,7 @@
         let requestResults = (await this.postRequest(`${this.apiHost}api/posts`, {
           offset: this.postList.length,
           filters: this.filters,
-          userId: this.$storage.user.id,
+          userId: this.$storage.user?.id || null,
         })).data;
         let newRequestResults = [];
         let timeFormatOptions = {

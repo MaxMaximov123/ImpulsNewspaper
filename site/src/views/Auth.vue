@@ -26,7 +26,7 @@ export default {
       }
     }
 
-    await VueCookies.set("token", res.data.token, "expiring time")
+    this.$cookies.set("token", res.data.token, "expiring time");
     this.$router.push(`../../`);
   },
   methods: {

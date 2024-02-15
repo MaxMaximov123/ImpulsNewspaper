@@ -1,5 +1,6 @@
 <template>
-    <Modal :value="dialog.isOpen" title="Войти черз" @closeModal="() => dialog.isOpen = false">
+    <Modal :value="authDialog.isOpen" title="Войти черз" 
+    @closeModal="() => authDialog.isOpen =false ">
         <div class="social-login-buttons">
         <button @click="loginWith('yandex')" class="yandex">
             <img style="width: 20px; margin-right: 5px;" src="https://yastatic.net/s3/web4static/_/v2/AppFavicon-Icon_size64_ru.5f7303b2887f57.link.png">
@@ -29,15 +30,18 @@
     components: {
         Modal,
     },
-    props: {
-        dialog: Object,
-    },
     methods: {
       loginWith(provider) {
         // Ваш код для обработки входа через выбранного провайдера
         console.log(`Вход через ${provider}`);
       },
     },
+
+    data() {
+      return {
+        authDialog: this.$storage.authDialog,
+      }
+    }
   };
   </script>
   

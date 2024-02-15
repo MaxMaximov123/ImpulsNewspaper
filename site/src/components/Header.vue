@@ -1,5 +1,5 @@
 <template>
-  <LoginForm :dialog="loginDialog"></LoginForm>
+  <LoginForm></LoginForm>
   <v-card max-width="448" class="mx-auto" color="grey-lighten-3" style="z-index: 100; padding-bottom: 60px;">
       <v-app-bar
         scroll-threshold="500"
@@ -53,15 +53,29 @@
               <q-menu>
                 <q-list>
                   <q-item-label header>Аккаунт</q-item-label>
-                  <q-item clickable v-close-popup tabindex="0">
-                    <q-item-section @click="() => loginDialog.isOpen = true">
-                      <q-item-label>Войти</q-item-label>
+                  <q-item clickable v-close-popup tabindex="0" v-if="!this.$storage.user.authorized"
+                  @click="() => {
+                    this.authDialog.isOpen = true;
+                    console.log(this.authDialog)
+                    }">
+                    <q-item-section>
+                      <q-item-label>
+                        <q-icon name="mdi-login"></q-icon>
+                        Войти
+                      </q-item-label>
                     </q-item-section>
                   </q-item>
 
-                  <q-item clickable v-close-popup tabindex="0">
+                  <q-item clickable v-close-popup tabindex="0" v-if="this.$storage.user.authorized"
+                  @click="async () => {
+                    this.$cookies.remove('token');
+                    this.$router.go();
+                  }">
                     <q-item-section>
-                      <q-item-label>Что-то еще</q-item-label>
+                      <q-item-label>
+                        <q-icon name="mdi-logout"></q-icon>
+                        Выйти
+                      </q-item-label>
                     </q-item-section>
                   </q-item>
 
@@ -114,6 +128,7 @@ import router from '@/router';
 import LoginForm from '@/components/LoginForm.vue';
 import paperEdition from '@/assets/paperEditionPaths.json';
 import { ref } from 'vue';
+import VueCookies from 'vue-cookies';
 
 export default {
   components: {
@@ -129,13 +144,14 @@ export default {
   data() {
     return {
       searchContext: '',
-      loginDialog: {
-        isOpen: false
-      },
+      authDialog: this.$storage.authDialog,
     }
   },
 
-  created() {
+  async created() {
+    while (!this.$storage.user) {
+      await this.$waitForTimeout(10);
+    };
     this.addHandler(paperEdition[0]);
   },
 

@@ -174,6 +174,9 @@ app.post('/api/setLike', async (req, res) => {
   try{
     let result = {
       data: await (async () => {
+        if (!req.body.userId) {
+          return 'User is not authorized';
+        }
         if (req.body.isLiked) {
           await db('likes').insert({
             userId: req.body.userId,
