@@ -2,10 +2,10 @@
     <Modal :value="authDialog.isOpen" title="Войти черз" 
     @closeModal="() => authDialog.isOpen =false ">
         <div class="social-login-buttons">
-        <button @click="loginWith('yandex')" class="yandex">
+        <q-btn @click="loginWith('yandex')" class="yandex">
             <img style="width: 20px; margin-right: 5px;" src="https://yastatic.net/s3/web4static/_/v2/AppFavicon-Icon_size64_ru.5f7303b2887f57.link.png">
             <a href="https://oauth.yandex.ru/authorize?response_type=code&client_id=34a4fadda62f45a694dd6f6d20e144a6" title="Яндекс">Войти c Яндекс ID</a>
-        </button>
+        </q-btn>
         <!-- <button @click="loginWith('google')" class="google">
             <i class="fab fa-google"></i>
             Войти через Google

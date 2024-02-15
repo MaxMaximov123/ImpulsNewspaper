@@ -128,7 +128,6 @@ export default {
     width: 100%;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 70px;
   }
 
  
