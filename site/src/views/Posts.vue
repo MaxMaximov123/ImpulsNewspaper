@@ -95,8 +95,22 @@
             </div>
           </div>
         </button>
-          <q-btn flat color="grey-7" rounded class="q-ml-sm q-my-xsm">
-            <q-icon class="q-mr-sm" :name="post.likeIcon"/>
+          <q-btn flat color="grey-7" rounded class="q-ml-sm q-my-xsm" @click="async () => {
+              await this.postRequest(`${this.apiHost}api/setLike`, {
+                userId: this.$storage.user.id,
+                postId: post.id,
+                isLiked: !this.postList[index].isLiked,
+              });
+
+              this.postList[index].isLiked = !this.postList[index].isLiked
+              
+              if (this.postList[index].isLiked) {
+                this.postList[index].likesCount++;
+              } else {
+                this.postList[index].likesCount--
+              };
+            }">
+            <q-icon class="q-mr-sm" color="red" :name="post.isLiked ? 'mdi-heart' : 'mdi-heart-outline'"/>
             <span>{{ post.likesCount }}</span>
           </q-btn>
         </q-card>

@@ -168,6 +168,39 @@ app.post('/api/user', async (req, res) => {
   }
 });
 
+app.post('/api/setLike', async (req, res) => {
+  const stTime = new Date().getTime();
+  console.log(req.body);
+  try{
+    let result = {
+      data: await (async () => {
+        if (req.body.isLiked) {
+          await db('likes').insert({
+            userId: req.body.userId,
+            postId: req.body.postId,
+            createdAt: new Date()
+          });
+
+          return 'Added';
+        } else {
+          await db('likes').delete()
+          .where({
+            userId: req.body.userId,
+            postId: req.body.postId,
+          });
+
+          return 'Deleted';
+        }
+      })(),
+      time: (new Date().getTime()) - stTime
+    };
+    res.send(JSON.stringify(result));
+  } catch(e){
+    console.log(e);
+    res.send(JSON.stringify({time: (new Date().getTime()) - stTime, data: {}}));
+  }
+});
+
 app.post('/api/post', async (req, res) => {
   const stTime = new Date().getTime();
   const requestData = req.body;
