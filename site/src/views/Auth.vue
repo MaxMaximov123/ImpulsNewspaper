@@ -27,6 +27,13 @@ export default {
     }
 
     this.$cookies.set("token", res.data.token, "expiring time");
+      let userData = (
+        await postRequest(
+          `${apiHost}api/user`, { token: VueCookies.get('token') }
+        )
+      ).data;
+
+      this.$storage.user = userData ? {...userData, authorized: true } : { authorized: false };
     this.$router.push(`../../`);
   },
   methods: {
