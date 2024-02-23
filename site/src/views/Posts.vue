@@ -122,7 +122,7 @@
                 this.postList[index].likesCount--
               };
             }">
-            <q-icon class="q-mr-sm" color="red" :name="post.isLiked ? 'mdi-heart' : 'mdi-heart-outline'"/>
+            <q-icon class="q-mr-sm" :color="post.isLiked ? 'red' : 'grey'" :name="post.isLiked ? 'mdi-heart' : 'mdi-heart-outline'"/>
             <span>{{ post.likesCount }}</span>
           </q-btn>
         </q-card>
