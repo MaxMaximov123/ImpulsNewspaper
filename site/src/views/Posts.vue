@@ -28,10 +28,12 @@
       
       <div
         v-for="(post, index) in postList"
+        :id="index"
         :key="post.key"
         :data-id="index - 1"
         class="news-item q-pa-sm"
       >
+      <!-- <a :href="`#${index}`">d;fljghblfdglksdbfnglksbndfgjbsdfjgbsd.fkg</a> -->
         <div class="info-block">
           <div class="created-at">
             {{ post.createdAt }}
@@ -42,12 +44,17 @@
             {{ sourceKeys[post.sourceKey] }}
           </div>
         </div>
-
         <q-card style="background-color: #f3efed;" >
           <button style="width: 100%; margin-bottom: -2lvh;"
         @click="() => {
           openInNewTab(`post/${post.key}`);
-          //this.$router.push(`../post/${post.key}`)
+          // this.$router.push({path: `/`, query: {
+          //   context: this.filters.context,
+          //   selectedSourceKeys: this.filters.selectedSourceKeys.join(','),
+          //   sortedBy: this.filters.sortedBy,
+          //   count: this.filters.count,
+          // }});
+          // this.$router.push(`../post/${post.key}`)
         }
         ">
           <div v-if="post.text[0] && post.images?.[0]" class="news-info items-start">
@@ -115,7 +122,7 @@
                 this.postList[index].likesCount--
               };
             }">
-            <q-icon class="q-mr-sm" :color="post.isLiked ? 'red' : 'grey'" :name="post.isLiked ? 'mdi-heart' : 'mdi-heart-outline'"/>
+            <q-icon class="q-mr-sm" color="red" :name="post.isLiked ? 'mdi-heart' : 'mdi-heart-outline'"/>
             <span>{{ post.likesCount }}</span>
           </q-btn>
         </q-card>
@@ -184,10 +191,14 @@
 
     async created() {
       window.addEventListener('scroll', this.handleScroll);
-      let queryParams = this.$route.query;
-      this.filters.context = queryParams?.context || '';
-      this.filters.sortedBy = queryParams?.sortedBy || 'Сначала новые';
-      this.filters.selectedSourceKeys = (queryParams?.selectedSourceKeys || "Импульс,ВШЭ,МГТУ,Иннополис").split(',');
+      this.filters.context = this.$route.query?.context || '';
+      this.filters.count = Number(this.$route.query?.count || '10');
+      this.filters.sortedBy = this.$route.query?.sortedBy || 'Сначала новые';
+      this.filters.selectedSourceKeys = (this.$route.query?.selectedSourceKeys || "Импульс,ВШЭ,МГТУ,Иннополис").split(',');
+
+      while (!this.$storage.user) {
+        await this.$waitForTimeout(10);
+      };
 
       await this.render();
     },
@@ -199,14 +210,15 @@
     methods: {
       async render() {
         this.postList = [];
-        
         await this.loadNewPosts();
       },
 
       async selectSourceKey() {
         this.$router.push({path: `/`, query: {
           context: this.filters.context,
-          selectedSourceKeys: this.filters.selectedSourceKeys.join(',')
+          selectedSourceKeys: this.filters.selectedSourceKeys.join(','),
+          sortedBy: this.filters.sortedBy,
+          count: this.filters.count,
         }});
       },
 
@@ -218,29 +230,13 @@
         this.$router.push({path: `/`, query: {
           context: this.filters.context,
           selectedSourceKeys: this.filters.selectedSourceKeys.join(','),
-          sortedBy: this.filters.sortedBy
+          sortedBy: this.filters.sortedBy,
+          count: this.filters.count,
         }});
-      },
-
-      formatCountPictures(n) {
-        if ([2, 3, 4, 6].includes(n)) {
-          return n;
-        }
-        for (let i of [2, 3, 4, 6]) {
-          if (n % i === 0) {
-            return this.formatCountPictures(n / i);
-          }
-        }
-
-        return n;
       },
 
       async postRequest(url, data) {
         return await postRequest(url, data)
-      },
-
-      showAllText(post) {
-        post.allText = !post.allText;
       },
 
       async loadNewPosts() {
@@ -250,7 +246,6 @@
           filters: this.filters,
           userId: this.$storage.user?.id || null,
         })).data;
-        let newRequestResults = [];
         let timeFormatOptions = {
           year: 'numeric',
           month: 'long',
@@ -279,6 +274,12 @@
 
         console.log(requestResults);
         this.postList.push(...requestResults);
+        // this.$router.query = {
+        //   context: this.filters.context,
+        //   selectedSourceKeys: this.filters.selectedSourceKeys.join(','),
+        //   sortedBy: this.filters.sortedBy,
+        //   count: this.filters.count,
+        // };
         this.isLoadingPosts = false;
       },
 

@@ -42,9 +42,9 @@ export default {
         )
       ).data;
 
-      this.user = this.userData ? {...this.userData, authorized: true } : { authorized: false };
+      this.$storage.user = this.user = this.userData ? {...this.userData, authorized: true } : { authorized: false };
 
-      console.log(this.$storage);
+      console.log(this.$storage, this.user);
     }
   },
 

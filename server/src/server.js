@@ -211,26 +211,27 @@ app.post('/api/post', async (req, res) => {
   try{
     await db('posts').where('key', requestData.postKey).increment('views', 1);
     let result = {
-      data: await 
+      data: (await 
       db.select('posts.*')
       .column(db.raw('array_agg(images.src) as images'))
       .from('posts')
       .leftJoin('images', 'posts.key', 'images.postKey')
-      .groupBy('posts.key', 'posts.id').where('posts.key', requestData.postKey),
+      .groupBy('posts.key', 'posts.id').where('posts.key', requestData.postKey))[0],
     };
 
-    await Promise.all(result.data.map(async post => {
-      post.likesCount = (await db('likes')
-      .count('* as likesCount')
-      .where('postId', post.id))[0].likesCount;
-
-      post.isLiked = (await db('likes')
-      .count('* as isLiked')
-      .where('postId', post.id)
-      .where('userId', requestData.userId))[0].isLiked;
-    }));
     
-    result.time = (new Date().getTime()) - stTime;
+    result.data.likesCount = (await db('likes')
+      .count('* as likesCount')
+      .where('postId', result.data.id))[0].likesCount;
+
+    result.data.isLiked = (await db('likes')
+    .count('* as isLiked')
+    .where('postId', result.data.id)
+    .where('userId', requestData.userId))[0].isLiked;
+
+    result.time = (new Date().getTime()) - stTime,
+
+    console.log(result);
 
     res.send(JSON.stringify(result));
   } catch(e){

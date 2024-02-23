@@ -46,6 +46,7 @@
           <q-btn flat color="grey-7" rounded class="q-ml-sm q-my-xsm" @click="async () => {
               if (!this.$storage.user.authorized) {
                 this.authDialog.isOpen = true;
+                console.log(this.authDialog);
                 return;
               }
               await this.postRequest(`${this.apiHost}api/setLike`, {
@@ -115,7 +116,10 @@ export default {
               day: 'numeric',
             };
             this.isLoadingPosts = true;
-            let requestResults = (await this.postRequest(`${this.apiHost}api/post`, {postKey: this.postKey})).data;
+            let requestResults = (await this.postRequest(`${this.apiHost}api/post`, {
+              postKey: this.postKey,
+              userId: this.$storage.user?.id || null,
+            })).data;
             this.post = requestResults;
 
             this.post.text = this.post.text

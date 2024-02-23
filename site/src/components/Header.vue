@@ -1,7 +1,7 @@
 <template>
   <LoginForm></LoginForm>
-  <v-card max-width="448" class="mx-auto" color="grey-lighten-3" style="z-index: 100; padding-bottom: 60px;">
-      <v-app-bar
+  <v-card flat class="mx-auto" :color="'rgba(255, 255, 255, 0)'" style="z-index: 100; padding-bottom: 60px;">
+    <v-app-bar
         scroll-threshold="500"
         color="teal-darken-4"
         :image="this.$reqire('assets/images/background.jpg')"
@@ -117,7 +117,7 @@
               </q-menu>
           </q-btn>
         </div>
-      </v-app-bar>
+    </v-app-bar>
   </v-card>
 </template>
 

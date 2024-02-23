@@ -1,7 +1,7 @@
 <template>
     <v-dialog v-model="dialog" class="model">
       <v-card>
-        <v-card-actions>
+        <v-card-actions >
           <v-spacer></v-spacer>
           <v-card-title style="position:fixed;">
             <span>{{ title }}</span>
