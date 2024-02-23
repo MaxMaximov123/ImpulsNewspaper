@@ -1,8 +1,10 @@
 <template>
   <v-app class="app">
     <div class="background"></div>
-    <Header :user="userData" :filters="filters" :loadingUpdate="false"></Header>
-    <div class="content blured" id="content">
+    <div v-if="this.user">
+      <Header :user="userData" :filters="filters" :loadingUpdate="false"></Header>
+    </div>
+    <div class="content blured" id="content" v-if="this.user">
       <router-view></router-view>
     </div>
     <!-- <MenuBar></MenuBar> -->
@@ -40,7 +42,9 @@ export default {
         )
       ).data;
 
-      this.$storage.user = this.userData ? {...this.userData, authorized: true } : { authorized: false };
+      this.user = this.userData ? {...this.userData, authorized: true } : { authorized: false };
+
+      console.log(this.$storage);
     }
   },
 
@@ -53,6 +57,7 @@ export default {
   data(){
     return {
       userData: {},
+      user: this.$storage.user,
       filters: {
         context: '',
       }

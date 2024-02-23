@@ -115,7 +115,7 @@
                 this.postList[index].likesCount--
               };
             }">
-            <q-icon class="q-mr-sm" color="red" :name="post.isLiked ? 'mdi-heart' : 'mdi-heart-outline'"/>
+            <q-icon class="q-mr-sm" :color="post.isLiked ? 'red' : 'grey'" :name="post.isLiked ? 'mdi-heart' : 'mdi-heart-outline'"/>
             <span>{{ post.likesCount }}</span>
           </q-btn>
         </q-card>
@@ -188,10 +188,6 @@
       this.filters.context = queryParams?.context || '';
       this.filters.sortedBy = queryParams?.sortedBy || 'Сначала новые';
       this.filters.selectedSourceKeys = (queryParams?.selectedSourceKeys || "Импульс,ВШЭ,МГТУ,Иннополис").split(',');
-
-      while (!this.$storage.user) {
-        await this.$waitForTimeout(10);
-      };
 
       await this.render();
     },

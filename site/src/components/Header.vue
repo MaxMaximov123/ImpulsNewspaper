@@ -149,9 +149,6 @@ export default {
   },
 
   async created() {
-    while (!this.$storage.user) {
-      await this.$waitForTimeout(10);
-    };
     this.addHandler(paperEdition[0]);
   },
 

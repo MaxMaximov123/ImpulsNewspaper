@@ -43,6 +43,28 @@
                 </q-card-section>
               </div>
             </div>
+          <q-btn flat color="grey-7" rounded class="q-ml-sm q-my-xsm" @click="async () => {
+              if (!this.$storage.user.authorized) {
+                this.authDialog.isOpen = true;
+                return;
+              }
+              await this.postRequest(`${this.apiHost}api/setLike`, {
+                userId: this.$storage.user.id,
+                postId: post.id,
+                isLiked: !this.postList[index].isLiked,
+              });
+
+              this.post.isLiked = !this.post.isLiked
+              
+              if (this.post.isLiked) {
+                this.post.likesCount++;
+              } else {
+                this.post.likesCount--
+              };
+            }">
+            <q-icon class="q-mr-sm" :color="post.isLiked ? 'red' : 'grey'" :name="post.isLiked ? 'mdi-heart' : 'mdi-heart-outline'"/>
+            <span>{{ post.likesCount }}</span>
+          </q-btn>
           </q-card>
         </div>
       </div>
@@ -66,6 +88,7 @@ export default {
         return {
             postKey: null,
             apiHost: apiHost,
+            authDialog: this.$storage.authDialog,
             post: {
                 text: '',
                 images: [],
@@ -120,7 +143,7 @@ export default {
 
 
   .gallery {
-    height: 86vh;
+    height: 80vh;
     overflow: auto;
   }
 
