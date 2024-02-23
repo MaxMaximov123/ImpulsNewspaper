@@ -51,8 +51,8 @@
               }
               await this.postRequest(`${this.apiHost}api/setLike`, {
                 userId: this.$storage.user.id,
-                postId: post.id,
-                isLiked: !this.postList[index].isLiked,
+                postId: this.post.id,
+                isLiked: !this.post.isLiked,
               });
 
               this.post.isLiked = !this.post.isLiked
