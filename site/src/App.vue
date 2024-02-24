@@ -43,8 +43,6 @@ export default {
       ).data;
 
       this.$storage.user = this.user = this.userData ? {...this.userData, authorized: true } : { authorized: false };
-
-      console.log(this.$storage, this.user);
     }
   },
 

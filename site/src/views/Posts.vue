@@ -26,83 +26,84 @@
           @update:modelValue="selectSourceKey"
         ></v-select></div>
       
-      <div
-        v-for="(post, index) in postList"
-        :id="index"
-        :key="post.key"
-        :data-id="index - 1"
-        class="news-item q-pa-sm"
-      >
-      <!-- <a :href="`#${index}`">d;fljghblfdglksdbfnglksbndfgjbsdfjgbsd.fkg</a> -->
-        <div class="info-block">
-          <div class="created-at">
-            {{ post.createdAt }}
+      <div ref="postsContainer">
+        <div
+          v-for="(post, index) in postList"
+          :ref="`post-${index}`"
+          :key="post.id"
+          :data-id="index - 1"
+          class="news-item q-pa-sm"
+        >
+        <!-- <a :href="`#${index}`">d;fljghblfdglksdbfnglksbndfgjbsdfjgbsd.fkg</a> -->
+          <div class="info-block">
+            <div class="created-at">
+              {{ post.createdAt }}
+            </div>
           </div>
-        </div>
-        <div class="info-block">
-          <div style="margin-left: auto; margin-right: auto;">
-            {{ sourceKeys[post.sourceKey] }}
+          <div class="info-block">
+            <div style="margin-left: auto; margin-right: auto;">
+              {{ sourceKeys[post.sourceKey] }}
+            </div>
           </div>
-        </div>
-        <q-card style="background-color: #f3efed;" >
+          <q-card style="background-color: #f3efed;" >
           <button style="width: 100%; margin-bottom: -2lvh;"
-        @click="() => {
-          openInNewTab(`post/${post.key}`);
-          // this.$router.push({path: `/`, query: {
-          //   context: this.filters.context,
-          //   selectedSourceKeys: this.filters.selectedSourceKeys.join(','),
-          //   sortedBy: this.filters.sortedBy,
-          //   count: this.filters.count,
-          // }});
-          // this.$router.push(`../post/${post.key}`)
-        }
-        ">
-          <div v-if="post.text[0] && post.images?.[0]" class="news-info items-start">
-            <div class="col" style="margin-top: auto; margin-bottom: auto;">
-              <q-card-section>
-                <div 
-                  class="news-title" v-html="
-                  post.text.slice(0, 10).join(' ') + (
-                  post.text.length > 10 ? '...' : '')
-                "></div>
-              </q-card-section>
-            </div>
+          @click="async () => {
+            // openInNewTab(`post/${post.key}`);
+            await this.$router.push({path: `/`, query: {
+              context: this.filters.context,
+              selectedSourceKeys: this.filters.selectedSourceKeys.join(','),
+              sortedBy: this.filters.sortedBy,
+              currentPost: index,
+            }});
+            await this.$router.push(`../post/${post.id}`)
+          }
+          ">
+            <div v-if="post.text[0] && post.images?.[0]" class="news-info items-start">
+              <div class="col" style="margin-top: auto; margin-bottom: auto;">
+                <q-card-section>
+                  <div 
+                    class="news-title" v-html="
+                    post.text.slice(0, 10).join(' ') + (
+                    post.text.length > 10 ? '...' : '')
+                  "></div>
+                </q-card-section>
+              </div>
 
-            <div class="col">
-              <q-card-section>
-                <q-responsive :ratio="4/3">
-                <q-img
-                    class="rounded-borders large-image"
-                    :src=post.images[0]
-                    alt="large-image"
-                /></q-responsive>
-              </q-card-section>
+              <div class="col">
+                <q-card-section>
+                  <q-responsive :ratio="4/3">
+                  <q-img
+                      class="rounded-borders large-image"
+                      :src=post.images[0]
+                      alt="large-image"
+                  /></q-responsive>
+                </q-card-section>
+              </div>
             </div>
-          </div>
-          <div v-else-if="post.text[0]" class="news-info items-start">
-            <div class="col" style="margin-top: auto; margin-bottom: auto;">
-              <q-card-section>
-                <div 
-                  class="news-title" v-html="
-                  post.text.slice(0, 10).join(' ') + (
-                  post.text.length > 10 ? '...' : '')
-                "></div>
-              </q-card-section>
+            <div v-else-if="post.text[0]" class="news-info items-start">
+              <div class="col" style="margin-top: auto; margin-bottom: auto;">
+                <q-card-section>
+                  <div 
+                    class="news-title" v-html="
+                    post.text.slice(0, 10).join(' ') + (
+                    post.text.length > 10 ? '...' : '')
+                  "></div>
+                </q-card-section>
+              </div>
             </div>
-          </div>
-          <div v-else class="items-start">
-            <div style="margin-left: auto; margin-right: auto;" class="once-image">
-              <q-card-section>
-                <q-responsive :ratio="16/9">
-                <q-img
-                    class="rounded-borders large-image"
-                    :src=post.images[0]
-                    alt="Large Image"
-                /></q-responsive>
-              </q-card-section>
+            <div v-else class="items-start">
+              <div style="margin-left: auto; margin-right: auto;" class="once-image">
+                <q-card-section>
+                  <q-responsive :ratio="16/9">
+                  <q-img
+                      class="rounded-borders large-image"
+                      :src=post.images[0]
+                      alt="Large Image"
+                  /></q-responsive>
+                </q-card-section>
+              </div>
             </div>
-          </div>
-        </button>
+          </button>
           <q-btn flat color="grey-7" rounded class="q-ml-sm q-my-xsm" @click="async () => {
               if (!this.$storage.user.authorized) {
                 this.authDialog.isOpen = true;
@@ -125,8 +126,14 @@
             <q-icon class="q-mr-sm" :color="post.isLiked ? 'red' : 'grey'" :name="post.isLiked ? 'mdi-heart' : 'mdi-heart-outline'"/>
             <span>{{ post.likesCount }}</span>
           </q-btn>
-        </q-card>
+          </q-card>
+        </div>
       </div>
+      <!-- <div>{{ (() => {
+        console.log(99923)
+        this.goToPost();
+      })()
+      }}</div> -->
       <div v-if="areAllPostsLoaded" style="
         display: flex;
         justify-content: center;
@@ -164,7 +171,11 @@
     watch: {
       $route(to, from) {
         this.render();
-      }
+      },
+    },
+
+    mounted() {
+      this.$refs.postsContainer.addEventListener('DOMNodeInserted', this.postContainerUpdated, false);
     },
 
     data() {
@@ -175,6 +186,7 @@
           queryParams: {},
           areAllPostsLoaded: false,
           authDialog: this.$storage.authDialog,
+          wentedToCurrentPoss: false,
           filters: {
             context: '',
             selectedSourceKeys: [ "Импульс", "ВШЭ", "МГТУ", "Иннополис"],
@@ -192,13 +204,9 @@
     async created() {
       window.addEventListener('scroll', this.handleScroll);
       this.filters.context = this.$route.query?.context || '';
-      this.filters.count = Number(this.$route.query?.count || '10');
+      this.filters.currentPost = Number(this.$route.query?.currentPost || '0');
       this.filters.sortedBy = this.$route.query?.sortedBy || 'Сначала новые';
       this.filters.selectedSourceKeys = (this.$route.query?.selectedSourceKeys || "Импульс,ВШЭ,МГТУ,Иннополис").split(',');
-
-      while (!this.$storage.user) {
-        await this.$waitForTimeout(10);
-      };
 
       await this.render();
     },
@@ -208,6 +216,30 @@
     },
 
     methods: {
+      goToPost() {
+        document.getElementById(6).scrollIntoView({ behavior: 'smooth' });
+      },
+
+      postContainerUpdated() {
+        console.log(1)
+        if (!this.wentedToCurrentPoss && this.$refs[`post-${this.filters.currentPost}`]?.[0]) {
+          this.wentedToCurrentPoss = true;
+          let currentPost = this.$refs[`post-${this.filters.currentPost}`]?.[0];
+          // currentPost.scrollIntoView({ behavior: 'instant' });
+
+          currentPost = currentPost.getBoundingClientRect();
+
+          // Выполняем мгновенный переход к элементу
+          console.log(window.scrollY);
+          window.scrollTo({
+            top: currentPost.top + currentPost.height / 2 - window.innerHeight / 2 + window.scrollY,
+            left: currentPost.left + window.scrollX,
+            behavior: 'instant'
+          });
+        }
+        
+      },
+
       async render() {
         this.postList = [];
         await this.loadNewPosts();
@@ -245,6 +277,7 @@
           offset: this.postList.length,
           filters: this.filters,
           userId: this.$storage.user?.id || null,
+          currentPost: this.filters.currentPost,
         })).data;
         let timeFormatOptions = {
           year: 'numeric',
@@ -272,19 +305,8 @@
           this.areAllPostsLoaded = true;
         }
 
-        console.log(requestResults);
         this.postList.push(...requestResults);
-        // this.$router.query = {
-        //   context: this.filters.context,
-        //   selectedSourceKeys: this.filters.selectedSourceKeys.join(','),
-        //   sortedBy: this.filters.sortedBy,
-        //   count: this.filters.count,
-        // };
         this.isLoadingPosts = false;
-      },
-
-      goToFullPost(postKey) {
-        console.log(postKey);
       },
 
       handleScroll(event) {

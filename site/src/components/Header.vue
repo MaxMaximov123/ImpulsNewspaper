@@ -6,15 +6,15 @@
         color="teal-darken-4"
         :image="this.$reqire('assets/images/background.jpg')"
         class="header"
-        scroll-behavior="elevate hide"
       >
+      <!-- scroll-behavior="elevate hide" -->
         <template v-slot:image>
           <v-img
             gradient="to top right, rgba(19,84,122,.8), rgba(128,208,199,.8)"
           ></v-img>
         </template>
         
-        <q-btn @click="() => this.$router.push('../../')" flat round class="q-ml-sm">
+        <q-btn @click="() => this.$router.push('../../')" flat round class="q-mx-sm">
         <q-avatar
           size="45px"
         >
@@ -22,11 +22,13 @@
         </q-avatar>
         </q-btn>
 
-        <v-app-bar-title style="
-        font-family: 'Gilroy-Medium', sans-serif;
-        font-size: clamp(17px, 3vw, 25px);" @click="() => this.$router.push('../../')">Импульс</v-app-bar-title>
+        <q-space></q-space>
 
-        <div style="width: 30vw;">
+        <!-- <v-app-bar-title style="
+        font-family: 'Gilroy-Medium', sans-serif;
+        font-size: clamp(17px, 3vw, 25px);" @click="() => this.$router.push('../../')">Импульс</v-app-bar-title> -->
+
+        <div style="width: 100%;">
           <v-text-field
             style="
             background-color: rgba(255, 255, 255, 0.196);

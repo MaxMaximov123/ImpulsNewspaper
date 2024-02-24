@@ -18,7 +18,7 @@ const router = createRouter({
       component: Post
     },
     {
-      path: '/auth/:key',
+      path: '/auth/:id',
       name: 'auth',
       component: Auth
     },

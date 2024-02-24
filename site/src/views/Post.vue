@@ -9,63 +9,65 @@
               {{ post.createdAt }}
           </div>
           <q-card style="background-color: rgba(240, 235, 232, 0.797);">
-            <div v-if="post.text[0] && post.images?.[0]" class="news-info">
-              <div class="col">
-                <q-card-section>
-                  <div 
-                    class="news-title" v-html="
-                    post.text
-                  "></div>
-                </q-card-section>
+            <button style="width: 100%; margin-bottom: -5lvh;">
+              <div v-if="post.text[0] && post.images?.[0]" class="news-info">
+                <div class="col">
+                  <q-card-section>
+                    <div 
+                      class="news-title" v-html="
+                      post.text
+                    "></div>
+                  </q-card-section>
+                </div>
+
+                <div class="col gallery q-my-md">
+                  <q-card-section>
+                    <Gallery :images="post.images"></Gallery>
+                  </q-card-section>
+                </div>
+              </div>
+              <div v-else-if="post.text[0]" class="news-info items-start">
+                <div class="col" style="margin-top: auto; margin-bottom: auto;">
+                  <q-card-section>
+                    <div 
+                      class="news-title" v-html="
+                      post.text
+                    "></div>
+                  </q-card-section>
+                </div>
               </div>
 
-              <div class="col gallery q-my-md">
-                <q-card-section>
-                  <Gallery :images="post.images"></Gallery>
-                </q-card-section>
+              <div v-else class="items-start">
+                <div class="col q-py-md" style="width: 50%; margin-left: auto; margin-right: auto;">
+                  <q-card-section>
+                    <Gallery :images="post.images"></Gallery>
+                  </q-card-section>
+                </div>
               </div>
-            </div>
-            <div v-else-if="post.text[0]" class="news-info items-start">
-              <div class="col" style="margin-top: auto; margin-bottom: auto;">
-                <q-card-section>
-                  <div 
-                    class="news-title" v-html="
-                    post.text
-                  "></div>
-                </q-card-section>
-              </div>
-            </div>
+            </button>
+            <q-btn flat color="grey-7" rounded class="q-ml-sm q-my-xsm" @click="async () => {
+                if (!this.$storage.user.authorized) {
+                  this.authDialog.isOpen = true;
+                  console.log(this.authDialog);
+                  return;
+                }
+                await this.postRequest(`${this.apiHost}api/setLike`, {
+                  userId: this.$storage.user.id,
+                  postId: this.post.id,
+                  isLiked: !this.post.isLiked,
+                });
 
-            <div v-else class="items-start">
-              <div class="col q-py-md" style="width: 50%; margin-left: auto; margin-right: auto;">
-                <q-card-section>
-                  <Gallery :images="post.images"></Gallery>
-                </q-card-section>
-              </div>
-            </div>
-          <q-btn flat color="grey-7" rounded class="q-ml-sm q-my-xsm" @click="async () => {
-              if (!this.$storage.user.authorized) {
-                this.authDialog.isOpen = true;
-                console.log(this.authDialog);
-                return;
-              }
-              await this.postRequest(`${this.apiHost}api/setLike`, {
-                userId: this.$storage.user.id,
-                postId: this.post.id,
-                isLiked: !this.post.isLiked,
-              });
-
-              this.post.isLiked = !this.post.isLiked
-              
-              if (this.post.isLiked) {
-                this.post.likesCount++;
-              } else {
-                this.post.likesCount--
-              };
-            }">
-            <q-icon class="q-mr-sm" :color="post.isLiked ? 'red' : 'grey'" :name="post.isLiked ? 'mdi-heart' : 'mdi-heart-outline'"/>
-            <span>{{ post.likesCount }}</span>
-          </q-btn>
+                this.post.isLiked = !this.post.isLiked
+                
+                if (this.post.isLiked) {
+                  this.post.likesCount++;
+                } else {
+                  this.post.likesCount--
+                };
+              }">
+              <q-icon class="q-mr-sm" :color="post.isLiked ? 'red' : 'grey'" :name="post.isLiked ? 'mdi-heart' : 'mdi-heart-outline'"/>
+              <span>{{ post.likesCount }}</span>
+            </q-btn>
           </q-card>
         </div>
       </div>
@@ -87,7 +89,7 @@ export default {
     },
     data(){
         return {
-            postKey: null,
+            postId: null,
             apiHost: apiHost,
             authDialog: this.$storage.authDialog,
             post: {
@@ -99,7 +101,7 @@ export default {
     },
 
     async created() {
-        this.postKey = Number(this.$route.params.postKey);
+        this.postId = Number(this.$route.params.postId);
         console.log(888, this.$user)
         this.loadNewPost();
     },
@@ -117,7 +119,7 @@ export default {
             };
             this.isLoadingPosts = true;
             let requestResults = (await this.postRequest(`${this.apiHost}api/post`, {
-              postKey: this.postKey,
+              postId: this.postId,
               userId: this.$storage.user?.id || null,
             })).data;
             this.post = requestResults;

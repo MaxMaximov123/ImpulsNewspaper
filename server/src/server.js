@@ -116,6 +116,8 @@ app.post('/api/posts', async (req, res) => {
   const stTime = new Date().getTime();
   const requestData = req.body;
 
+  console.log(requestData);
+
   requestData.filters.selectedSourceKeys = requestData.filters.selectedSourceKeys.map(
     sourceKey => sourceKeys[sourceKey]
   );
@@ -131,7 +133,7 @@ app.post('/api/posts', async (req, res) => {
       .whereIn('posts.sourceKey', requestData.filters.selectedSourceKeys)
       .orderBy(...sortedBy[requestData.filters.sortedBy])
       .orderBy('posts.createdAt', 'desc')
-      .groupBy('posts.key', 'posts.id').offset(requestData.offset).limit(10),
+      .groupBy('posts.key', 'posts.id').offset(requestData.offset).limit(requestData?.filters?.currentPost || 0 + 10),
     };
 
     await Promise.all(result.data.map(async post => {
@@ -209,14 +211,14 @@ app.post('/api/post', async (req, res) => {
   const requestData = req.body;
   
   try{
-    await db('posts').where('key', requestData.postKey).increment('views', 1);
+    await db('posts').where('id', requestData.postId).increment('views', 1);
     let result = {
       data: (await 
       db.select('posts.*')
       .column(db.raw('array_agg(images.src) as images'))
       .from('posts')
       .leftJoin('images', 'posts.key', 'images.postKey')
-      .groupBy('posts.key', 'posts.id').where('posts.key', requestData.postKey))[0],
+      .groupBy('posts.key', 'posts.id').where('posts.id', requestData.postId))[0],
     };
 
     
