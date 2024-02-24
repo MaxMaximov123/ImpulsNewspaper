@@ -13,12 +13,12 @@ const router = createRouter({
       component: Posts
     },
     {
-      path: '/post/:postKey',
+      path: '/post/:postId',
       name: 'post',
       component: Post
     },
     {
-      path: '/auth/:id',
+      path: '/auth/:key',
       name: 'auth',
       component: Auth
     },

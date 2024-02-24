@@ -102,6 +102,7 @@ export default {
 
     async created() {
         this.postId = Number(this.$route.params.postId);
+        console.log(this.postId);
         console.log(888, this.$user)
         this.loadNewPost();
     },

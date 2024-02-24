@@ -221,16 +221,10 @@
       },
 
       postContainerUpdated() {
-        console.log(1)
         if (!this.wentedToCurrentPoss && this.$refs[`post-${this.filters.currentPost}`]?.[0]) {
           this.wentedToCurrentPoss = true;
           let currentPost = this.$refs[`post-${this.filters.currentPost}`]?.[0];
-          // currentPost.scrollIntoView({ behavior: 'instant' });
-
           currentPost = currentPost.getBoundingClientRect();
-
-          // Выполняем мгновенный переход к элементу
-          console.log(window.scrollY);
           window.scrollTo({
             top: currentPost.top + currentPost.height / 2 - window.innerHeight / 2 + window.scrollY,
             left: currentPost.left + window.scrollX,
@@ -277,7 +271,6 @@
           offset: this.postList.length,
           filters: this.filters,
           userId: this.$storage.user?.id || null,
-          currentPost: this.filters.currentPost,
         })).data;
         let timeFormatOptions = {
           year: 'numeric',

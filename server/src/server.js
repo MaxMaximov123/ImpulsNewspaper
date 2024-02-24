@@ -122,7 +122,7 @@ app.post('/api/posts', async (req, res) => {
     sourceKey => sourceKeys[sourceKey]
   );
   
-  try{
+  try {
     let result = {
       data: await 
       db.select('posts.*')
@@ -133,7 +133,7 @@ app.post('/api/posts', async (req, res) => {
       .whereIn('posts.sourceKey', requestData.filters.selectedSourceKeys)
       .orderBy(...sortedBy[requestData.filters.sortedBy])
       .orderBy('posts.createdAt', 'desc')
-      .groupBy('posts.key', 'posts.id').offset(requestData.offset).limit(requestData?.filters?.currentPost || 0 + 10),
+      .groupBy('posts.key', 'posts.id').offset(requestData.offset).limit((requestData?.filters?.currentPost || 0) + 10),
     };
 
     await Promise.all(result.data.map(async post => {
@@ -209,6 +209,7 @@ app.post('/api/setLike', async (req, res) => {
 app.post('/api/post', async (req, res) => {
   const stTime = new Date().getTime();
   const requestData = req.body;
+  console.log(requestData);
   
   try{
     await db('posts').where('id', requestData.postId).increment('views', 1);
