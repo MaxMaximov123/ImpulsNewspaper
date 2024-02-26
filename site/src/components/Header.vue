@@ -34,7 +34,7 @@
             background-color: rgba(255, 255, 255, 0.196);
             border-top-right-radius: 5px;
             border-top-left-radius: 5px;"
-            @keyup.enter.native.stop="searchByContext"
+            @keyup.enter="searchByContext"
             v-model="filters.context"
             :loading="loadingUpdate"
             label="Поиск"
