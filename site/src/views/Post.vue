@@ -9,7 +9,7 @@
               {{ post.createdAt }}
           </div>
           <q-card style="background-color: rgba(240, 235, 232, 0.797);">
-            <button style="width: 100%; margin-bottom: -5lvh;">
+            <button style="width: 100%;">
               <div v-if="post.text[0] && post.images?.[0]" class="news-info">
                 <div class="col">
                   <q-card-section>

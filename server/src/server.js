@@ -172,13 +172,19 @@ app.post('/api/user', async (req, res) => {
 
 app.post('/api/setLike', async (req, res) => {
   const stTime = new Date().getTime();
-  console.log(req.body);
   try{
     let result = {
       data: await (async () => {
         if (!req.body.userId) {
           return 'User is not authorized';
         }
+
+        if ((await db('users').where({
+          id: req.body.userId
+        })).length === 0) {
+          return 'User is not exist';
+        }
+        
         if (req.body.isLiked) {
           await db('likes').insert({
             userId: req.body.userId,
@@ -209,7 +215,6 @@ app.post('/api/setLike', async (req, res) => {
 app.post('/api/post', async (req, res) => {
   const stTime = new Date().getTime();
   const requestData = req.body;
-  console.log(requestData);
   
   try{
     await db('posts').where('id', requestData.postId).increment('views', 1);

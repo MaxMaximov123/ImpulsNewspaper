@@ -63,8 +63,8 @@
                 <q-card-section>
                   <div 
                     class="news-title" v-html="
-                    post.text.slice(0, 10).join(' ') + (
-                    post.text.length > 10 ? '...' : '')
+                    post.text.slice(0, 20).join(' ') + (
+                    post.text.length > 20 ? '...' : '')
                   "></div>
                 </q-card-section>
               </div>
@@ -85,8 +85,8 @@
                 <q-card-section>
                   <div 
                     class="news-title" v-html="
-                    post.text.slice(0, 10).join(' ') + (
-                    post.text.length > 10 ? '...' : '')
+                    post.text.slice(0, 20).join(' ') + (
+                    post.text.length > 20 ? '...' : '')
                   "></div>
                 </q-card-section>
               </div>
@@ -203,11 +203,6 @@
 
     async created() {
       window.addEventListener('scroll', this.handleScroll);
-      this.filters.context = this.$route.query?.context || '';
-      this.filters.currentPost = Number(this.$route.query?.currentPost || '0');
-      this.filters.sortedBy = this.$route.query?.sortedBy || 'Сначала новые';
-      this.filters.selectedSourceKeys = (this.$route.query?.selectedSourceKeys || "Импульс,ВШЭ,МГТУ,Иннополис").split(',');
-
       await this.render();
     },
 
@@ -235,10 +230,10 @@
       },
 
       async render() {
-      this.filters.context = this.$route.query?.context || '';
-      this.filters.currentPost = Number(this.$route.query?.currentPost || '0');
-      this.filters.sortedBy = this.$route.query?.sortedBy || 'Сначала новые';
-      this.filters.selectedSourceKeys = (this.$route.query?.selectedSourceKeys || "Импульс,ВШЭ,МГТУ,Иннополис").split(',');
+        this.filters.context = this.$route.query?.context || '';
+        this.filters.currentPost = Number(this.$route.query?.currentPost || '0');
+        this.filters.sortedBy = this.$route.query?.sortedBy || 'Сначала новые';
+        this.filters.selectedSourceKeys = (this.$route.query?.selectedSourceKeys || "Импульс,ВШЭ,МГТУ,Иннополис").split(',');
         this.postList = [];
         await this.loadNewPosts();
       },

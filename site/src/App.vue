@@ -1,6 +1,5 @@
 <template>
   <v-app class="app">
-    <div class="background"></div>
     <div v-if="this.user">
       <Header :user="userData" :filters="filters" :loadingUpdate="false"></Header>
     </div>
@@ -73,23 +72,6 @@ export default {
   .content {
     position: relative;
     z-index: 1;
-  }
-  /* .content.blured {
-    filter: blur(10px);
-  } */
-  .background {
-    /* background-image: url('/images/background1.jpg'); */
-    /* background-size: cover; */
-    /* background-attachment: fixed; */
-    /* filter: blur(4px); */
-
-    /* position: fixed;
-    top: 0;
-    left: 0;
-    width: 100lvw;
-    height: 100lvh; */
-    background-color: #96BAFF;
-    z-index: -1;
   }
 
   body {
