@@ -1,20 +1,44 @@
 
 <template>
   <div class="pdf-viewer">
-    <PDF :src="this.paperEditionPath"/>
+    <!-- <PDF :src="this.paperEditionPath"/> -->
+    {{  }}
+    <VuePDF 
+      class="q-mb-sm"
+      :pdf="this.pdf.pdf" 
+      :page="page" 
+      :key="page" 
+      :width="this.window.innerWidth / 100 * 90" 
+      v-for="page in 10"/>
   </div>
 </template>
 
 <script>
 import PDF from "pdf-vue3";
+import { VuePDF, usePDF } from '@tato30/vue-pdf';
 
 export default {
   components: {
-    PDF
+    PDF,
+    VuePDF
+  },
+
+  data() {
+    return {
+      pdf: null,
+    }
   },
 
   created() {
     this.paperEditionPath = this.$reqire('assets/paperEdition/' + this.$route.params.pathMatch.join('/') + '.pdf');
+    this.pdf = usePDF({
+      url: this.paperEditionPath,
+      enableXfa: false,
+    })
+
+    this.window = window
+
+    console.log(this.pdf.pages)
   },
 
   watch: {
@@ -30,12 +54,8 @@ export default {
 .pdf-viewer {
   margin-left: auto;
   margin-right: auto;
-  width: 60lvw;
+  width: fit-content;
+
 }
 
-@media (max-width: 700px) {
-  .pdf-viewer {
-    width: 90lvw;
-}
-}
 </style>

@@ -28,7 +28,7 @@
         font-family: 'Gilroy-Medium', sans-serif;
         font-size: clamp(17px, 3vw, 25px);" @click="() => this.$router.push('../../')">Импульс</v-app-bar-title> -->
 
-        <div style="width: 100%;">
+        <div style="margin-left: auto; width: clamp(50%, 10%, 100%);;">
           <v-text-field
             style="
             background-color: rgba(255, 255, 255, 0.196);
