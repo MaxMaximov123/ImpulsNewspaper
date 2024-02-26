@@ -76,7 +76,15 @@
                       class="rounded-borders large-image"
                       :src=post.images[0]
                       alt="large-image"
-                  /></q-responsive>
+                  >
+                  <template v-slot:loading>
+                    <q-spinner-bars
+                      color="cyan"
+                      size="xl"
+                      />
+                  </template>
+                  </q-img>
+                </q-responsive>
                 </q-card-section>
               </div>
             </div>
@@ -99,7 +107,15 @@
                       class="rounded-borders large-image"
                       :src=post.images[0]
                       alt="Large Image"
-                  /></q-responsive>
+                  >
+                  <template v-slot:loading>
+                    <q-spinner-bars
+                      color="cyan"
+                      size="xl"
+                      />
+                  </template>
+                  </q-img>
+                </q-responsive>
                 </q-card-section>
               </div>
             </div>
@@ -146,13 +162,17 @@
         display: flex;
         justify-content: center;
         align-items: center;">
-        <v-progress-circular
+        <!-- <v-progress-circular
           style="display: flex;"
           color="dark-blue"
           indeterminate
           :size="40"
           :width="5"
-        ></v-progress-circular>
+        ></v-progress-circular> -->
+        <q-spinner-bars
+        color="cyan"
+        size="xl"
+        />
       </div>
     </div>
   </div>

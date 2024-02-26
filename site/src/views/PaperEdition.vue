@@ -1,15 +1,20 @@
 
 <template>
   <div class="pdf-viewer">
+    <q-spinner-bars
+      v-if="!this.pdf.pages"
+      style="margin-left: 45%;"
+      color="cyan"
+      size="xl"
+    />
     <!-- <PDF :src="this.paperEditionPath"/> -->
-    {{  }}
     <VuePDF 
       class="q-mb-sm"
       :pdf="this.pdf.pdf" 
       :page="page" 
       :key="page" 
-      :width="this.window.innerWidth / 100 * 90" 
-      v-for="page in 10"/>
+      :width="window.innerWidth < 700 ? window.innerWidth * 0.9 : window.innerWidth * 0.6" 
+      v-for="page in this.pdf.pages"/>
   </div>
 </template>
 
@@ -35,10 +40,7 @@ export default {
       url: this.paperEditionPath,
       enableXfa: false,
     })
-
-    this.window = window
-
-    console.log(this.pdf.pages)
+    this.window = window;
   },
 
   watch: {

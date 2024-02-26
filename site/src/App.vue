@@ -75,7 +75,7 @@ export default {
   }
 
   body {
-    background-color: #96BAFF;
+    background-color: #557bc6;
     /* height: 120%; */
   }
 </style>
