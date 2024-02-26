@@ -1,9 +1,8 @@
 
 <template>
-  <div style="display: flex;">
+  <div style="display: flex;" class="q-mt-md" v-if="!this.pdf.pages">
     <q-space></q-space>
     <q-spinner-bars
-      v-if="!this.pdf.pages"
       color="cyan"
       size="xl"
     />
