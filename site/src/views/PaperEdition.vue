@@ -1,13 +1,15 @@
 
 <template>
-  <div class="pdf-viewer">
+  <div style="display: flex;">
+    <q-space></q-space>
     <q-spinner-bars
       v-if="!this.pdf.pages"
-      style="margin-left: 43%;"
       color="cyan"
       size="xl"
     />
-    <!-- <PDF :src="this.paperEditionPath"/> -->
+    <q-space></q-space>
+  </div>
+  <div class="pdf-viewer">
     <VuePDF 
       class="q-mb-sm"
       :pdf="this.pdf.pdf" 
@@ -21,6 +23,7 @@
 <script>
 import PDF from "pdf-vue3";
 import { VuePDF, usePDF } from '@tato30/vue-pdf';
+import '@tato30/vue-pdf/style.css';
 
 export default {
   components: {
@@ -57,7 +60,6 @@ export default {
   margin-left: auto;
   margin-right: auto;
   width: fit-content;
-
 }
 
 </style>
