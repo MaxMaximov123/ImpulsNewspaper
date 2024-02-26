@@ -145,7 +145,7 @@ export default {
 
   data() {
     return {
-      searchContext: this.$route?.query?.context || '',
+      searchContext: this.$route.query?.context || '',
       authDialog: this.$storage.authDialog,
     }
   },
