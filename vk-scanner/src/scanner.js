@@ -184,7 +184,7 @@ export default class Scanner {
               await db('images').insert(
                 post.images.map(src => {
                   return {
-                    postKey: `${config.sourceKey}-${post.key}`,
+                    postKey: `${post.key}`,
                     src: src
                   }
                 })
