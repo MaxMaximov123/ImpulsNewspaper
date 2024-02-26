@@ -36,6 +36,7 @@ export default {
 
   methods: {
     async render() {
+      this.filters.context = this.$route.query?.context || "";
       this.userData = (
         await postRequest(
           `${apiHost}api/user`, { token: VueCookies.get('token') }
