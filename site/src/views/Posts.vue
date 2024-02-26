@@ -235,6 +235,10 @@
       },
 
       async render() {
+      this.filters.context = this.$route.query?.context || '';
+      this.filters.currentPost = Number(this.$route.query?.currentPost || '0');
+      this.filters.sortedBy = this.$route.query?.sortedBy || 'Сначала новые';
+      this.filters.selectedSourceKeys = (this.$route.query?.selectedSourceKeys || "Импульс,ВШЭ,МГТУ,Иннополис").split(',');
         this.postList = [];
         await this.loadNewPosts();
       },
