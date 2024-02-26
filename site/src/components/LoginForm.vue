@@ -1,5 +1,5 @@
 <template>
-    <Modal :value="authDialog.isOpen" title="Войти черз" 
+    <Modal :value="authDialog.isOpen" title="Войти через" 
     @closeModal="() => authDialog.isOpen =false ">
         <div class="social-login-buttons">
         <q-btn @click="loginWith('yandex')" class="yandex">
