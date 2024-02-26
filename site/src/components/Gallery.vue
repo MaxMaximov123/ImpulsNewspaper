@@ -4,7 +4,14 @@
         style="margin-bottom: 18px;"
         class="rounded-borders"
         :src=image
-    />
+    >
+      <template v-slot:loading>
+        <q-spinner-bars
+          color="cyan"
+          size="xl"
+          />
+      </template>
+    </q-img>
     <q-img
         class="rounded-borders"
         :src="images[images.length - 1]"
