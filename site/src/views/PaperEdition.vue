@@ -3,7 +3,7 @@
   <div class="pdf-viewer">
     <q-spinner-bars
       v-if="!this.pdf.pages"
-      style="margin-left: 45%;"
+      style="margin-left: 43%;"
       color="cyan"
       size="xl"
     />
