@@ -38,7 +38,7 @@
               </div>
 
               <div v-else class="items-start">
-                <div class="col q-py-md" style="width: 50%; margin-left: auto; margin-right: auto;">
+                <div class="col q-py-md" style="width: 100%; margin-left: auto; margin-right: auto;">
                   <q-card-section>
                     <Gallery :images="post.images"></Gallery>
                   </q-card-section>
