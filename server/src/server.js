@@ -133,6 +133,7 @@ app.post('/api/posts', async (req, res) => {
       .whereIn('posts.sourceKey', requestData.filters.selectedSourceKeys)
       .orderBy(...sortedBy[requestData.filters.sortedBy])
       .orderBy('posts.createdAt', 'desc')
+      .orderBy('posts.id', 'desc')
       .groupBy('posts.key', 'posts.id').offset(requestData.offset).limit((requestData?.filters?.currentPost || 0) + 10),
     };
 
