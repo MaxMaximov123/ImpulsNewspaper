@@ -93,8 +93,8 @@
                 <q-card-section>
                   <div 
                     class="news-title" v-html="
-                    post.text.slice(0, 20).join(' ') + (
-                    post.text.length > 20 ? '...' : '')
+                    post.text.slice(0, 50).join(' ') + (
+                    post.text.length > 50 ? '...' : '')
                   "></div>
                 </q-card-section>
               </div>
