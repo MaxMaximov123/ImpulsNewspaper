@@ -199,7 +199,7 @@ export default class Scanner {
         }
 
         if (postsIntoDB.length > 0) {
-          await db('posts').insert(postsIntoDB).onConflict(['key', 'source_key']).merge()
+          await db('posts').insert(postsIntoDB).onConflict(['key', 'source_key']).ignore()
           this.postKeys.push(...postsIntoDB.map(obj => obj.key));
         }
 
