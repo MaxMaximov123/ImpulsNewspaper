@@ -126,7 +126,7 @@ export default {
             this.post.text = this.post.text
               .replace(/Show more/g, `Показать ещё`)
               .replace(/Показать ещё/g, '');
-            this.post.text = this.post.text.replace(/((\s|\n|\(|\))https?:([A-z]|[0-9]|\.|\/|-)*(\s|\n|\(|\)))/g, ` 👉 <a href="$1" target="_blank">ссылка</a> `);
+            this.post.text = this.post.text.replace(/((\s|\n|\(|\))(https?:([A-z]|[0-9]|\.|\/|-)*)(\s|\n|\(|\)))/g, ` 👉 <a href="$3" target="_blank">ссылка</a> `);
             this.post.text = this.post.text.replace(/\n/g, "<br>")
             // obj.text = obj.text.replace(/Show more/g, `Показать ещё`);
             this.post.createdAt = new Date(this.post.createdAt).toLocaleString("ru", timeFormatOptions);
