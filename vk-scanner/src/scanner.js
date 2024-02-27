@@ -132,32 +132,37 @@ export default class Scanner {
               post.text = processedText;
             }
 
-            let onceImageBlock = await postContentBody.$('.PrimaryAttachment');
-            if (onceImageBlock) {
-              onceImageBlock = await onceImageBlock.$('.PhotoPrimaryAttachment__interactive');
-              let image = await onceImageBlock.$('.PhotoPrimaryAttachment__imageElement');
-              post.images.push(await image.evaluate(element => element.src));
-            }
+            try {
+              let onceImageBlock = await postContentBody.$('.PrimaryAttachment');
+              if (onceImageBlock) {
+                onceImageBlock = await onceImageBlock.$('.PhotoPrimaryAttachment__interactive');
+                let image = await onceImageBlock.$('.PhotoPrimaryAttachment__imageElement');
+                post.images.push(await image.evaluate(element => element.src));
+              }
 
-            let postContentImageBlock = await postContentBody.$('.MediaGridContainerWeb--post');
-
-            if (postContentImageBlock) {
-              postContentImageBlock = await postContentImageBlock.$('.MediaGrid');
+              let postContentImageBlock = await postContentBody.$('.MediaGridContainerWeb--post');
 
               if (postContentImageBlock) {
-                let postContentImages = await postContentImageBlock.$$('.MediaGrid__thumb');
+                postContentImageBlock = await postContentImageBlock.$('.MediaGrid');
 
-                if (postContentImages) {
-                
-                  for (let image of postContentImages) {
-                    if (image) {
-                      image = await image.$('.MediaGrid__interactive');
-                      image = await image.$('.MediaGrid__imageElement');
-                      post.images.push(await image.evaluate(element => element.src));
+                if (postContentImageBlock) {
+                  let postContentImages = await postContentImageBlock.$$('.MediaGrid__thumb');
+
+                  if (postContentImages) {
+                  
+                    for (let image of postContentImages) {
+                      if (image) {
+                        image = await image.$('.MediaGrid__interactive');
+                        image = await image.$('.MediaGrid__imageElement');
+                        post.images.push(await image.evaluate(element => element.src));
+                      }
                     }
                   }
                 }
               }
+
+            } catch(e) {
+              console.log(e);
             }
 
             console.log(post);
@@ -194,7 +199,7 @@ export default class Scanner {
         }
 
         if (postsIntoDB.length > 0) {
-          await db('posts').insert(postsIntoDB).onConflict().ignore();
+          await db('posts').insert(postsIntoDB).onConflict(['key', 'source_key']).merge()
           this.postKeys.push(...postsIntoDB.map(obj => obj.key));
         }
 

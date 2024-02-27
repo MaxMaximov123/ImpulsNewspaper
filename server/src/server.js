@@ -184,8 +184,15 @@ app.post('/api/setLike', async (req, res) => {
         })).length === 0) {
           return 'User is not exist';
         }
-        
+
         if (req.body.isLiked) {
+          if ((await db('likes').where({
+            userId: req.body.userId,
+            postId: req.body.postId,
+          })).length > 0) {
+            return 'Like already added';
+          }
+
           await db('likes').insert({
             userId: req.body.userId,
             postId: req.body.postId,

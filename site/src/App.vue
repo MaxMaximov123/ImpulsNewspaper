@@ -75,7 +75,7 @@ export default {
   }
 
   body {
-    background-color: #557bc6;
+    background-color: rgba(47, 123, 132, 0.566)
     /* height: 120%; */
   }
 </style>
