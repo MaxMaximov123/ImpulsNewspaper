@@ -102,6 +102,17 @@
                     </q-tree>
                   </q-item>
 
+                  <q-item clickable v-close-popup @click="async () => openInNewTab('https://forms.gle/ye6HWjuhuriFSaU29')">
+                    <q-item-section avatar>
+                      <q-avatar>
+                        <q-icon size="35px" name="mdi-message-alert"></q-icon>
+                      </q-avatar>
+                    </q-item-section>
+                    <q-item-section>
+                      <q-item-label>Сделать импульс лучше</q-item-label>
+                    </q-item-section>
+                  </q-item>
+
                   <!-- <q-item clickable v-close-popup tabindex="0">
                     <q-item-section avatar>
                       <q-avatar>
@@ -156,6 +167,10 @@ export default {
   methods: {
     async searchByContext() {
       await this.applyFilters();
+    },
+
+    openInNewTab(url) {
+      window.open(url, '_blank').focus();
     },
 
     addHandler(obj) {
