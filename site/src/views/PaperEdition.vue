@@ -3,7 +3,7 @@
   <div style="display: flex;" class="q-mt-md" v-if="!this.pdf.pages">
     <q-space></q-space>
     <q-spinner-bars
-      color="cyan"
+      style="color: #e4fffc"
       size="xl"
     />
     <q-space></q-space>

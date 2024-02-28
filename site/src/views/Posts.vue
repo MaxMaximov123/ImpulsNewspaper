@@ -79,7 +79,7 @@
                   >
                   <template v-slot:loading>
                     <q-spinner-bars
-                      color="cyan"
+                    style="color: #1b867a"
                       size="xl"
                       />
                   </template>
@@ -177,7 +177,7 @@
           :width="5"
         ></v-progress-circular> -->
         <q-spinner-bars
-        color="cyan"
+        style="color: #e4fffc"
         size="xl"
         />
       </div>
@@ -308,7 +308,8 @@
             (() => {
             let obj = requestResults[index];
             obj.images = Array.from(new Set(obj.images)) || [];
-            obj.text = obj.text.replace(/\n/g, "<br>");
+            obj.text = obj.text.replace(/(https?:[0-9a-zA-Z_/.-]*)/g, ` 👉 <a href="$1" target="_blank">ссылка</a> `);
+            obj.text = obj.text.replace(/\n/g, "<br>")
             // obj.text = obj.text.replace(/Show more/g, `Показать ещё`);
             obj.text = obj.text.replace(/#.*/g, ``);
             obj.text = obj.text.split(` `);
