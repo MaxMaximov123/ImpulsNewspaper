@@ -102,7 +102,7 @@
                     </q-tree>
                   </q-item>
 
-                  <q-item clickable v-close-popup @click="async () => openInNewTab('https://forms.gle/ye6HWjuhuriFSaU29')">
+                  <q-item clickable v-close-popup @click="async () => openInNewTab('https://forms.gle/kDQmSrg1jZwLqEKg9')">
                     <q-item-section avatar>
                       <q-avatar>
                         <q-icon size="35px" name="mdi-message-alert"></q-icon>
