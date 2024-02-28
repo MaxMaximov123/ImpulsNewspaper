@@ -1,7 +1,8 @@
 <template>
   <v-app class="app">
+    <link rel="icon" :href="logoSrc" style="border-radius: 50%;">
     <div v-if="this.user">
-      <Header :user="userData" :filters="filters" :loadingUpdate="false"></Header>
+      <Header :user="userData" :logoSrc="logoSrc" :filters="filters" :loadingUpdate="false"></Header>
     </div>
     <div class="content blured" id="content" v-if="this.user">
       <router-view></router-view>
@@ -42,6 +43,9 @@ export default {
         )
       ).data;
 
+      this.logoSrc = this.userData.logoSrc;
+      delete this.userData.logoSrc;
+
       this.$storage.user = this.user = this.userData ? {...this.userData, authorized: true } : { authorized: false };
     }
   },
@@ -56,6 +60,7 @@ export default {
     return {
       userData: {},
       user: this.$storage.user,
+      logoSrc: '',
       filters: {
         context: '',
       }

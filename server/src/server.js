@@ -161,9 +161,11 @@ app.post('/api/user', async (req, res) => {
   console.log(req.body);
   try{
     let result = {
-      data: (await db('users').select('*').where('token', req.body.token))[0],
+      data: (await db('users').select('*').where('token', req.body.token))[0] || {},
       time: (new Date().getTime()) - stTime
     };
+
+    result.data.logoSrc = (await db('sources').select('logo_src').where('key', 'IMPULS'))[0].logoSrc;
     res.send(JSON.stringify(result));
   } catch(e){
     console.log(e);

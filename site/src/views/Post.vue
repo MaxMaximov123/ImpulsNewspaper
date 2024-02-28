@@ -45,7 +45,8 @@
                 </div>
               </div>
             </button>
-            <q-btn flat color="grey-7" rounded class="q-ml-sm q-my-xsm" @click="async () => {
+            <div style="display: flex;">
+              <q-btn flat color="grey-7" rounded class="q-ml-sm q-my-xsm" @click="async () => {
                 if (!this.$storage.user.authorized) {
                   this.authDialog.isOpen = true;
                   console.log(this.authDialog);
@@ -68,6 +69,12 @@
               <q-icon class="q-mr-sm" :color="post.isLiked ? 'red' : 'grey'" :name="post.isLiked ? 'mdi-heart' : 'mdi-heart-outline'"/>
               <span>{{ post.likesCount }}</span>
             </q-btn>
+            <q-space></q-space>
+            <div class="q-my-auto">
+              <q-icon name="mdi-eye-outline" size="25px" color="grey-7"></q-icon>
+              <span style="color: rgb(107, 107, 107);" class="q-mx-md">{{ post.views }}</span>
+            </div>
+          </div>
           </q-card>
         </div>
       </div>

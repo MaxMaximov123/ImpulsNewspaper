@@ -18,7 +18,7 @@
         <q-avatar
           size="45px"
         >
-          <img :src="`/favicon.ico`">
+          <img :src="logoSrc">
         </q-avatar>
         </q-btn>
 
@@ -151,6 +151,7 @@ export default {
     user: Object,
     filters: Object,
     loadingUpdate: Boolean,
+    logoSrc: String,
   },
 
   data() {

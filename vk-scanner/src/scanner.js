@@ -23,6 +23,13 @@ export default class Scanner {
   async scanning() {
     let scrollStep = 5000;
     while (true) {
+      let sourceLogo = await this.page.$('.AvatarRich__img');
+
+      await db('sources').insert({
+        key: config.sourceKey,
+        logoSrc: await sourceLogo.evaluate(element => element.src)
+      }).onConflict(['key']).merge();
+
       while (this.isScanning) {
         await this.page.evaluate(scrollStep => {
           window.scrollBy(0, scrollStep);
@@ -31,7 +38,7 @@ export default class Scanner {
         let postElements = await this.page.$$('.post');
         let newPosts = [];
 
-        await this.waitForTimeout(10000); 
+        await this.waitForTimeout(10000);
 
         for (let postElement of postElements) {
           let post = {
