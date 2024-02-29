@@ -46,7 +46,7 @@ export default {
       this.logoSrc = this.userData.logoSrc;
       delete this.userData.logoSrc;
 
-      this.$storage.user = this.user = this.userData ? {...this.userData, authorized: true } : { authorized: false };
+      this.$storage.user = this.user = this.userData.id ? {...this.userData, authorized: true } : { authorized: false };
     }
   },
 
