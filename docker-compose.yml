@@ -93,6 +93,102 @@ services:
     depends_on:
       - db
     network_mode: "host"
+  
+  scanner-distolymp:
+    restart: always
+    build:
+      context: .
+      dockerfile: vk-scanner/Dockerfile
+    environment:
+      DATABASE_POOL_MAX: 40
+      DATABASE_POOL_MIN: 5
+      DATABASE_URL: postgres://max:jbfgslgsdlfkngd@localhost:3200/posts
+      DATABASE_SCHEMA: public
+      SOURCE_KEY: DISTOLYMP
+      SOURCE_URL: https://vk.com/distolymp
+    depends_on:
+      - db
+    network_mode: "host"
+  
+  scanner-lomonosov-olymp:
+    restart: always
+    build:
+      context: .
+      dockerfile: vk-scanner/Dockerfile
+    environment:
+      DATABASE_POOL_MAX: 40
+      DATABASE_POOL_MIN: 5
+      DATABASE_URL: postgres://max:jbfgslgsdlfkngd@localhost:3200/posts
+      DATABASE_SCHEMA: public
+      SOURCE_KEY: LOMONOSOV_OLYMP_CHEMISTRY
+      SOURCE_URL: https://vk.com/lomonosov.olymp
+    depends_on:
+      - db
+    network_mode: "host"
+  
+  scanner-olympspbu:
+    restart: always
+    build:
+      context: .
+      dockerfile: vk-scanner/Dockerfile
+    environment:
+      DATABASE_POOL_MAX: 40
+      DATABASE_POOL_MIN: 5
+      DATABASE_URL: postgres://max:jbfgslgsdlfkngd@localhost:3200/posts
+      DATABASE_SCHEMA: public
+      SOURCE_KEY: OLYMP_SPBU
+      SOURCE_URL: https://vk.com/olympspbu
+    depends_on:
+      - db
+    network_mode: "host"
+  
+  scanner-innopolis-open-is:
+    restart: always
+    build:
+      context: .
+      dockerfile: vk-scanner/Dockerfile
+    environment:
+      DATABASE_POOL_MAX: 40
+      DATABASE_POOL_MIN: 5
+      DATABASE_URL: postgres://max:jbfgslgsdlfkngd@localhost:3200/posts
+      DATABASE_SCHEMA: public
+      SOURCE_KEY: INNOPOLIS_OPEN_IS
+      SOURCE_URL: https://vk.com/iuiso
+    depends_on:
+      - db
+    network_mode: "host"
+  
+  scanner-olymp-gazprom:
+    restart: always
+    build:
+      context: .
+      dockerfile: vk-scanner/Dockerfile
+    environment:
+      DATABASE_POOL_MAX: 40
+      DATABASE_POOL_MIN: 5
+      DATABASE_URL: postgres://max:jbfgslgsdlfkngd@localhost:3200/posts
+      DATABASE_SCHEMA: public
+      SOURCE_KEY: OLYMP_GAZPROM
+      SOURCE_URL: https://vk.com/olymp_gazprom
+    depends_on:
+      - db
+    network_mode: "host"
+  
+  scanner-olymp-nti:
+    restart: always
+    build:
+      context: .
+      dockerfile: vk-scanner/Dockerfile
+    environment:
+      DATABASE_POOL_MAX: 40
+      DATABASE_POOL_MIN: 5
+      DATABASE_URL: postgres://max:jbfgslgsdlfkngd@localhost:3200/posts
+      DATABASE_SCHEMA: public
+      SOURCE_KEY: OLYMP_NTI
+      SOURCE_URL: https://vk.com/nticontest
+    depends_on:
+      - db
+    network_mode: "host"
 
   backend:
     restart: always

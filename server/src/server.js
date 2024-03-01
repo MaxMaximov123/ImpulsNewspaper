@@ -12,6 +12,12 @@ const sourceKeys = {
   'МГТУ': 'BMSTU',
   "Иннополис": "INNOPOLIS",
   "Спец.": "SPECIAL",
+  "Онлайн олимп. физ.": "DISTOLYMP",
+  "Олимп. Ломоносов химия": "LOMONOSOV_OLYMP_CHEMISTRY",
+  "Олимп. СПбГУ": "OLYMP_SPBU",
+  "Иннополис Open ИБ": "INNOPOLIS_OPEN_IS",
+  "Олимп. газпром": "OLYMP_GAZPROM",
+  "Олимп. НТИ": "OLYMP_NTI",
 };
 
 const sortedBy = {
