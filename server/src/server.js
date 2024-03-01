@@ -11,6 +11,7 @@ const sourceKeys = {
   'ВШЭ': 'HSE',
   'МГТУ': 'BMSTU',
   "Иннополис": "INNOPOLIS",
+  "Спец.": "SPECIAL",
 };
 
 const sortedBy = {
@@ -128,13 +129,17 @@ app.post('/api/posts', async (req, res) => {
       db.select('posts.*')
       .column(db.raw('array_agg(images.src) as images'))
       .from('posts')
-      .leftJoin('images', 'posts.key', 'images.postKey')
+      .leftJoin('images', function () {
+        this.on('posts.key', '=', 'images.postKey')
+          .andOn('posts.sourceKey', '=', 'images.srcKey');
+      })
       .where('posts.text', 'ilike', `%${requestData?.filters?.context || ''}%`)
       .whereIn('posts.sourceKey', requestData.filters.selectedSourceKeys)
       .orderBy(...sortedBy[requestData.filters.sortedBy])
       .orderBy('posts.createdAt', 'desc')
       .orderBy('posts.id', 'desc')
-      .groupBy('posts.key', 'posts.id').offset(requestData.offset).limit((requestData?.filters?.currentPost || 0) + 10),
+      .groupBy('posts.key', 'posts.id').offset(requestData.offset)
+      .limit((requestData?.filters?.currentPost || 0) + 10),
     };
 
     await Promise.all(result.data.map(async post => {
@@ -233,7 +238,10 @@ app.post('/api/post', async (req, res) => {
       db.select('posts.*')
       .column(db.raw('array_agg(images.src) as images'))
       .from('posts')
-      .leftJoin('images', 'posts.key', 'images.postKey')
+      .leftJoin('images', function () {
+        this.on('posts.key', '=', 'images.postKey')
+          .andOn('posts.sourceKey', '=', 'images.srcKey');
+      })
       .groupBy('posts.key', 'posts.id').where('posts.id', requestData.postId))[0],
     };
 

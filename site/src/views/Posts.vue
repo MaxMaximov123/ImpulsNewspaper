@@ -20,7 +20,7 @@
           chips
           multiple
           label="Источник"
-          :items="['Импульс', 'ВШЭ', 'МГТУ', 'Иннополис']"
+          :items="['Импульс', 'ВШЭ', 'МГТУ', 'Иннополис', 'Спец.']"
           :loading="isLoadingPosts"
           density="compact"
           @update:modelValue="selectSourceKey"
@@ -216,7 +216,7 @@
           wentedToCurrentPoss: false,
           filters: {
             context: '',
-            selectedSourceKeys: [ "Импульс", "ВШЭ", "МГТУ", "Иннополис"],
+            selectedSourceKeys: [ "Импульс", "ВШЭ", "МГТУ", "Иннополис", "Спец."],
             sortedBy: 'Сначала новые',
           },
           sourceKeys: {
@@ -224,6 +224,7 @@
             'HSE': 'ВШЭ',
             'BMSTU': 'МГТУ',
             "INNOPOLIS": "Иннополис",
+            "SPECIAL": "Спец.",
           },
         }
     },
@@ -260,7 +261,7 @@
         this.filters.context = this.$route.query?.context || '';
         this.filters.currentPost = Number(this.$route.query?.currentPost || '0');
         this.filters.sortedBy = this.$route.query?.sortedBy || 'Сначала новые';
-        this.filters.selectedSourceKeys = (this.$route.query?.selectedSourceKeys || "Импульс,ВШЭ,МГТУ,Иннополис").split(',');
+        this.filters.selectedSourceKeys = (this.$route.query?.selectedSourceKeys || "Импульс,ВШЭ,МГТУ,Иннополис,Спец.").split(',');
         this.postList = [];
         await this.loadNewPosts();
       },

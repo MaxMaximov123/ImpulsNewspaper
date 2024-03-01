@@ -89,6 +89,8 @@ export default class Scanner {
                 return new Date().toString();
               } else if (/.*минут назад.*/.test(dateString)) {
                 return new Date().toString();
+              } else if (/.*секунд.? назад.*/.test(dateString)) {
+                return new Date().toString();
               } else if (/.*минуты назад.*/.test(dateString)) {
                 return new Date().toString();
               } else if (/.*минуту назад.*/.test(dateString)) {
@@ -196,6 +198,7 @@ export default class Scanner {
               await db('images').insert(
                 post.images.map(src => {
                   return {
+                    srcKey: config.sourceKey,
                     postKey: `${post.key}`,
                     src: src
                   }
@@ -206,7 +209,7 @@ export default class Scanner {
         }
 
         if (postsIntoDB.length > 0) {
-          await db('posts').insert(postsIntoDB).onConflict(['key', 'source_key']).ignore()
+          await db('posts').insert(postsIntoDB).onConflict(['key', 'source_key']).merge();
           this.postKeys.push(...postsIntoDB.map(obj => obj.key));
         }
 
@@ -247,9 +250,9 @@ export default class Scanner {
   async start() {
     this.browser = await puppeteer.launch(
       {
-        args: ['--no-sandbox'],
-        headless: 'new',
-        // headless: false
+        // args: ['--no-sandbox'],
+        // headless: 'new',
+        headless: false
       }
     );
     this.page = await this.browser.newPage();

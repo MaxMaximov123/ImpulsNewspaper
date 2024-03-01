@@ -9,42 +9,40 @@
               {{ post.createdAt }}
           </div>
           <q-card style="background-color: rgba(240, 235, 232, 0.797);">
-            <button style="width: 100%;">
-              <div v-if="post.text[0] && post.images?.[0]" class="news-info">
-                <div class="col">
-                  <q-card-section>
-                    <div 
-                      class="news-title" v-html="
-                      post.text
-                    "></div>
-                  </q-card-section>
-                </div>
-
-                <div class="col gallery q-my-md">
-                  <q-card-section>
-                    <Gallery :images="post.images"></Gallery>
-                  </q-card-section>
-                </div>
-              </div>
-              <div v-else-if="post.text[0]" class="news-info items-start">
-                <div class="col" style="margin-top: auto; margin-bottom: auto;">
-                  <q-card-section>
-                    <div 
-                      class="news-title" v-html="
-                      post.text
-                    "></div>
-                  </q-card-section>
-                </div>
+            <div v-if="post.text[0] && post.images?.[0]" class="news-info">
+              <div class="col">
+                <q-card-section>
+                  <div 
+                    class="news-title" v-html="
+                    post.text
+                  "></div>
+                </q-card-section>
               </div>
 
-              <div v-else class="items-start">
-                <div class="col q-py-md" style="width: 100%; margin-left: auto; margin-right: auto;">
-                  <q-card-section>
-                    <Gallery :images="post.images"></Gallery>
-                  </q-card-section>
-                </div>
+              <div class="col gallery q-my-md">
+                <q-card-section>
+                  <Gallery :images="post.images"></Gallery>
+                </q-card-section>
               </div>
-            </button>
+            </div>
+            <div v-else-if="post.text[0]" class="news-info items-start">
+              <div class="col" style="margin-top: auto; margin-bottom: auto;">
+                <q-card-section>
+                  <div 
+                    class="news-title" v-html="
+                    post.text
+                  "></div>
+                </q-card-section>
+              </div>
+            </div>
+
+            <div v-else class="items-start">
+              <div class="col q-py-md" style="width: 100%; margin-left: auto; margin-right: auto;">
+                <q-card-section>
+                  <Gallery :images="post.images"></Gallery>
+                </q-card-section>
+              </div>
+            </div>
             <div style="display: flex;">
               <q-btn flat color="grey-7" rounded class="q-ml-sm q-my-xsm" @click="async () => {
                 if (!this.$storage.user.authorized) {

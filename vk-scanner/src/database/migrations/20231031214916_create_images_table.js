@@ -3,6 +3,7 @@ export async function up(knex) {
 
       table.increments('id').primary();
       table.string('post_key');
+      table.string('src_key');
       table.text('src');
 
       table.index('id');

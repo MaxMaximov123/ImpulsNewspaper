@@ -25,6 +25,7 @@ services:
       DATABASE_URL: postgres://max:jbfgslgsdlfkngd@localhost:3200/posts
       DATABASE_SCHEMA: public
       SOURCE_KEY: IMPULS
+      SOURCE_URL: https://vk.com/impulse131
     depends_on:
       - db
     network_mode: "host"
@@ -40,6 +41,7 @@ services:
       DATABASE_URL: postgres://max:jbfgslgsdlfkngd@localhost:3200/posts
       DATABASE_SCHEMA: public
       SOURCE_KEY: HSE
+      SOURCE_URL: https://vk.com/hseolymp
     depends_on:
       - db
     network_mode: "host"
@@ -55,6 +57,7 @@ services:
       DATABASE_URL: postgres://max:jbfgslgsdlfkngd@localhost:3200/posts
       DATABASE_SCHEMA: public
       SOURCE_KEY: BMSTU
+      SOURCE_URL: https://vk.com/olymp_bmstu
     depends_on:
       - db
     network_mode: "host"
@@ -70,6 +73,23 @@ services:
       DATABASE_URL: postgres://max:jbfgslgsdlfkngd@localhost:3200/posts
       DATABASE_SCHEMA: public
       SOURCE_KEY: INNOPOLIS
+      SOURCE_URL: https://vk.com/innopolisu
+    depends_on:
+      - db
+    network_mode: "host"
+  
+  scanner-special:
+    restart: always
+    build:
+      context: .
+      dockerfile: vk-scanner/Dockerfile
+    environment:
+      DATABASE_POOL_MAX: 40
+      DATABASE_POOL_MIN: 5
+      DATABASE_URL: postgres://max:jbfgslgsdlfkngd@localhost:3200/posts
+      DATABASE_SCHEMA: public
+      SOURCE_KEY: SPECIAL
+      SOURCE_URL: https://vk.com/club224926448
     depends_on:
       - db
     network_mode: "host"
