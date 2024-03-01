@@ -209,7 +209,7 @@ export default class Scanner {
         }
 
         if (postsIntoDB.length > 0) {
-          await db('posts').insert(postsIntoDB).onConflict(['key', 'source_key']).merge();
+          await db('posts').insert(postsIntoDB).onConflict(['key', 'source_key']).merge({ text: db.raw('EXCLUDED.text') });
           this.postKeys.push(...postsIntoDB.map(obj => obj.key));
         }
 
