@@ -12,19 +12,22 @@
           density="compact"
           @update:modelValue="updateSortedBy"
         ></v-select>
+        <!-- chips -->
         <v-select
           class="source-keys"
           variant="outlined"
           v-model="filters.selectedSourceKeys"
           clearable
-          chips
           multiple
           label="Источник"
-          :items="['Импульс', 'ВШЭ', 'МГТУ', 'Иннополис', 'Спец.']"
+          :items="Object.values(this.sourceKeys)"
           :loading="isLoadingPosts"
           density="compact"
           @update:modelValue="selectSourceKey"
-        ></v-select></div>
+          chips
+          :closable-chips="true"
+        >
+        </v-select></div>
       
       <div ref="postsContainer">
         <div
@@ -214,17 +217,23 @@
           areAllPostsLoaded: false,
           authDialog: this.$storage.authDialog,
           wentedToCurrentPoss: false,
-          filters: {
-            context: '',
-            selectedSourceKeys: [ "Импульс", "ВШЭ", "МГТУ", "Иннополис", "Спец."],
-            sortedBy: 'Сначала новые',
-          },
           sourceKeys: {
             'IMPULS': 'Импульс',
             'HSE': 'ВШЭ',
             'BMSTU': 'МГТУ',
             "INNOPOLIS": "Иннополис",
             "SPECIAL": "Спец.",
+            "DISTOLYMP": "Онлайн олимп. физ.",
+            "LOMONOSOV_OLYMP_CHEMISTRY": "Олимп. Ломоносов химия",
+            "OLYMP_SPBU": "Олимп. СПбГУ",
+            "INNOPOLIS_OPEN_IS": "Иннополис Open ИБ",
+            "OLYMP_GAZPROM": "Олимп. газпром",
+            "OLYMP_NTI": "Олимп. НТИ",
+          },
+          filters: {
+            context: '',
+            selectedSourceKeys: [],
+            sortedBy: 'Сначала новые',
           },
         }
     },
@@ -261,7 +270,7 @@
         this.filters.context = this.$route.query?.context || '';
         this.filters.currentPost = Number(this.$route.query?.currentPost || '0');
         this.filters.sortedBy = this.$route.query?.sortedBy || 'Сначала новые';
-        this.filters.selectedSourceKeys = (this.$route.query?.selectedSourceKeys || "Импульс,ВШЭ,МГТУ,Иннополис,Спец.").split(',');
+        this.filters.selectedSourceKeys = (this.$route.query?.selectedSourceKeys || Object.values(this.sourceKeys).join(',')).split(',');
         this.postList = [];
         await this.loadNewPosts();
       },
