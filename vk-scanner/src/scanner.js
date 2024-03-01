@@ -250,9 +250,9 @@ export default class Scanner {
   async start() {
     this.browser = await puppeteer.launch(
       {
-        // args: ['--no-sandbox'],
-        // headless: 'new',
-        headless: false
+        args: ['--no-sandbox'],
+        headless: 'new',
+        // headless: false
       }
     );
     this.page = await this.browser.newPage();
