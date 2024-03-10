@@ -2,7 +2,7 @@ import config from './config.js';
 import Scanner from './scanner.js';
 
 async function main() {
-	new Scanner({ restartTime: 3 });
+	new Scanner({ restartTime: config.restartTime });
 	// new Scanner({ restartTime: 60 });
 }
 

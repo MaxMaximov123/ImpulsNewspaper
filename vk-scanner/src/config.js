@@ -7,7 +7,7 @@ const config = {};
 
 config.sourceKey = process.env.SOURCE_KEY;
 config.sourceUrl = process.env.SOURCE_URL;
-config.restartTime = process.env.RESTART_TIME;
+config.restartTime = Number(process.env.RESTART_TIME);
 
 config.database = {
 	pool: {

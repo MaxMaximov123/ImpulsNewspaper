@@ -18,6 +18,7 @@ const sourceKeys = {
   "Иннополис Open ИБ": "INNOPOLIS_OPEN_IS",
   "Олимп. газпром": "OLYMP_GAZPROM",
   "Олимп. НТИ": "OLYMP_NTI",
+  "О проекте": "ABOUT_PROJECT",
 };
 
 const sortedBy = {
@@ -122,8 +123,6 @@ app.post('/api/auth', async (req, res) => {
 app.post('/api/posts', async (req, res) => {
   const stTime = new Date().getTime();
   const requestData = req.body;
-
-  console.log(requestData);
 
   requestData.filters.selectedSourceKeys = requestData.filters.selectedSourceKeys.map(
     sourceKey => sourceKeys[sourceKey]
