@@ -205,7 +205,12 @@
     },
 
     mounted() {
-      this.$refs.postsContainer.addEventListener('DOMNodeInserted', this.postContainerUpdated, false);
+      this.$refs.postsContainer.addEventListener('DOMNodeInserted', () => this.postContainerUpdated('instant'), false);
+      window.addEventListener('keydown', this.handleKeyPress);
+    },
+
+    beforeDestroy() {
+      window.removeEventListener('keydown', this.handleKeyPress);
     },
 
     data() {
@@ -249,19 +254,28 @@
     },
 
     methods: {
-      goToPost() {
-        document.getElementById(6).scrollIntoView({ behavior: 'smooth' });
+      handleKeyPress(event) {
+        if (event.key === 'ArrowRight') {
+          this.filters.currentPost++;
+        } else if (event.key === 'ArrowLeft') {
+          this.filters.currentPost--;
+        }
+
+        console.log(this.filters.currentPost);
+
+        this.postContainerUpdated('instant');
       },
 
-      postContainerUpdated() {
-        if (!this.wentedToCurrentPoss && this.$refs[`post-${this.filters.currentPost}`]?.[0]) {
+      postContainerUpdated(behavior) {
+        if (this.$refs[`post-${this.filters.currentPost}`]?.[0]) {
           this.wentedToCurrentPoss = true;
           let currentPost = this.$refs[`post-${this.filters.currentPost}`]?.[0];
           currentPost = currentPost.getBoundingClientRect();
+          console.log(currentPost);
           window.scrollTo({
             top: currentPost.top + currentPost.height / 2 - window.innerHeight / 2 + window.scrollY,
             left: currentPost.left + window.scrollX,
-            behavior: 'instant'
+            behavior: behavior
           });
         }
         

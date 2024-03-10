@@ -144,7 +144,7 @@ app.post('/api/posts', async (req, res) => {
       .orderBy('posts.createdAt', 'desc')
       .orderBy('posts.id', 'desc')
       .groupBy('posts.key', 'posts.id').offset(requestData.offset)
-      .limit((requestData?.filters?.currentPost || 0) + 10),
+      .limit((requestData?.filters?.currentPost || 0) + 10 - requestData.offset),
     };
 
     await Promise.all(result.data.map(async post => {
