@@ -130,12 +130,13 @@ export default {
 
             this.post.text = this.post.text
               .replace(/Show more/g, `Показать ещё`)
-              .replace(/Показать ещё/g, '');
-            this.post.text = this.post.text.replace(/(https?:[0-9a-zA-Z_/.-]*)/g, ` 👉 <a href="$1" target="_blank">ссылка</a> `);
-            this.post.text = this.post.text.replace(/\n/g, "<br>")
-            // obj.text = obj.text.replace(/Show more/g, `Показать ещё`);
+              .replace(/Показать ещё/g, '')
+              .replace(/\n/g, "<br>")
+              .replace(/&lt;/g, '<')
+              .replace(/&gt;/g, '>')
+              .replace(/(https?:[0-9a-zA-Z_/.-]*)/g, ` 👉 <a href="$1" target="_blank">ссылка</a> `)
+
             this.post.createdAt = new Date(this.post.createdAt).toLocaleString("ru", timeFormatOptions);
-            this.post.text = this.post.text.replace(/#.*/g, ``);
             this.post.images = [...new Set(this.post.images)];
             this.isLoadingPosts = false;
         },

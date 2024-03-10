@@ -349,11 +349,21 @@
             (() => {
             let obj = requestResults[index];
             obj.images = Array.from(new Set(obj.images)) || [];
-            obj.text = obj.text.replace(/(https?:[0-9a-zA-Z_/.-]*)/g, ` 👉 <a href="$1" target="_blank">ссылка</a> `);
-            obj.text = obj.text.replace(/\n/g, "<br>")
-            // obj.text = obj.text.replace(/Show more/g, `Показать ещё`);
-            obj.text = obj.text.replace(/#.*/g, ``);
-            obj.text = obj.text.split(` `);
+            obj.text = obj.text
+              .replace(/Show more/g, `Показать ещё`)
+              .replace(/Показать ещё/g, '')
+              .replace(/&lt;/g, '<')
+              .replace(/&gt;/g, '>')
+              .replace(/(https?:[0-9a-zA-Z_/.-]*)/g, ` 👉 <a href="$1" target="_blank">ссылка</a> `)
+            
+            if (obj.sourceKey !== 'ABOUT_PROJECT') {
+              obj.text = obj.text
+                .replace(/\n/g, "<br>")
+                .split(/[\n\s]/);
+            } else {
+              obj.text = [obj.text]
+            }
+            console.log(obj.text);
             obj.allText = false;
             obj.slide = ref(1);
             obj.createdAt = new Date(obj.createdAt).toLocaleString("ru", timeFormatOptions);
@@ -362,7 +372,7 @@
           })();
         }
 
-        if (requestResults.length === 0) {
+        if (requestResults.length <= 10) {
           this.areAllPostsLoaded = true;
         }
 
