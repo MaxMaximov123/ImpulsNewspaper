@@ -213,7 +213,7 @@ services:
       DATABASE_SCHEMA: public
       SOURCE_KEY: ABOUT_PROJECT
       SOURCE_URL: https://vk.com/club225033050
-      RESTART_TIME: 3
+      RESTART_TIME: 1
     depends_on:
       - db
     network_mode: "host"
