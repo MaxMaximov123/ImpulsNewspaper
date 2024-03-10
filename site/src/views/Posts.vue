@@ -362,6 +362,27 @@
                 .split(/[\n\s]/);
             } else {
               obj.text = [obj.text]
+              // obj.text = [
+              //   `<h4 style="">Цели и задачи проекта</h4>
+
+              //   <div style="margin-top: 5%; text-align: left">
+              //     <h6><b>Цель:</b> создать сайт школьной газеты, посредством использования технологий веб-разработки.</h6>
+              //     <br>
+              //     <h6><b>Задачи:</b>
+              //       <br>
+              //       <div style="margin-left: 20px">
+              //         1.	Изучить технологии веб-разработки
+              //       </div>
+              //       <div style="margin-left: 20px">
+              //         2.	Разработать сайт и вспомогательные системы
+              //       </div>
+              //       <div style="margin-left: 20px">3.	Запустить продукт и обеспечить всеобщий доступ
+              //       </div>
+
+              //     </h6>
+
+              //   </div>`
+              // ]
             }
             console.log(obj.text);
             obj.allText = false;
@@ -416,12 +437,12 @@
   }
 
   .info-block {
-    top: -18px;
+    top: -21px;
     height: 0px;
     z-index: 1; 
     position:relative;
     font-family: 'Gilroy-Medium', sans-serif;
-    font-size: clamp(10px, 2.5vw, 16px);
+    font-size: 16px;
     color: #1F3264;
     display: flex;
   }
