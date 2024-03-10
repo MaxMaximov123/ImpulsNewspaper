@@ -66,8 +66,8 @@
                 <q-card-section>
                   <div 
                     class="news-title" v-html="
-                    post.text.slice(0, 20).join(' ') + (
-                    post.text.length > 20 ? '...' : '')
+                    post.text.slice(0, 40).join(' ') + (
+                    post.text.length > 40 ? '...' : '')
                   "></div>
                 </q-card-section>
               </div>
@@ -96,8 +96,8 @@
                 <q-card-section>
                   <div 
                     class="news-title" v-html="
-                    post.text.slice(0, 50).join(' ') + (
-                    post.text.length > 50 ? '...' : '')
+                    post.text.slice(0, 60).join(' ') + (
+                    post.text.length > 60 ? '...' : '')
                   "></div>
                 </q-card-section>
               </div>
@@ -205,12 +205,13 @@
     },
 
     mounted() {
-      this.$refs.postsContainer.addEventListener('DOMNodeInserted', () => this.postContainerUpdated('instant'), false);
-      window.addEventListener('keydown', this.handleKeyPress);
+      this.$refs.postsContainer.addEventListener('DOMNodeInserted', () => 
+      this.postContainerUpdated(), false);
+      window.addEventListener('keyup', this.handleKeyPress);
     },
 
     beforeDestroy() {
-      window.removeEventListener('keydown', this.handleKeyPress);
+      window.removeEventListener('keyup', this.handleKeyPress);
     },
 
     data() {
@@ -256,26 +257,41 @@
     methods: {
       handleKeyPress(event) {
         if (event.key === 'ArrowRight') {
-          this.filters.currentPost++;
+          if (this.filters.currentPost < this.postList.length) {
+            this.filters.currentPost++;
+          }
         } else if (event.key === 'ArrowLeft') {
-          this.filters.currentPost--;
+          if (this.filters.currentPost > 0) {
+            this.filters.currentPost--;
+          }
         }
 
-        console.log(this.filters.currentPost);
+        console.log(this.filters.currentPost)
 
-        this.postContainerUpdated('instant');
+        this.goToPost();
       },
 
-      postContainerUpdated(behavior) {
+      goToPost() {
         if (this.$refs[`post-${this.filters.currentPost}`]?.[0]) {
-          this.wentedToCurrentPoss = true;
           let currentPost = this.$refs[`post-${this.filters.currentPost}`]?.[0];
           currentPost = currentPost.getBoundingClientRect();
-          console.log(currentPost);
           window.scrollTo({
             top: currentPost.top + currentPost.height / 2 - window.innerHeight / 2 + window.scrollY,
             left: currentPost.left + window.scrollX,
-            behavior: behavior
+            behavior: 'smooth'
+          });
+        }
+      },
+
+      postContainerUpdated(behavior, type) {
+        if (!this.wentedToCurrentPoss && this.$refs[`post-${this.filters.currentPost}`]?.[0]) {
+          this.wentedToCurrentPoss = true;
+          let currentPost = this.$refs[`post-${this.filters.currentPost}`]?.[0];
+          currentPost = currentPost.getBoundingClientRect();
+          window.scrollTo({
+            top: currentPost.top + currentPost.height / 2 - window.innerHeight / 2 + window.scrollY,
+            left: currentPost.left + window.scrollX,
+            behavior: 'instant'
           });
         }
         
@@ -368,7 +384,7 @@
   <style scoped>
   @import url('https://fonts.cdnfonts.com/css/gilroy-bold');
   .news-item {
-    max-width: 70%;
+    max-width: 80%;
     margin-bottom: 20px;
     background-color: #ebe1c583;
     border-radius: 5px;
