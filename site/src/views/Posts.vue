@@ -351,38 +351,31 @@
               .replace(/Показать ещё/g, '')
               .replace(/&lt;/g, '<')
               .replace(/&gt;/g, '>')
-              .replace(/(https?:[0-9a-zA-Z_/.-]*)/g, ` 👉 <a href="$1" target="_blank">ссылка</a> `)
             
             if (obj.sourceKey !== 'ABOUT_PROJECT') {
               obj.text = obj.text
                 .replace(/\n/g, "<br>")
+                .replace(/(https?:[0-9a-zA-Z_/.-]*)/g, ` 👉 <a href="$1" target="_blank">ссылка</a> `)
                 .split(/[\n\s]/);
             } else {
               obj.text = [obj.text]
 
               // obj.images = [];
               // obj.text = [
-              //   `<h4 style="">Веб-приложения в современном мире</h4>
+              //   `<h4 style="">Пользовательский интерфейс</h4>
 
               //   <div style="margin-top: 5%; text-align: left">
-              //     <h6><b>Играют роль:</b>
+              //     <h6><b>Используемые технологии:</b>
               //       <br>
               //       <div style="margin-left: 20px">
-              //         1.	Поставщика информации
+              //         1.	<img src="https://masteringjs.io/assets/images/vue/vue.png" style="margin-bottom: -5px; width: 25px; margin-right: 5px"><u>Vue.js</u> - JavaScript-фреймворк, предназначенный для упрощения создания сайтов и веб-приложений.
               //       </div>
               //       <div style="margin-left: 20px">
-              //         2.	Средства общения
+              //         2.	<img src="https://cdn.vuetifyjs.com/docs/images/brand-kit/v-logo.png" style="margin-bottom: -5px; margin-left: -5px; width: 30px"><u>Vuetify</u> - фреймворк пользовательского интерфейса с готовыми компонентами в стиле Material Design.
               //       </div>
               //       <div style="margin-left: 20px">
-              //         3.	Платформы для ведения профессиональной деятельности
+              //         3.	<img src="https://itcraftapps.com/wp-content/uploads/2023/05/Quasar-Framework.svg" style="margin-bottom: -5px; width: 25px; margin-right: 5px"><u>Quasar</u> - Фреймворк с открытым исходным кодом для создания приложений под различные платформы с единой кодовой базой.
               //       </div>
-              //       <div style="margin-left: 20px">
-              //         4.	Самого большого рынка товаров и услуг
-              //       </div>
-              //       <div style="margin-left: 20px">
-              //         5.	Развлекательной платформы
-              //       </div>
-
               //     </h6>
 
               //   </div>`
