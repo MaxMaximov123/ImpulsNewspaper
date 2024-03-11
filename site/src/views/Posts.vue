@@ -29,7 +29,7 @@
         >
         </v-select></div>
       
-      <div ref="postsContainer">
+      <div ref="postsContainer" @keydown="(event) => {console.log(event)}">
         <div
           v-for="(post, index) in postList"
           :ref="`post-${index}`"
@@ -186,9 +186,9 @@
       </div>
     </div>
   </div>
-  </template>
+</template>
   
-  <script>
+<script>
   import { ref } from 'vue';
   import MenuBar from '@/components/MenuBar.vue';
   import { postRequest, apiHost } from '@/services/postRequest';
@@ -207,11 +207,7 @@
     mounted() {
       this.$refs.postsContainer.addEventListener('DOMNodeInserted', () => 
       this.postContainerUpdated(), false);
-      window.addEventListener('keyup', this.handleKeyPress);
-    },
-
-    beforeDestroy() {
-      window.removeEventListener('keyup', this.handleKeyPress);
+      window.addEventListener('keydown', this.handleKeyPress);
     },
 
     data() {
@@ -252,21 +248,22 @@
 
     beforeDestroy() {
         window.removeEventListener('scroll', this.handleScroll);
+        window.removeEventListener('keydown', this.handleKeyPress);
     },
 
     methods: {
       handleKeyPress(event) {
-        if (event.key === 'ArrowRight') {
+        if (event.key === 'PageDown' || event.key === 'ArrowRight') {
+          event.preventDefault();
           if (this.filters.currentPost < this.postList.length) {
             this.filters.currentPost++;
           }
-        } else if (event.key === 'ArrowLeft') {
+        } else if (event.key === 'PageUp' || event.key === 'ArrowLeft') {
+          event.preventDefault();
           if (this.filters.currentPost > 0) {
             this.filters.currentPost--;
           }
         }
-
-        console.log(this.filters.currentPost)
 
         this.goToPost();
       },
@@ -283,7 +280,7 @@
         }
       },
 
-      postContainerUpdated(behavior, type) {
+      postContainerUpdated() {
         if (!this.wentedToCurrentPoss && this.$refs[`post-${this.filters.currentPost}`]?.[0]) {
           this.wentedToCurrentPoss = true;
           let currentPost = this.$refs[`post-${this.filters.currentPost}`]?.[0];
@@ -384,7 +381,6 @@
               //   </div>`
               // ]
             }
-            console.log(obj.text);
             obj.allText = false;
             obj.slide = ref(1);
             obj.createdAt = new Date(obj.createdAt).toLocaleString("ru", timeFormatOptions);
@@ -415,7 +411,7 @@
   <style scoped>
   @import url('https://fonts.cdnfonts.com/css/gilroy-bold');
   .news-item {
-    max-width: 80%;
+    max-width: 75%;
     margin-bottom: 20px;
     background-color: #ebe1c583;
     border-radius: 5px;
