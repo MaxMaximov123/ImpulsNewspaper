@@ -127,14 +127,18 @@ export default {
               userId: this.$storage.user?.id || null,
             })).data;
             this.post = requestResults;
-
+            
             this.post.text = this.post.text
               .replace(/Show more/g, `Показать ещё`)
               .replace(/Показать ещё/g, '')
-              .replace(/\n/g, "<br>")
               .replace(/&lt;/g, '<')
               .replace(/&gt;/g, '>')
-              .replace(/(https?:[0-9a-zA-Z_/.-]*)/g, ` 👉 <a href="$1" target="_blank">ссылка</a> `)
+            
+            if (this.post.sourceKey !== 'ABOUT_PROJECT') {
+              this.post.text = this.post.text
+                .replace(/\n/g, "<br>")
+                .replace(/(https?:[0-9a-zA-Z_/.-]*)/g, ` 👉 <a href="$1" target="_blank">ссылка</a> `);
+            }
 
             this.post.createdAt = new Date(this.post.createdAt).toLocaleString("ru", timeFormatOptions);
             this.post.images = [...new Set(this.post.images)];

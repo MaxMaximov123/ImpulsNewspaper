@@ -358,26 +358,72 @@
                 .replace(/(https?:[0-9a-zA-Z_/.-]*)/g, ` 👉 <a href="$1" target="_blank">ссылка</a> `)
                 .split(/[\n\s]/);
             } else {
-              obj.text = [obj.text]
+              obj.text = [obj.text];
 
               // obj.images = [];
               // obj.text = [
-              //   `<h4 style="">Пользовательский интерфейс</h4>
-
-              //   <div style="margin-top: 5%; text-align: left">
-              //     <h6><b>Используемые технологии:</b>
+              //   `<h4 style="">Модули сканирования</h4>
+              //   <div style="margin-top: 5%; margin-botton: 5%; text-align: left">
+              //     <h6><b>Источники:</b>
               //       <br>
               //       <div style="margin-left: 20px">
-              //         1.	<img src="https://masteringjs.io/assets/images/vue/vue.png" style="margin-bottom: -5px; width: 25px; margin-right: 5px"><u>Vue.js</u> - JavaScript-фреймворк, предназначенный для упрощения создания сайтов и веб-приложений.
-              //       </div>
-              //       <div style="margin-left: 20px">
-              //         2.	<img src="https://cdn.vuetifyjs.com/docs/images/brand-kit/v-logo.png" style="margin-bottom: -5px; margin-left: -5px; width: 30px"><u>Vuetify</u> - фреймворк пользовательского интерфейса с готовыми компонентами в стиле Material Design.
-              //       </div>
-              //       <div style="margin-left: 20px">
-              //         3.	<img src="https://itcraftapps.com/wp-content/uploads/2023/05/Quasar-Framework.svg" style="margin-bottom: -5px; width: 25px; margin-right: 5px"><u>Quasar</u> - Фреймворк с открытым исходным кодом для создания приложений под различные платформы с единой кодовой базой.
+              //         <table>
+              //           <tbody>
+              //             <tr id="r-1">
+              //               <td>
+              //                 <img src="https://tinylinks.ru/8eb0g" style="border-radius: 20%; margin-bottom: -5px; width: 25px; margin-right: 5px">
+              //                 Импульс
+              //               </td>
+              //               <td style="padding-left: 20px;">
+              //                 <img src="https://tinylinks.ru/7x199" style="border-radius: 20%; margin-bottom: -5px; width: 25px; margin-right: 5px">
+              //                 Иннополис
+              //               </td>
+              //             </tr>
+              //             <tr id="r-2">
+              //               <td>
+              //                 <img src="https://tinylinks.ru/4gj99" style="border-radius: 20%; margin-bottom: -5px; width: 25px; margin-right: 5px">
+              //                 Олимпиада МГТУ
+              //               </td>
+              //               <td style="padding-left: 20px;">
+              //                 <img src="https://tinylinks.ru/pcxn5" style="border-radius: 20%; margin-bottom: -5px; width: 25px; margin-right: 5px">
+              //                 Олимпиада ВШЭ
+              //               </td>
+              //             </tr>
+                          
+              //             <tr id="r-3">
+              //               <td>
+              //                 <img src="https://tinylinks.ru/z8svi" style="border-radius: 20%; margin-bottom: -5px; width: 25px; margin-right: 5px">
+              //                 Олимпиада газпром
+              //               </td>
+              //               <td style="padding-left: 20px;">
+              //                 <img src="https://tinylinks.ru/a6bd9" style="border-radius: 20%; margin-bottom: -5px; width: 25px; margin-right: 5px">
+              //                 Онлайн олимпиада ф.
+              //               </td>
+              //             </tr>
+              //             <tr id="r-3">
+              //               <td>
+              //                 <img src="https://tinylinks.ru/sld5o" style="border-radius: 20%; margin-bottom: -5px; width: 25px; margin-right: 5px">
+              //                 Олимпиада НТИ
+              //               </td>
+              //               <td style="padding-left: 20px;">
+              //                 <img src="https://tinylinks.ru/xngym" style="border-radius: 20%; margin-bottom: -5px; width: 25px; margin-right: 5px">
+              //                 Ломоносов хим.
+              //               </td>
+              //             </tr>
+              //             <tr id="r-3">
+              //               <td>
+              //                 <img src="https://tinylinks.ru/2t9ao" style="border-radius: 20%; margin-bottom: -5px; width: 25px; margin-right: 5px">
+              //                 Иннополис ИБ
+              //               </td>
+              //               <td style="padding-left: 20px;">
+              //                 <img src="https://tinylinks.ru/x3j18" style="border-radius: 20%; margin-bottom: -5px; width: 25px; margin-right: 5px">
+              //                 Олимпиада СПбГУ
+              //               </td>
+              //             </tr>
+              //           </tbody>
+              //         </table>
               //       </div>
               //     </h6>
-
               //   </div>`
               // ]
             }
