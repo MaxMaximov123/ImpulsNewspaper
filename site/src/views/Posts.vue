@@ -39,13 +39,11 @@
         >
         <!-- <a :href="`#${index}`">d;fljghblfdglksdbfnglksbndfgjbsdfjgbsd.fkg</a> -->
           <div class="info-block">
-            <div class="created-at">
-              {{ post.createdAt }}
-            </div>
-          </div>
-          <div class="info-block">
-            <div style="margin-left: auto; margin-right: auto;">
+            <div>
               {{ sourceKeys[post.sourceKey] }}
+            </div>
+            <div class="created-at" style="margin-left: auto;">
+              {{ post.createdAt }}
             </div>
           </div>
           <q-card style="background-color: #f3efed;" >
@@ -360,72 +358,34 @@
             } else {
               obj.text = [obj.text];
 
-              // obj.images = [];
-              // obj.text = [
-              //   `<h4 style="">Модули сканирования</h4>
-              //   <div style="margin-top: 5%; margin-botton: 5%; text-align: left">
-              //     <h6><b>Источники:</b>
-              //       <br>
-              //       <div style="margin-left: 20px">
-              //         <table>
-              //           <tbody>
-              //             <tr id="r-1">
-              //               <td>
-              //                 <img src="https://tinylinks.ru/8eb0g" style="border-radius: 20%; margin-bottom: -5px; width: 25px; margin-right: 5px">
-              //                 Импульс
-              //               </td>
-              //               <td style="padding-left: 20px;">
-              //                 <img src="https://tinylinks.ru/7x199" style="border-radius: 20%; margin-bottom: -5px; width: 25px; margin-right: 5px">
-              //                 Иннополис
-              //               </td>
-              //             </tr>
-              //             <tr id="r-2">
-              //               <td>
-              //                 <img src="https://tinylinks.ru/4gj99" style="border-radius: 20%; margin-bottom: -5px; width: 25px; margin-right: 5px">
-              //                 Олимпиада МГТУ
-              //               </td>
-              //               <td style="padding-left: 20px;">
-              //                 <img src="https://tinylinks.ru/pcxn5" style="border-radius: 20%; margin-bottom: -5px; width: 25px; margin-right: 5px">
-              //                 Олимпиада ВШЭ
-              //               </td>
-              //             </tr>
-                          
-              //             <tr id="r-3">
-              //               <td>
-              //                 <img src="https://tinylinks.ru/z8svi" style="border-radius: 20%; margin-bottom: -5px; width: 25px; margin-right: 5px">
-              //                 Олимпиада газпром
-              //               </td>
-              //               <td style="padding-left: 20px;">
-              //                 <img src="https://tinylinks.ru/a6bd9" style="border-radius: 20%; margin-bottom: -5px; width: 25px; margin-right: 5px">
-              //                 Онлайн олимпиада ф.
-              //               </td>
-              //             </tr>
-              //             <tr id="r-3">
-              //               <td>
-              //                 <img src="https://tinylinks.ru/sld5o" style="border-radius: 20%; margin-bottom: -5px; width: 25px; margin-right: 5px">
-              //                 Олимпиада НТИ
-              //               </td>
-              //               <td style="padding-left: 20px;">
-              //                 <img src="https://tinylinks.ru/xngym" style="border-radius: 20%; margin-bottom: -5px; width: 25px; margin-right: 5px">
-              //                 Ломоносов хим.
-              //               </td>
-              //             </tr>
-              //             <tr id="r-3">
-              //               <td>
-              //                 <img src="https://tinylinks.ru/2t9ao" style="border-radius: 20%; margin-bottom: -5px; width: 25px; margin-right: 5px">
-              //                 Иннополис ИБ
-              //               </td>
-              //               <td style="padding-left: 20px;">
-              //                 <img src="https://tinylinks.ru/x3j18" style="border-radius: 20%; margin-bottom: -5px; width: 25px; margin-right: 5px">
-              //                 Олимпиада СПбГУ
-              //               </td>
-              //             </tr>
-              //           </tbody>
-              //         </table>
-              //       </div>
-              //     </h6>
-              //   </div>`
-              // ]
+              obj.images = [];
+              obj.text = [
+                `<h4 style="">Docker</h4>
+                <div style="margin-top: 5%; margin-botton: 5%; text-align: left">
+                  <div style="text-align: justify;">
+                    <h6>
+                    <img src="https://tinylinks.ru/smg8z" style="margin-bottom: -5px; width: 50px; margin-right: -5px">
+                    <b>Docker</b> — программное обеспечение для автоматизации развёртывания и управления приложениями с собственным окружением в средах с поддержкой контейнеризации.
+                    </h6>
+                  </div>
+                  <br>
+                  <h6><b>Контейнеры приложения:</b>
+                    <br>
+                    <div style="margin-left: 20px">
+                      🔸 Веб-сервер
+                    </div>
+                    <div style="margin-left: 20px">
+                      🔸 Пользовательский интерфейс (сборка)
+                    </div>
+                    <div style="margin-left: 20px">
+                      🔸 Каждый сканер
+                    </div>
+                    <div style="margin-left: 20px">
+                      🔸 База данных
+                    </div>
+                  </h6>
+                </div>`
+              ]
             }
             obj.allText = false;
             obj.slide = ref(1);
