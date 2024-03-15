@@ -360,34 +360,34 @@
             } else {
               obj.text = [obj.text];
 
-              obj.images = [];
-              obj.text = [
-                `<h4 style="">Docker</h4>
-                <div style="margin-top: 5%; margin-botton: 5%; text-align: left">
-                  <div style="text-align: justify;">
-                    <h6>
-                    <img src="https://tinylinks.ru/smg8z" style="margin-bottom: -5px; width: 50px; margin-right: -5px">
-                    <b>Docker</b> — программное обеспечение для автоматизации развёртывания и управления приложениями с собственным окружением в средах с поддержкой контейнеризации.
-                    </h6>
-                  </div>
-                  <br>
-                  <h6><b>Контейнеры приложения:</b>
-                    <br>
-                    <div style="margin-left: 20px">
-                      🔸 Веб-сервер
-                    </div>
-                    <div style="margin-left: 20px">
-                      🔸 Пользовательский интерфейс (сборка)
-                    </div>
-                    <div style="margin-left: 20px">
-                      🔸 Каждый сканер
-                    </div>
-                    <div style="margin-left: 20px">
-                      🔸 База данных
-                    </div>
-                  </h6>
-                </div>`
-              ]
+              // obj.images = [];
+              // obj.text = [
+              //   `<h4 style="">Docker</h4>
+              //   <div style="margin-top: 5%; margin-botton: 5%; text-align: left">
+              //     <div style="text-align: justify;">
+              //       <h6>
+              //       <img src="https://tinylinks.ru/smg8z" style="margin-bottom: -5px; width: 50px; margin-right: -5px">
+              //       <b>Docker</b> — программное обеспечение для автоматизации развёртывания и управления приложениями с собственным окружением в средах с поддержкой контейнеризации.
+              //       </h6>
+              //     </div>
+              //     <br>
+              //     <h6><b>Контейнеры приложения:</b>
+              //       <br>
+              //       <div style="margin-left: 20px">
+              //         🔸 Веб-сервер
+              //       </div>
+              //       <div style="margin-left: 20px">
+              //         🔸 Пользовательский интерфейс (сборка)
+              //       </div>
+              //       <div style="margin-left: 20px">
+              //         🔸 Каждый сканер
+              //       </div>
+              //       <div style="margin-left: 20px">
+              //         🔸 База данных
+              //       </div>
+              //     </h6>
+              //   </div>`
+              // ]
             }
             obj.allText = false;
             obj.slide = ref(1);
