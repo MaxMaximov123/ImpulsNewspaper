@@ -148,7 +148,7 @@
             </div>
           </div>
           </q-card>
-          <div class="info-block" style="top: 0px;">
+          <div class="info-block" style="top: 1px;">
             <div class="created-at" style="margin-left: auto;">
               {{ post.createdAt }}
             </div>
@@ -438,16 +438,15 @@
 
   .created-at {
     padding-left: 5px;
-    font-size: clamp(10px, 2.5vw, 16px);
   }
 
   .info-block {
-    top: -21px;
+    top: clamp(-21px, -3.5vw, -16px);
     height: 0px;
     z-index: 1; 
     position:relative;
     font-family: 'Gilroy-Medium', sans-serif;
-    font-size: 16px;
+    font-size: clamp(10px, 2.5vw, 16px);
     color: #1F3264;
     display: flex;
   }
