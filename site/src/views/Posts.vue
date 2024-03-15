@@ -39,11 +39,8 @@
         >
         <!-- <a :href="`#${index}`">d;fljghblfdglksdbfnglksbndfgjbsdfjgbsd.fkg</a> -->
           <div class="info-block">
-            <div>
+            <div style="margin-left: auto; margin-right: auto;">
               {{ sourceKeys[post.sourceKey] }}
-            </div>
-            <div class="created-at" style="margin-left: auto;">
-              {{ post.createdAt }}
             </div>
           </div>
           <q-card style="background-color: #f3efed;" >
@@ -151,6 +148,11 @@
             </div>
           </div>
           </q-card>
+          <div class="info-block" style="top: 0px;">
+            <div class="created-at" style="margin-left: auto;">
+              {{ post.createdAt }}
+            </div>
+          </div>
         </div>
       </div>
       <!-- <div>{{ (() => {

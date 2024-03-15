@@ -3,12 +3,14 @@
     <div class="q-pa-sm">
       <div class="news-container q-pa-xs">
         <div
-          class="q-pa-sm"
+          class="news-item q-pa-sm"
         >
-          <div class="created-at q-ml-md q-mt-sm">
-              {{ post.createdAt }}
+          <div class="info-block">
+            <div style="margin-left: auto; margin-right: auto;">
+              {{ sourceKeys[post.sourceKey] }}
+            </div>
           </div>
-          <q-card style="background-color: rgba(240, 235, 232, 0.797);">
+          <q-card style="background-color: #f3efed;">
             <div v-if="post.text[0] && post.images?.[0]" class="news-info">
               <div class="col">
                 <q-card-section>
@@ -74,6 +76,11 @@
             </div>
           </div>
           </q-card>
+          <div class="info-block" style="top: 0px;">
+            <div class="created-at" style="margin-left: auto;">
+              {{ post.createdAt }}
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -101,7 +108,21 @@ export default {
                 text: '',
                 images: [],
                 createdAt: null,
-            }
+            },
+            sourceKeys: {
+              'IMPULS': 'Импульс',
+              'HSE': 'ВШЭ',
+              'BMSTU': 'МГТУ',
+              "INNOPOLIS": "Иннополис",
+              "SPECIAL": "Спец.",
+              "DISTOLYMP": "Онлайн олимп. физ.",
+              "LOMONOSOV_OLYMP_CHEMISTRY": "Олимп. Ломоносов химия",
+              "OLYMP_SPBU": "Олимп. СПбГУ",
+              "INNOPOLIS_OPEN_IS": "Иннополис Open ИБ",
+              "OLYMP_GAZPROM": "Олимп. газпром",
+              "OLYMP_NTI": "Олимп. НТИ",
+              "ABOUT_PROJECT": "О проекте",
+            },
         }
     },
 
@@ -148,6 +169,27 @@ export default {
 }
 </script>
 <style scoped>@import url('https://fonts.cdnfonts.com/css/gilroy-bold');
+  .news-item {
+    /* max-width: 75%; */
+    /* margin-bottom: 20px; */
+    background-color: #ebe1c583;
+    border-radius: 5px;
+    padding: 20px;
+    margin-left: auto;
+    margin-right: auto; 
+  }
+
+  .info-block {
+    top: -21px;
+    height: 0px;
+    z-index: 1; 
+    position:relative;
+    font-family: 'Gilroy-Medium', sans-serif;
+    font-size: 16px;
+    color: #1F3264;
+    display: flex;
+  }
+
   .news-title {
     color: #1F3264;
     font-family: 'Gilroy-Medium', sans-serif;
@@ -171,10 +213,7 @@ export default {
  
 
   .created-at {
-    z-index: 1; 
-    position:absolute;
-    color: #1F3264;
-    font-family: 'Gilroy-Medium', sans-serif;
+    padding-left: 5px;
     font-size: clamp(10px, 2.5vw, 16px);
   }
 
