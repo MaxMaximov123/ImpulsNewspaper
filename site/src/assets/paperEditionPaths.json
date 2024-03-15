@@ -6,6 +6,100 @@
     "url": "paperEdition",
     "children": [
       {
+        "path": "./src/assets/paperEdition/2017",
+        "label": "2017",
+        "url": "paperEdition/2017",
+        "selectable": false,
+        "children": [
+          {
+            "path": "./src/assets/paperEdition/2017/Декабрь.pdf",
+            "label": "Декабрь",
+            "url": "paperEdition/2017/Декабрь",
+            "selectable": true,
+            "handler": "() => {console.Consolelog(777)}"
+          },
+          {
+            "path": "./src/assets/paperEdition/2017/Ноябрь.pdf",
+            "label": "Ноябрь",
+            "url": "paperEdition/2017/Ноябрь",
+            "selectable": true,
+            "handler": "() => {console.Consolelog(777)}"
+          }
+        ]
+      },
+      {
+        "path": "./src/assets/paperEdition/2018",
+        "label": "2018",
+        "url": "paperEdition/2018",
+        "selectable": false,
+        "children": [
+          {
+            "path": "./src/assets/paperEdition/2018/Апрель.pdf",
+            "label": "Апрель",
+            "url": "paperEdition/2018/Апрель",
+            "selectable": true,
+            "handler": "() => {console.Consolelog(777)}"
+          },
+          {
+            "path": "./src/assets/paperEdition/2018/Май.pdf",
+            "label": "Май",
+            "url": "paperEdition/2018/Май",
+            "selectable": true,
+            "handler": "() => {console.Consolelog(777)}"
+          },
+          {
+            "path": "./src/assets/paperEdition/2018/Март.pdf",
+            "label": "Март",
+            "url": "paperEdition/2018/Март",
+            "selectable": true,
+            "handler": "() => {console.Consolelog(777)}"
+          },
+          {
+            "path": "./src/assets/paperEdition/2018/Октябрь.pdf",
+            "label": "Октябрь",
+            "url": "paperEdition/2018/Октябрь",
+            "selectable": true,
+            "handler": "() => {console.Consolelog(777)}"
+          },
+          {
+            "path": "./src/assets/paperEdition/2018/Сентябрь.pdf",
+            "label": "Сентябрь",
+            "url": "paperEdition/2018/Сентябрь",
+            "selectable": true,
+            "handler": "() => {console.Consolelog(777)}"
+          },
+          {
+            "path": "./src/assets/paperEdition/2018/Февраль.pdf",
+            "label": "Февраль",
+            "url": "paperEdition/2018/Февраль",
+            "selectable": true,
+            "handler": "() => {console.Consolelog(777)}"
+          },
+          {
+            "path": "./src/assets/paperEdition/2018/Январь.pdf",
+            "label": "Январь",
+            "url": "paperEdition/2018/Январь",
+            "selectable": true,
+            "handler": "() => {console.Consolelog(777)}"
+          }
+        ]
+      },
+      {
+        "path": "./src/assets/paperEdition/2019",
+        "label": "2019",
+        "url": "paperEdition/2019",
+        "selectable": false,
+        "children": [
+          {
+            "path": "./src/assets/paperEdition/2019/День учителя.pdf",
+            "label": "День учителя",
+            "url": "paperEdition/2019/День учителя",
+            "selectable": true,
+            "handler": "() => {console.Consolelog(777)}"
+          }
+        ]
+      },
+      {
         "path": "./src/assets/paperEdition/2020",
         "label": "2020",
         "url": "paperEdition/2020",
@@ -48,6 +142,13 @@
             "handler": "() => {console.Consolelog(777)}"
           }
         ]
+      },
+      {
+        "path": "./src/assets/paperEdition/Спец выпуски",
+        "label": "Спец",
+        "url": "paperEdition/Спец",
+        "selectable": true,
+        "handler": "() => {console.Consolelog(777)}"
       }
     ]
   }
