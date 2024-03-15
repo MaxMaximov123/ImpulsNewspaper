@@ -476,6 +476,7 @@
 
   .created-at {
     padding-left: 5px;
+    font-size: clamp(10px, 2.5vw, 16px);
   }
 
   .info-block {
