@@ -359,7 +359,7 @@
                 .split(/[\n\s]/);
             } else {
               obj.text = [obj.text];
-
+ 
               // obj.images = [];
               // obj.text = [
               //   `<h4 style="">Перспективы развития</h4>
