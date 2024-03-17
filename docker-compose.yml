@@ -26,7 +26,7 @@ services:
       DATABASE_SCHEMA: public
       SOURCE_KEY: IMPULS
       SOURCE_URL: https://vk.com/impulse131
-      RESTART_TIME: 20
+      RESTART_TIME: 5
     depends_on:
       - db
     network_mode: "host"
@@ -43,7 +43,7 @@ services:
       DATABASE_SCHEMA: public
       SOURCE_KEY: HSE
       SOURCE_URL: https://vk.com/hseolymp
-      RESTART_TIME: 20
+      RESTART_TIME: 5
     depends_on:
       - db
     network_mode: "host"
@@ -60,7 +60,7 @@ services:
       DATABASE_SCHEMA: public
       SOURCE_KEY: BMSTU
       SOURCE_URL: https://vk.com/olymp_bmstu
-      RESTART_TIME: 20
+      RESTART_TIME: 5
     depends_on:
       - db
     network_mode: "host"
@@ -77,7 +77,7 @@ services:
       DATABASE_SCHEMA: public
       SOURCE_KEY: INNOPOLIS
       SOURCE_URL: https://vk.com/innopolisu
-      RESTART_TIME: 20
+      RESTART_TIME: 5
     depends_on:
       - db
     network_mode: "host"
@@ -94,7 +94,7 @@ services:
       DATABASE_SCHEMA: public
       SOURCE_KEY: SPECIAL
       SOURCE_URL: https://vk.com/club224926448
-      RESTART_TIME: 20
+      RESTART_TIME: 5
     depends_on:
       - db
     network_mode: "host"
@@ -111,7 +111,7 @@ services:
       DATABASE_SCHEMA: public
       SOURCE_KEY: DISTOLYMP
       SOURCE_URL: https://vk.com/distolymp
-      RESTART_TIME: 20
+      RESTART_TIME: 5
     depends_on:
       - db
     network_mode: "host"
@@ -128,7 +128,7 @@ services:
       DATABASE_SCHEMA: public
       SOURCE_KEY: LOMONOSOV_OLYMP_CHEMISTRY
       SOURCE_URL: https://vk.com/lomonosov.olymp
-      RESTART_TIME: 20
+      RESTART_TIME: 5
     depends_on:
       - db
     network_mode: "host"
@@ -145,7 +145,7 @@ services:
       DATABASE_SCHEMA: public
       SOURCE_KEY: OLYMP_SPBU
       SOURCE_URL: https://vk.com/olympspbu
-      RESTART_TIME: 20
+      RESTART_TIME: 5
     depends_on:
       - db
     network_mode: "host"
@@ -162,7 +162,7 @@ services:
       DATABASE_SCHEMA: public
       SOURCE_KEY: INNOPOLIS_OPEN_IS
       SOURCE_URL: https://vk.com/iuiso
-      RESTART_TIME: 20
+      RESTART_TIME: 5
     depends_on:
       - db
     network_mode: "host"
@@ -179,7 +179,7 @@ services:
       DATABASE_SCHEMA: public
       SOURCE_KEY: OLYMP_GAZPROM
       SOURCE_URL: https://vk.com/olymp_gazprom
-      RESTART_TIME: 20
+      RESTART_TIME: 5
     depends_on:
       - db
     network_mode: "host"
@@ -196,7 +196,7 @@ services:
       DATABASE_SCHEMA: public
       SOURCE_KEY: OLYMP_NTI
       SOURCE_URL: https://vk.com/nticontest
-      RESTART_TIME: 20
+      RESTART_TIME: 5
     depends_on:
       - db
     network_mode: "host"
