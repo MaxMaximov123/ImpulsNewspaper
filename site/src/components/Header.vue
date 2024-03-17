@@ -113,7 +113,7 @@
                     </q-item-section>
                   </q-item>
 
-                  <!-- <q-item clickable v-close-popup tabindex="0">
+                  <q-item clickable v-close-popup tabindex="0" @click="this.$router.push('../../paperEdition/Спец выпуски/20 лет импульсу (ru)')">
                     <q-item-section avatar>
                       <q-avatar>
                         <img src="https://cdn-icons-png.flaticon.com/512/6159/6159876.png">
@@ -123,7 +123,7 @@
                       <q-item-label>Юбилейный выпуск</q-item-label>
                       <q-item-label caption>2024</q-item-label>
                     </q-item-section>
-                  </q-item> -->
+                  </q-item>
 
                 </q-list>
               </q-menu>

@@ -157,6 +157,7 @@ export default {
             
             if (this.post.sourceKey !== 'ABOUT_PROJECT') {
               this.post.text = this.post.text
+                .replace(/#[A-Za-zА-Яа-я0-9]+[\s\n]*/g, "")
                 .replace(/\n/g, "<br>")
                 .replace(/(https?:[0-9a-zA-Z_/.-]*)/g, ` 👉 <a href="$1" target="_blank">ссылка</a> `);
             }

@@ -145,10 +145,25 @@
       },
       {
         "path": "./src/assets/paperEdition/Спец выпуски",
-        "label": "Спец",
-        "url": "paperEdition/Спец",
-        "selectable": true,
-        "handler": "() => {console.Consolelog(777)}"
+        "label": "Спец выпуски",
+        "url": "paperEdition/Спец выпуски",
+        "selectable": false,
+        "children": [
+          {
+            "path": "./src/assets/paperEdition/Спец выпуски/20 лет импульсу (en).pdf",
+            "label": "20 лет импульсу (en)",
+            "url": "paperEdition/Спец выпуски/20 лет импульсу (en)",
+            "selectable": true,
+            "handler": "() => {console.Consolelog(777)}"
+          },
+          {
+            "path": "./src/assets/paperEdition/Спец выпуски/20 лет импульсу (ru).pdf",
+            "label": "20 лет импульсу (ru)",
+            "url": "paperEdition/Спец выпуски/20 лет импульсу (ru)",
+            "selectable": true,
+            "handler": "() => {console.Consolelog(777)}"
+          }
+        ]
       }
     ]
   }

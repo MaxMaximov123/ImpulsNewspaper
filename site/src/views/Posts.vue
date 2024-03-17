@@ -31,7 +31,9 @@
       
       <div ref="postsContainer" @keydown="(event) => {console.log(event)}">
         <div
-          v-for="(post, index) in postList"
+          v-for="(post, index) in postList.filter(post => {
+            return post.text[0] || post.images?.[0]
+          })"
           :ref="`post-${index}`"
           :key="post.id"
           :data-id="index - 1"
@@ -354,6 +356,7 @@
             
             if (obj.sourceKey !== 'ABOUT_PROJECT') {
               obj.text = obj.text
+                .replace(/#[A-Za-zА-Яа-я0-9]+[\s\n]*/g, "")
                 .replace(/\n/g, "<br>")
                 .replace(/(https?:[0-9a-zA-Z_/.-]*)/g, ` 👉 <a href="$1" target="_blank">ссылка</a> `)
                 .split(/[\n\s]/);
