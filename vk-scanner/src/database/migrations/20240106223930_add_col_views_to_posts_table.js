@@ -7,8 +7,8 @@ export async function up(knex) {
   
 export async function down(knex) {
   return knex.schema.table("posts", function (table) {
-    table.dropColumn("views");
     table.dropIndex('views');
+    table.dropColumn("views");
   });
 };
   

@@ -25,6 +25,8 @@ export default class Scanner {
     while (true) {
       let sourceLogo = await this.page.$('.AvatarRich__img');
 
+      console.log(await sourceLogo.evaluate(element => element.src));
+
       await db('sources').insert({
         key: config.sourceKey,
         logoSrc: await sourceLogo.evaluate(element => element.src)
