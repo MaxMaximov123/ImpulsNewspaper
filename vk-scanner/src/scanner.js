@@ -238,7 +238,7 @@ export default class Scanner {
 
       this.browser = await puppeteer.launch(
         {
-          args: ['--no-sandbox'],
+          args: ['--no-sandbox', '--lang=ru-RU'],
           headless: 'new',
           // headless: false
         }
@@ -253,7 +253,7 @@ export default class Scanner {
         Object.defineProperty(navigator, 'language', { get: () => 'ru-RU' });
         Object.defineProperty(navigator, 'languages', { get: () => ['ru-RU', 'ru', 'en-US'] });
       });
-      
+
       await this.page.goto(config.sourceUrl, { timeout: 0 });
       this.totalHeight = 0;
     }
@@ -262,7 +262,7 @@ export default class Scanner {
   async start() {
     this.browser = await puppeteer.launch(
       {
-        args: ['--no-sandbox'],
+        args: ['--no-sandbox', '--lang=ru-RU'],
         headless: 'new',
         // headless: false
       }
