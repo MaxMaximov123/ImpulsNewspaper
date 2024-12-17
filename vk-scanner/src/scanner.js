@@ -74,6 +74,8 @@ export default class Scanner {
               };
 
               let dateString = element ? element.textContent.replace(/\s+в\s+\d+:\d+/, '') : '';
+
+              return dateString;
               if (!/\d\d\d\d/.test(dateString)) {
                 dateString += ` ${MONTH_NAMES[dateString.split(/\s+/)[1]] <= currentMonth ? currentYear : currentYear - 1}`;
               }
