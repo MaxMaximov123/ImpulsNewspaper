@@ -246,7 +246,7 @@ export default class Scanner {
       await this.page.setExtraHTTPHeaders({
         'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
       });
-      await this.page.goto(config.sourceUrl);
+      await this.page.goto(config.sourceUrl, { timeout: 0 });
       this.totalHeight = 0;
     }
   }
@@ -264,7 +264,7 @@ export default class Scanner {
     await this.page.setExtraHTTPHeaders({
       'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
     });
-    await this.page.goto(config.sourceUrl);
+    await this.page.goto(config.sourceUrl, { timeout: 0 });
 
     this.postKeys = (await db('posts').select('key')).map(obj => obj.key);
     this.startReloadingPage();
