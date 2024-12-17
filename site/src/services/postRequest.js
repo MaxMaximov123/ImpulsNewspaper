@@ -1,6 +1,6 @@
 // import { config } from '../config.js';
 
-export const apiHost = 1 ? 'http://impuls131.ru/' : 'http://localhost:81/';
+export const apiHost = 0 ? 'http://impuls131.ru/' : 'http://185.238.74.193:8084/';
 
 export function postRequest(url, data) {
     return new Promise((resolve, reject) => {
