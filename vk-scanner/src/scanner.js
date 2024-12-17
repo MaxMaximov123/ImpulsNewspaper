@@ -239,8 +239,8 @@ export default class Scanner {
       this.browser = await puppeteer.launch(
         {
           args: ['--no-sandbox', '--lang=ru-RU'],
-          headless: 'new',
-          // headless: false
+          // headless: 'new',
+          headless: false
         }
       );
 
@@ -271,8 +271,8 @@ export default class Scanner {
     this.browser = await puppeteer.launch(
       {
         args: ['--no-sandbox', '--lang=ru-RU'],
-        headless: 'new',
-        // headless: false
+        // headless: 'new',
+        headless: false
       }
     );
     this.page = await this.browser.newPage();
