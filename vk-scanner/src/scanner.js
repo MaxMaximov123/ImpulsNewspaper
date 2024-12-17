@@ -251,7 +251,7 @@ export default class Scanner {
 
       await this.page.evaluateOnNewDocument(() => {
         Object.defineProperty(navigator, 'language', { get: () => 'ru-RU' });
-        Object.defineProperty(navigator, 'languages', { get: () => ['ru-RU', 'ru', 'en-US'] });
+        Object.defineProperty(navigator, 'languages', { get: () => ['ru-RU', 'ru'] });
 
         const originalFormat = Intl.DateTimeFormat;
         Intl.DateTimeFormat = function (locale, options) {
@@ -283,7 +283,7 @@ export default class Scanner {
 
     await this.page.evaluateOnNewDocument(() => {
       Object.defineProperty(navigator, 'language', { get: () => 'ru-RU' });
-      Object.defineProperty(navigator, 'languages', { get: () => ['ru-RU', 'ru', 'en-US'] });
+      Object.defineProperty(navigator, 'languages', { get: () => ['ru-RU', 'ru'] });
 
       const originalFormat = Intl.DateTimeFormat;
       Intl.DateTimeFormat = function (locale, options) {
