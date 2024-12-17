@@ -252,6 +252,14 @@ export default class Scanner {
       await this.page.evaluateOnNewDocument(() => {
         Object.defineProperty(navigator, 'language', { get: () => 'ru-RU' });
         Object.defineProperty(navigator, 'languages', { get: () => ['ru-RU', 'ru', 'en-US'] });
+
+        const originalFormat = Intl.DateTimeFormat;
+        Intl.DateTimeFormat = function (locale, options) {
+          if (!locale || locale.startsWith('en')) {
+            locale = 'ru-RU'; // Принудительно переключаем на русский
+          }
+          return new originalFormat(locale, options);
+        };
       });
 
       await this.page.goto(config.sourceUrl, { timeout: 0 });
@@ -276,6 +284,14 @@ export default class Scanner {
     await this.page.evaluateOnNewDocument(() => {
       Object.defineProperty(navigator, 'language', { get: () => 'ru-RU' });
       Object.defineProperty(navigator, 'languages', { get: () => ['ru-RU', 'ru', 'en-US'] });
+
+      const originalFormat = Intl.DateTimeFormat;
+      Intl.DateTimeFormat = function (locale, options) {
+        if (!locale || locale.startsWith('en')) {
+          locale = 'ru-RU'; // Принудительно переключаем на русский
+        }
+        return new originalFormat(locale, options);
+      };
     });
 
     await this.page.goto(config.sourceUrl, { timeout: 0 });
