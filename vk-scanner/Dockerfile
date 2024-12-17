@@ -1,11 +1,12 @@
 # Указываем базовый образ Node.js
 FROM --platform=linux/amd64 node:18.16
 
-# Установка необходимых инструментов и Google Chrome
+# Устанавливаем необходимые пакеты, включая локали
 RUN apt-get update && apt-get install -y \
     vim wget gnupg ca-certificates locales \
-    && locale-gen ru_RU.UTF-8 \
-    && update-locale LANG=ru_RU.UTF-8 \
+    && echo "ru_RU.UTF-8 UTF-8" > /etc/locale.gen \
+    && locale-gen \
+    && update-locale LANG=ru_RU.UTF-8 LANGUAGE=ru_RU:ru LC_ALL=ru_RU.UTF-8 \
     && wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
     && sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list' \
     && apt-get update \
@@ -14,27 +15,25 @@ RUN apt-get update && apt-get install -y \
     && wget --quiet https://raw.githubusercontent.com/vishnubob/wait-for-it/master/wait-for-it.sh -O /usr/sbin/wait-for-it.sh \
     && chmod +x /usr/sbin/wait-for-it.sh
 
-# Устанавливаем глобально npm 7 и Knex
+# Устанавливаем глобальные пакеты npm
 RUN npm install -g npm@7 knex
 
-# Устанавливаем переменные окружения для локали
+# Устанавливаем переменные окружения для приложения
 ENV LANG=ru_RU.UTF-8
 ENV LANGUAGE=ru_RU:ru
 ENV LC_ALL=ru_RU.UTF-8
+ENV IS_HEADLESS=true
+ENV IS_DOCKERIZED=true
 
 # Настройка рабочей директории
 WORKDIR /app
 
-# Копируем зависимости
+# Копируем зависимости и устанавливаем их
 COPY vk-scanner/package.json vk-scanner/package-lock.json ./
 RUN npm install
 
 # Копируем остальные файлы проекта
 COPY vk-scanner/ ./
-
-# Устанавливаем переменные окружения для приложения
-ENV IS_HEADLESS=true
-ENV IS_DOCKERIZED=true
 
 # Запуск приложения
 CMD ["npm", "run", "start"]
