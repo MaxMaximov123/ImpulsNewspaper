@@ -302,15 +302,15 @@ export default class Scanner {
     };
 
     process.on('exit', closeBrowser); // При нормальном завершении
-      process.on('SIGINT', () => {
-        console.log('Получен SIGINT (Ctrl+C)');
-        closeBrowser().then(() => process.exit(0)); // При принудительном завершении
-      });
-      process.on('SIGTERM', closeBrowser); // При остановке через kill
-      process.on('uncaughtException', (error) => {
-        console.error('Необработанное исключение:', error);
-        closeBrowser().then(() => process.exit(1));
-      });
+    process.on('SIGINT', () => {
+      console.log('Получен SIGINT (Ctrl+C)');
+      closeBrowser().then(() => process.exit(0)); // При принудительном завершении
+    });
+    process.on('SIGTERM', closeBrowser); // При остановке через kill
+    process.on('uncaughtException', (error) => {
+      console.error('Необработанное исключение:', error);
+      closeBrowser().then(() => process.exit(1));
+    });
   
 
     await this.page.evaluateOnNewDocument(() => {
