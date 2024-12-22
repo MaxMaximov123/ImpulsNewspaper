@@ -244,6 +244,25 @@ export default class Scanner {
         }
       );
 
+      const closeBrowser = async () => {
+        console.log('Закрытие браузера...');
+        if (this.browser && (await this.browser.isConnected())) {
+          await this.browser.close();
+        }
+        console.log('Браузер закрыт');
+      };
+
+      process.on('exit', closeBrowser); // При нормальном завершении
+      process.on('SIGINT', () => {
+        console.log('Получен SIGINT (Ctrl+C)');
+        closeBrowser().then(() => process.exit(0)); // При принудительном завершении
+      });
+      process.on('SIGTERM', closeBrowser); // При остановке через kill
+      process.on('uncaughtException', (error) => {
+        console.error('Необработанное исключение:', error);
+        closeBrowser().then(() => process.exit(1));
+      });
+
       this.page = await this.browser.newPage();
       await this.page.setExtraHTTPHeaders({
         'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
@@ -263,9 +282,9 @@ export default class Scanner {
     this.browser = await puppeteer.launch(
       {
         args: ['--no-sandbox'],
-        headless: 'new',
-        userDataDir: './user_data'
-        // headless: false
+        // headless: 'new',
+        userDataDir: './user_data',
+        headless: false
       }
     );
     this.page = await this.browser.newPage();
@@ -273,6 +292,26 @@ export default class Scanner {
     await this.page.setExtraHTTPHeaders({
       'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
     });
+
+    const closeBrowser = async () => {
+      console.log('Закрытие браузера...');
+      if (this.browser && (await this.browser.isConnected())) {
+        await this.browser.close();
+      }
+      console.log('Браузер закрыт');
+    };
+
+    process.on('exit', closeBrowser); // При нормальном завершении
+      process.on('SIGINT', () => {
+        console.log('Получен SIGINT (Ctrl+C)');
+        closeBrowser().then(() => process.exit(0)); // При принудительном завершении
+      });
+      process.on('SIGTERM', closeBrowser); // При остановке через kill
+      process.on('uncaughtException', (error) => {
+        console.error('Необработанное исключение:', error);
+        closeBrowser().then(() => process.exit(1));
+      });
+  
 
     await this.page.evaluateOnNewDocument(() => {
       Object.defineProperty(navigator, 'language', { get: () => 'ru-RU' });
