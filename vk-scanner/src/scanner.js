@@ -239,7 +239,7 @@ export default class Scanner {
         {
           args: ['--no-sandbox'],
           headless: 'new',
-          userDataDir: './user_data'
+          // userDataDir: './user_data'
           // headless: false
         }
       );
@@ -282,9 +282,9 @@ export default class Scanner {
     this.browser = await puppeteer.launch(
       {
         args: ['--no-sandbox'],
-        // headless: 'new',
-        userDataDir: './user_data',
-        headless: false
+        headless: 'new',
+        // userDataDir: './user_data',
+        // headless: false
       }
     );
     this.page = await this.browser.newPage();
