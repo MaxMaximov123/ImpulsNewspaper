@@ -239,6 +239,7 @@ export default class Scanner {
         {
           args: ['--no-sandbox'],
           headless: 'new',
+          userDataDir: './user_data'
           // headless: false
         }
       );
@@ -263,6 +264,7 @@ export default class Scanner {
       {
         args: ['--no-sandbox'],
         headless: 'new',
+        userDataDir: './user_data'
         // headless: false
       }
     );
