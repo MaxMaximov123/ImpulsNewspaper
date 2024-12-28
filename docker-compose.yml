@@ -25,7 +25,7 @@ services:
       DATABASE_URL: postgres://max:jbfgslgsdlfkngd@localhost:3200/posts
       DATABASE_SCHEMA: public
       SOURCE_KEY: IMPULS
-      SOURCE_URL: https://vk.com/impulse131
+      SOURCE_URL: https://m.vk.com/impulse131
       RESTART_TIME: 5
     depends_on:
       - db
@@ -42,7 +42,7 @@ services:
       DATABASE_URL: postgres://max:jbfgslgsdlfkngd@localhost:3200/posts
       DATABASE_SCHEMA: public
       SOURCE_KEY: HSE
-      SOURCE_URL: https://vk.com/hseolymp
+      SOURCE_URL: https://m.vk.com/hseolymp
       RESTART_TIME: 5
     depends_on:
       - db
@@ -59,7 +59,7 @@ services:
       DATABASE_URL: postgres://max:jbfgslgsdlfkngd@localhost:3200/posts
       DATABASE_SCHEMA: public
       SOURCE_KEY: BMSTU
-      SOURCE_URL: https://vk.com/olymp_bmstu
+      SOURCE_URL: https://m.vk.com/olymp_bmstu
       RESTART_TIME: 5
     depends_on:
       - db
@@ -76,7 +76,7 @@ services:
       DATABASE_URL: postgres://max:jbfgslgsdlfkngd@localhost:3200/posts
       DATABASE_SCHEMA: public
       SOURCE_KEY: INNOPOLIS
-      SOURCE_URL: https://vk.com/innopolisu
+      SOURCE_URL: https://m.vk.com/innopolisu
       RESTART_TIME: 5
     depends_on:
       - db
@@ -93,7 +93,7 @@ services:
       DATABASE_URL: postgres://max:jbfgslgsdlfkngd@localhost:3200/posts
       DATABASE_SCHEMA: public
       SOURCE_KEY: SPECIAL
-      SOURCE_URL: https://vk.com/club224926448
+      SOURCE_URL: https://m.vk.com/club224926448
       RESTART_TIME: 5
     depends_on:
       - db
@@ -110,7 +110,7 @@ services:
       DATABASE_URL: postgres://max:jbfgslgsdlfkngd@localhost:3200/posts
       DATABASE_SCHEMA: public
       SOURCE_KEY: DISTOLYMP
-      SOURCE_URL: https://vk.com/distolymp
+      SOURCE_URL: https://m.vk.com/distolymp
       RESTART_TIME: 5
     depends_on:
       - db
@@ -127,7 +127,7 @@ services:
       DATABASE_URL: postgres://max:jbfgslgsdlfkngd@localhost:3200/posts
       DATABASE_SCHEMA: public
       SOURCE_KEY: LOMONOSOV_OLYMP_CHEMISTRY
-      SOURCE_URL: https://vk.com/lomonosov.olymp
+      SOURCE_URL: https://m.vk.com/lomonosov.olymp
       RESTART_TIME: 5
     depends_on:
       - db
@@ -144,7 +144,7 @@ services:
       DATABASE_URL: postgres://max:jbfgslgsdlfkngd@localhost:3200/posts
       DATABASE_SCHEMA: public
       SOURCE_KEY: OLYMP_SPBU
-      SOURCE_URL: https://vk.com/olympspbu
+      SOURCE_URL: https://m.vk.com/olympspbu
       RESTART_TIME: 5
     depends_on:
       - db
@@ -161,7 +161,7 @@ services:
       DATABASE_URL: postgres://max:jbfgslgsdlfkngd@localhost:3200/posts
       DATABASE_SCHEMA: public
       SOURCE_KEY: INNOPOLIS_OPEN_IS
-      SOURCE_URL: https://vk.com/iuiso
+      SOURCE_URL: https://m.vk.com/iuiso
       RESTART_TIME: 5
     depends_on:
       - db
@@ -178,7 +178,7 @@ services:
       DATABASE_URL: postgres://max:jbfgslgsdlfkngd@localhost:3200/posts
       DATABASE_SCHEMA: public
       SOURCE_KEY: OLYMP_GAZPROM
-      SOURCE_URL: https://vk.com/olymp_gazprom
+      SOURCE_URL: https://m.vk.com/olymp_gazprom
       RESTART_TIME: 5
     depends_on:
       - db
@@ -195,7 +195,7 @@ services:
       DATABASE_URL: postgres://max:jbfgslgsdlfkngd@localhost:3200/posts
       DATABASE_SCHEMA: public
       SOURCE_KEY: OLYMP_NTI
-      SOURCE_URL: https://vk.com/nticontest
+      SOURCE_URL: https://m.vk.com/nticontest
       RESTART_TIME: 5
     depends_on:
       - db
@@ -212,7 +212,7 @@ services:
       DATABASE_URL: postgres://max:jbfgslgsdlfkngd@localhost:3200/posts
       DATABASE_SCHEMA: public
       SOURCE_KEY: ABOUT_PROJECT
-      SOURCE_URL: https://vk.com/club225033050
+      SOURCE_URL: https://m.vk.com/club225033050
       RESTART_TIME: 5
     depends_on:
       - db

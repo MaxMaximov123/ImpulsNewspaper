@@ -23,9 +23,7 @@ export default class Scanner {
   async scanning() {
     let scrollStep = 5000;
     while (true) {
-      let sourceLogo = await this.page.$('.AvatarRich__img');
-
-      console.log(await sourceLogo.evaluate(element => element.src));
+      let sourceLogo = await this.page.$('.vkuiImageBase__img');
 
       await db('sources').insert({
         key: config.sourceKey,
@@ -37,7 +35,7 @@ export default class Scanner {
           window.scrollBy(0, scrollStep);
         }, scrollStep);
 
-        let postElements = await this.page.$$('.post');
+        let postElements = await this.page.$$('.wall_item');
         let newPosts = [];
 
         await this.waitForTimeout(10000);
@@ -55,16 +53,15 @@ export default class Scanner {
 
             if (this.postKeys.includes(post.key)) continue;
 
-            let postContent = await postElement.$('._post_content');
-            let postHeader = await postElement.$('.PostHeader');
-            let postHeaderInfo = await postHeader.$('.PostHeaderInfo');
-            let postHeaderSubtitle = await postHeaderInfo.$('.PostHeaderSubtitle');
-            let PostHeaderSubtitleLink = await postHeaderSubtitle.$('.PostHeaderSubtitle__link');
-            let PostHeaderSubtitleItem = await PostHeaderSubtitleLink.$('.PostHeaderSubtitle__item');
+            let wiHead = await postElement.$('.wi_head');
+            let postHeaderContentWrapper = await wiHead.$('.PostHeader__contentWrapper');
+            let postHeaderInfoWrapper = await postHeaderContentWrapper.$('.PostHeader__infoWrapper');
+            let PostHeaderInfo = await postHeaderInfoWrapper.$('.PostHeader__info');
+            let postHeaderTime = await PostHeaderInfo.$('.PostHeaderTime');
 
 
 
-            let postDate = await PostHeaderSubtitleItem.evaluate(element => {
+            let postDate = await postHeaderTime.evaluate(element => {
               let currentYear = new Date().getFullYear();
               let currentMonth = new Date().getMonth();
               let today = new Date().getDay();
@@ -107,26 +104,13 @@ export default class Scanner {
               return dateString;
             });
 
-            console.log(postDate);
-
             post.createdAt = new Date(postDate);
 
+            let wiBody  = await postElement.$('.wi_body');
 
-            if (!postContent) continue;
+            if (!wiBody) continue;
 
-            let postContentBody = await postContent.$('.post_content');
-
-            if (!postContentBody) continue;
-
-            postContentBody = await postContentBody.$('.post_info');
-
-            if (!postContentBody) continue;
-
-            postContentBody = await postContentBody.$('.wall_text');
-
-            if (!postContentBody) continue;
-
-            let postContentText = await postContentBody.$('.wall_post_text');
+            let postContentText = await wiBody.$('.pi_text');
 
             if (postContentText) {
               let processedText = await postContentText.evaluate(element => {
@@ -146,37 +130,15 @@ export default class Scanner {
               post.text = processedText;
             }
 
-            try {
-              let onceImageBlock = await postContentBody.$('.PrimaryAttachment');
-              if (onceImageBlock) {
-                onceImageBlock = await onceImageBlock.$('.PhotoPrimaryAttachment__interactive');
-                let image = await onceImageBlock.$('.PhotoPrimaryAttachment__imageElement');
-                post.images.push(await image.evaluate(element => element.src));
-              }
+            let piMedias = await wiBody.$('.pi_medias');
 
-              let postContentImageBlock = await postContentBody.$('.MediaGridContainerWeb--post');
+            if (piMedias) {
+              let imgSources = await piMedias.evaluate(node => {
+                const lazyImages = Array.from(node.querySelectorAll('img[loading="lazy"]'));
+                return lazyImages.map(img => img.src.replace(/&cs=\d+x\d+$/, ''));
+              });
 
-              if (postContentImageBlock) {
-                postContentImageBlock = await postContentImageBlock.$('.MediaGrid');
-
-                if (postContentImageBlock) {
-                  let postContentImages = await postContentImageBlock.$$('.MediaGrid__thumb');
-
-                  if (postContentImages) {
-                  
-                    for (let image of postContentImages) {
-                      if (image) {
-                        image = await image.$('.MediaGrid__interactive');
-                        image = await image.$('.MediaGrid__imageElement');
-                        post.images.push(await image.evaluate(element => element.src));
-                      }
-                    }
-                  }
-                }
-              }
-
-            } catch(e) {
-              console.log(e);
+              post.images.push(imgSources);
             }
 
             console.log(post);
@@ -221,6 +183,9 @@ export default class Scanner {
         this.totalHeight += scrollStep;     
       }
 
+      await this.page.reload({ timeout: 0 });
+      console.log('Page was reloaded:', new Date());
+
       await this.waitForTimeout(1000 * 1);
       this.isScanning = true;
     }
@@ -230,50 +195,7 @@ export default class Scanner {
     while (true) {
       await this.waitForTimeout(1000 * 60 * this.restartTime);
       this.isScanning = false;
-
-      // await this.page.reload();
-
-      await this.browser.close();
-
-      this.browser = await puppeteer.launch(
-        {
-          args: ['--no-sandbox'],
-          headless: 'new',
-          // userDataDir: './user_data'
-          // headless: false
-        }
-      );
-
-      const closeBrowser = async () => {
-        console.log('Закрытие браузера...');
-        if (this.browser && (await this.browser.isConnected())) {
-          await this.browser.close();
-        }
-        console.log('Браузер закрыт');
-      };
-
-      process.on('exit', closeBrowser); // При нормальном завершении
-      process.on('SIGINT', () => {
-        console.log('Получен SIGINT (Ctrl+C)');
-        closeBrowser().then(() => process.exit(0)); // При принудительном завершении
-      });
-      process.on('SIGTERM', closeBrowser); // При остановке через kill
-      process.on('uncaughtException', (error) => {
-        console.error('Необработанное исключение:', error);
-        closeBrowser().then(() => process.exit(1));
-      });
-
-      this.page = await this.browser.newPage();
-      await this.page.setExtraHTTPHeaders({
-        'Accept-Language': 'ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
-      });
-
-      await this.page.evaluateOnNewDocument(() => {
-        Object.defineProperty(navigator, 'language', { get: () => 'ru-RU' });
-        Object.defineProperty(navigator, 'languages', { get: () => ['ru-RU', 'ru', 'en-US'] });
-      });
-
-      await this.page.goto(config.sourceUrl, { timeout: 0 });
+      
       this.totalHeight = 0;
     }
   }
@@ -294,21 +216,20 @@ export default class Scanner {
     });
 
     const closeBrowser = async () => {
-      console.log('Закрытие браузера...');
       if (this.browser && (await this.browser.isConnected())) {
         await this.browser.close();
       }
-      console.log('Браузер закрыт');
+      console.log('Browser was closed', new Date());
     };
 
     process.on('exit', closeBrowser); // При нормальном завершении
     process.on('SIGINT', () => {
-      console.log('Получен SIGINT (Ctrl+C)');
+      console.log('Got SIGINT (Ctrl+C)');
       closeBrowser().then(() => process.exit(0)); // При принудительном завершении
     });
     process.on('SIGTERM', closeBrowser); // При остановке через kill
     process.on('uncaughtException', (error) => {
-      console.error('Необработанное исключение:', error);
+      console.error('Process was killed', new Date(), error);
       closeBrowser().then(() => process.exit(1));
     });
   
