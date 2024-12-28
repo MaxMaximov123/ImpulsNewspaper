@@ -183,7 +183,7 @@ export default class Scanner {
         this.totalHeight += scrollStep;     
       }
 
-      await this.page.reload({ timeout: 0 });
+      await this.page.reload({ timeout: 0, waitUntil: 'domcontentloaded' });
       console.log('Page was reloaded:', new Date());
 
       await this.waitForTimeout(1000 * 1);
@@ -195,7 +195,6 @@ export default class Scanner {
     while (true) {
       await this.waitForTimeout(1000 * 60 * this.restartTime);
       this.isScanning = false;
-      
       this.totalHeight = 0;
     }
   }
@@ -203,7 +202,12 @@ export default class Scanner {
   async start() {
     this.browser = await puppeteer.launch(
       {
-        args: ['--no-sandbox'],
+        args: [
+          '--disable-gpu',
+          '--no-sandbox',
+          '--disable-setuid-sandbox',
+          '--disable-dev-shm-usage'
+        ],
         headless: 'new',
         // userDataDir: './user_data',
         // headless: false
@@ -239,7 +243,7 @@ export default class Scanner {
       Object.defineProperty(navigator, 'languages', { get: () => ['ru-RU', 'ru', 'en-US'] });
     });
 
-    await this.page.goto(config.sourceUrl, { timeout: 0 });
+    await this.page.goto(config.sourceUrl, { timeout: 0, waitUntil: 'domcontentloaded'});
 
     this.postKeys = (await db('posts').select('key')).map(obj => obj.key);
     this.startReloadingPage();
