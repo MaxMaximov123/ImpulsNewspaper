@@ -25,6 +25,8 @@ export default class Scanner {
     while (true) {
       let sourceLogo = await this.page.$('.vkuiImageBase__img');
 
+      console.log(sourceLogo);
+
       await db('sources').insert({
         key: config.sourceKey,
         logoSrc: await sourceLogo.evaluate(element => element.src)
@@ -183,7 +185,7 @@ export default class Scanner {
         this.totalHeight += scrollStep;     
       }
 
-      await this.page.reload({ timeout: 0, waitUntil: 'domcontentloaded' });
+      await this.page.reload({ timeout: 0, waitUntil: 'networkidle0' });
       console.log('Page was reloaded:', new Date());
 
       await this.waitForTimeout(1000 * 1);
@@ -243,9 +245,10 @@ export default class Scanner {
       Object.defineProperty(navigator, 'languages', { get: () => ['ru-RU', 'ru', 'en-US'] });
     });
 
-    await this.page.goto(config.sourceUrl, { timeout: 0, waitUntil: 'domcontentloaded'});
+    await this.page.goto(config.sourceUrl, { timeout: 0, waitUntil: 'networkidle0'});
 
     this.postKeys = (await db('posts').select('key')).map(obj => obj.key);
+
     this.startReloadingPage();
     this.scanning();
   }
