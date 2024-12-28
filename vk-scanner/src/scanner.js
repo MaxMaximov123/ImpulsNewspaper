@@ -140,7 +140,7 @@ export default class Scanner {
                 return lazyImages.map(img => img.src.replace(/&cs=\d+x\d+$/, ''));
               });
 
-              post.images.push(imgSources);
+              post.images.push(...imgSources);
             }
 
             console.log(post);
