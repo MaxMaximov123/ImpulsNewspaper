@@ -7,7 +7,12 @@
         >
           <div class="info-block">
             <div style="margin-left: auto; margin-right: auto;">
+              <q-chip>
+              <q-avatar rounded size="18px">
+                <img :src="post.logoSrc">
+              </q-avatar>
               {{ sourceKeys[post.sourceKey] }}
+            </q-chip>
             </div>
           </div>
           <q-card style="background-color: #f3efed;">
@@ -159,7 +164,7 @@ export default {
               this.post.text = this.post.text
                 .replace(/#[A-Za-zА-Яа-я0-9]+[\s\n]*/g, "")
                 .replace(/\n/g, "<br>")
-                .replace(/(https?:[0-9a-zA-Z_/?.-]*)/g, ` 👉 <a href="$1" target="_blank">ссылка</a> `);
+                .replace(/(https?:[0-9a-zA-Z_/?.-=&]*)/g, ` 👉 <a href="$1" target="_blank">ссылка</a> `);
             }
 
             this.post.createdAt = new Date(this.post.createdAt).toLocaleString("ru", timeFormatOptions);

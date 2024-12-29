@@ -131,9 +131,12 @@ app.post('/api/posts', async (req, res) => {
   try {
     let result = {
       data: await 
-      db.select('posts.*')
+      db.select('posts.*', 'sources.logo_src')
       .column(db.raw('array_agg(images.src) as images'))
       .from('posts')
+      .leftJoin('sources', function () {
+        this.on('posts.sourceKey', '=', 'sources.key');
+      })
       .leftJoin('images', function () {
         this.on('posts.key', '=', 'images.postKey')
           .andOn('posts.sourceKey', '=', 'images.srcKey');
@@ -143,7 +146,8 @@ app.post('/api/posts', async (req, res) => {
       .orderBy(...sortedBy[requestData.filters.sortedBy])
       .orderBy('posts.createdAt', 'desc')
       .orderBy('posts.id', 'desc')
-      .groupBy('posts.key', 'posts.id').offset(requestData.offset)
+      .groupBy('posts.key', 'posts.id', 'sources.logo_src')
+      .offset(requestData.offset)
       .limit(Math.max(0, (requestData?.filters?.currentPost || 0 - requestData.offset)) + 10),
     };
 
@@ -240,14 +244,17 @@ app.post('/api/post', async (req, res) => {
     await db('posts').where('id', requestData.postId).increment('views', 1);
     let result = {
       data: (await 
-      db.select('posts.*')
+      db.select('posts.*', 'sources.logo_src')
       .column(db.raw('array_agg(images.src) as images'))
       .from('posts')
       .leftJoin('images', function () {
         this.on('posts.key', '=', 'images.postKey')
           .andOn('posts.sourceKey', '=', 'images.srcKey');
       })
-      .groupBy('posts.key', 'posts.id').where('posts.id', requestData.postId))[0],
+      .leftJoin('sources', function () {
+        this.on('posts.sourceKey', '=', 'sources.key');
+      })
+      .groupBy('posts.key', 'posts.id', 'sources.logo_src').where('posts.id', requestData.postId))[0],
     };
 
     
