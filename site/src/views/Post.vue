@@ -1,7 +1,7 @@
 <template>
   <!-- <Header @updateFilters="() => {}" :filters="{context: ''}" id="header"></Header> -->
-    <div class="q-pa-sm">
-      <div class="news-container q-pa-xs">
+    <div class="q-pt-sm">
+      <div class="news-container">
         <div
           class="news-item q-pa-sm"
         >
@@ -171,8 +171,8 @@ export default {
 </script>
 <style scoped>@import url('https://fonts.cdnfonts.com/css/gilroy-bold');
   .news-item {
-    /* max-width: 75%; */
-    /* margin-bottom: 20px; */
+    max-width: 75%;
+    margin-bottom: 20px;
     background-color: #ebe1c583;
     border-radius: 5px;
     padding: 20px;
@@ -206,7 +206,7 @@ export default {
   }
 
   .news-container {
-    width: 100%;
+    /* width: 100%; */
     margin-left: auto;
     margin-right: auto;
   }
@@ -223,7 +223,7 @@ export default {
   }
 
   .once-image {
-    width: 100%;
+    max-width: 50%;
   }
 
   @media (max-width: 700px) {
@@ -240,7 +240,7 @@ export default {
     }
   
     .news-item {
-      width: 95%;
+      max-width: 100%;
     }
 
     .once-image {

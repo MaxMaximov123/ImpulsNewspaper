@@ -1,6 +1,6 @@
 <template>
-  <div class="q-pa-md">
-    <div class="news-container q-gutter-sm" @scroll="handleScroll">
+  <div class="q-pt-md">
+    <div class="news-container" @scroll="handleScroll">
       <div class="filters">
         <v-select
           variant="outlined"
@@ -504,7 +504,7 @@
     }
 
     .once-image {
-      max-width: 100%;
+      max-width: 100vw;
     }
 
     .source-keys {
