@@ -43,7 +43,7 @@
           <div class="info-block">
             <div style="margin-left: auto; margin-right: auto;">
               <q-chip>
-              <q-avatar rounded size="18px">
+              <q-avatar rounded size="25px">
                 <img :src="post.logoSrc">
               </q-avatar>
               {{ sourceKeys[post.sourceKey] }}
