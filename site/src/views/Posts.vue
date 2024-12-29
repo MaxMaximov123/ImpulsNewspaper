@@ -363,7 +363,7 @@
               obj.text = obj.text
                 .replace(/#[A-Za-zА-Яа-я0-9]+[\s\n]*/g, "")
                 .replace(/\n/g, "<br>")
-                .replace(/(https?:[0-9a-zA-Z_/.?-=&]*)/g, ` 👉 <a href="$1" target="_blank">ссылка</a> `)
+                .replace(/(https?:[0-9a-zA-Z_/?.-=&]*)/g, ` 👉 <a href="$1" target="_blank">ссылка</a> `)
                 .split(/[\n\s]/);
             } else {
               obj.text = [obj.text];
