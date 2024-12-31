@@ -127,7 +127,7 @@ services:
       DATABASE_URL: postgres://max:jbfgslgsdlfkngd@localhost:3200/posts
       DATABASE_SCHEMA: public
       SOURCE_KEY: LOMONOSOV_OLYMP_CHEMISTRY
-      SOURCE_URL: https://m.vk.com/lomonosov.olymp
+      SOURCE_URL: https://m.vk.com/chemistry_olymp_lomonosov
       RESTART_TIME: 5
     depends_on:
       - db
