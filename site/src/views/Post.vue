@@ -115,6 +115,7 @@ export default {
                 createdAt: null,
             },
             sourceKeys: {
+              "BMSTU_APPLY": 'МГТУ',
               'IMPULS': 'Импульс',
               'HSE': 'ВШЭ',
               'BMSTU': 'МГТУ',

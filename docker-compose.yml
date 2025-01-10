@@ -65,6 +65,23 @@ services:
       - db
     network_mode: "host"
   
+  scanner-bmstu-apply:
+    restart: always
+    build:
+      context: .
+      dockerfile: vk-scanner/Dockerfile
+    environment:
+      DATABASE_POOL_MAX: 40
+      DATABASE_POOL_MIN: 5
+      DATABASE_URL: postgres://max:jbfgslgsdlfkngd@localhost:3200/posts
+      DATABASE_SCHEMA: public
+      SOURCE_KEY: BMSTU_APPLY
+      SOURCE_URL: https://m.vk.com/ab_bmstu1830
+      RESTART_TIME: 5
+    depends_on:
+      - db
+    network_mode: "host"
+  
   scanner-innopolis:
     restart: always
     build:
