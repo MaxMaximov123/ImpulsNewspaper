@@ -9,7 +9,8 @@ import jwt from 'jsonwebtoken';
 const sourceKeys = {
   'Импульс': 'IMPULS',
   'ВШЭ': 'HSE',
-  'МГТУ': 'BMSTU',
+  'ШВБ МГТУ': 'BMSTU',
+  'МГТУ': 'BMSTU_APPLY',
   "Иннополис": "INNOPOLIS",
   "Спец.": "SPECIAL",
   "Онлайн олимп. физ.": "DISTOLYMP",
