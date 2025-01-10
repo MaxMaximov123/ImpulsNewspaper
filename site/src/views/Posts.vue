@@ -306,7 +306,7 @@
         this.filters.context = this.$route.query?.context || '';
         this.filters.currentPost = Number(this.$route.query?.currentPost || '0');
         this.filters.sortedBy = this.$route.query?.sortedBy || 'Сначала новые';
-        this.filters.selectedSourceKeys = (this.$route.query?.selectedSourceKeys || 'Импульс,МГТУ,Спец.,ВШЭ,Иннополис,МГТУ').split(',');
+        this.filters.selectedSourceKeys = (this.$route.query?.selectedSourceKeys || 'Импульс,МГТУ,Спец.,ВШЭ,Иннополис,ШВБ МГТУ').split(',');
         this.postList = [];
         await this.loadNewPosts();
       },

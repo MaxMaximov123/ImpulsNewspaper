@@ -118,7 +118,7 @@ export default {
               "BMSTU_APPLY": 'МГТУ',
               'IMPULS': 'Импульс',
               'HSE': 'ВШЭ',
-              'BMSTU': 'МГТУ',
+              'BMSTU': 'ШВБ МГТУ',
               "INNOPOLIS": "Иннополис",
               "SPECIAL": "Спец.",
               "DISTOLYMP": "Онлайн олимп. физ.",
