@@ -6,6 +6,23 @@ import { db } from './database.js';
 import { constants } from 'buffer';
 import jwt from 'jsonwebtoken';
 
+
+const sourceLinks = {
+  'IMPULS': 'https://vk.com/impulse131',
+  'HSE': 'https://vk.com/hseolymp',
+  'BMSTU': 'https://vk.com/olymp_bmstu',
+  "INNOPOLIS": "https://vk.com/innopolisu",
+  "BMSTU_APPLY": 'https://vk.com/ab_bmstu1830',
+  "SPECIAL": "https://vk.com/club224926448",
+  "DISTOLYMP": "https://vk.com/distolymp",
+  "LOMONOSOV_OLYMP_CHEMISTRY": "https://vk.com/chemistry_olymp_lomonosov",
+  "OLYMP_SPBU": "https://vk.com/olympspbu",
+  "INNOPOLIS_OPEN_IS": "https://vk.com/iuiso",
+  "OLYMP_GAZPROM": "https://vk.com/olymp_gazprom",
+  "OLYMP_NTI": "https://vk.com/nticontest",
+  "ABOUT_PROJECT": "https://vk.com/club225033050",
+};
+
 const sourceKeys = {
   'Импульс': 'IMPULS',
   'ВШЭ': 'HSE',
@@ -152,6 +169,8 @@ app.post('/api/posts', async (req, res) => {
       .limit(Math.max(0, (requestData?.filters?.currentPost || 0 - requestData.offset)) + 10),
     };
 
+    result.data.forEach(obj => obj.sourceLink = sourceLinks[obj.sourceKey]);
+
     await Promise.all(result.data.map(async post => {
       post.likesCount = (await db('likes')
       .count('* as likesCount')
@@ -257,6 +276,8 @@ app.post('/api/post', async (req, res) => {
       })
       .groupBy('posts.key', 'posts.id', 'sources.logo_src').where('posts.id', requestData.postId))[0],
     };
+
+    result.data.sourceLink = sourceLinks[result.data.sourceKey];
 
     
     result.data.likesCount = (await db('likes')

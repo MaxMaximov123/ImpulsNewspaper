@@ -5,15 +5,14 @@
         <div
           class="news-item q-pa-sm"
         >
-          <div class="info-block">
-            <div style="margin-left: auto; margin-right: auto;">
-              <q-chip>
+          <div class="info-block" 
+            @click="openInNewTab(post.sourceLink)">
+              <q-chip style=" margin-left: auto; margin-right: auto;text-decoration: underline;">
               <q-avatar rounded size="25px">
                 <img :src="post.logoSrc">
               </q-avatar>
               {{ sourceKeys[post.sourceKey] }}
             </q-chip>
-            </div>
           </div>
           <q-card style="background-color: #f3efed;">
             <div v-if="post.text[0] && post.images?.[0]" class="news-info">
@@ -140,6 +139,10 @@ export default {
     methods: {
         postRequest(url, data){
             return postRequest(url, data);
+        },
+
+        openInNewTab(url) {
+          window.open(url, '_blank').focus();
         },
 
         async loadNewPost() {
